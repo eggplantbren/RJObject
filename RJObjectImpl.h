@@ -51,6 +51,18 @@ double RJObject<MassDist>::perturb_mass(int i, double scale)
 	return 0.;
 }
 
+template<class MassDist>
+double RJObject<MassDist>::perturb_position(int i, double scale)
+{
+	// Perturb
+	for(int j=0; j<num_dimensions; j++)
+	{
+		positions[i][j] += 2.*scale*DNest3::randn();
+		positions[i][j] = DNest3::mod(positions[i][j] + 1., 2.) - 1.;
+	}
+	return 0.;
+}
+
 
 template<class MassDist>
 void RJObject<MassDist>::print(std::ostream& out)
