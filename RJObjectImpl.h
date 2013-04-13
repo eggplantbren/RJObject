@@ -154,7 +154,7 @@ double RJObject<MassDist>::perturb_num_components(double scale)
 		else
 			diff =  1;
 	}
-	int new_num_components = (num_components + diff)%(max_num_components + 1);
+	int new_num_components = DNest3::mod(num_components + diff, max_num_components + 1);
 	diff = new_num_components - num_components;
 
 	// Now do the required changes
@@ -237,6 +237,8 @@ void RJObject<MassDist>::print(std::ostream& out)
 {
 	out<<std::setprecision(12);
 	out<<num_dimensions<<' '<<max_num_components<<' ';
+	mass_dist.print(out); out<<' ';
+	out<<num_components<<' ';
 
 	// Write out positions (all of first coordinate,
 	// then all of second coordinate, etc)

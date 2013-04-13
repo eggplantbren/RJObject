@@ -32,7 +32,7 @@ void Exponential::fromPrior()
 
 void Exponential::print(ostream& out) const
 {
-	out<<mu<<' ';
+	out<<mu;
 }
 
 double Exponential::perturb_parameters()

@@ -1,5 +1,5 @@
 *.o
 main
 *.pyc
-RJObject
+output.txt
 
