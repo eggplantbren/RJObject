@@ -7,8 +7,6 @@ template<class MassDist>
 RJObject<MassDist>::RJObject(int num_dimensions, int max_num_components)
 :num_dimensions(num_dimensions)
 ,max_num_components(max_num_components)
-,positions(max_num_components, std::vector<double>(num_dimensions))
-,masses(max_num_components)
 {
 
 }
@@ -16,11 +14,15 @@ RJObject<MassDist>::RJObject(int num_dimensions, int max_num_components)
 template<class MassDist>
 void RJObject<MassDist>::fromPrior()
 {
+	// Generate the mass distribution parameters
+	mass_dist.fromPrior();
+
 	// Generate from {0, 1, 2, ..., max_num_components}
 	num_components = DNest3::randInt(max_num_components + 1);
 
-	// Generate the mass distribution parameters
-	mass_dist.fromPrior();
+	// Resize the vectors of positions and masses
+	positions.resize(max_num_components, std::vector<double>(num_dimensions));
+	masses.resize(max_num_components);
 
 	// Generate positions and masses
 	for(int i=0; i<num_components; i++)
