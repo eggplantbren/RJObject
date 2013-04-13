@@ -69,3 +69,14 @@ ostream& operator << (ostream& out, const RJObject& r)
 	return out;
 }
 
+
+
+// Demonstration of the class
+int main()
+{
+	RJObject r(2, 100);
+	r.fromPrior();
+	cout<<r<<endl;
+	return 0;
+}
+
