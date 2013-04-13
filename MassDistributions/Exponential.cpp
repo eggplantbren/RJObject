@@ -7,9 +7,9 @@
 using namespace DNest3;
 using namespace std;
 
-Exponential::Exponential(double mu_min, double mu_max)
-:mu_min(mu_min)
-,mu_max(mu_max)
+Exponential::Exponential()
+:mu_min(1E-3)
+,mu_max(1E3)
 {
 	if(mu_min < 0. || mu_max < 0.)
 	{
@@ -51,14 +51,14 @@ double Exponential::mass_log_pdf(double x) const
 {
 	if(x <= 0.)
 		return -1E300;
-	return -x;
+	return -log(mu) - x/mu;
 }
 
 double Exponential::mass_cdf(double x) const
 {
 	if(x <= 0.)
 		return 0.;
-	return 1. - exp(-x);
+	return 1. - exp(-x/mu);
 }
 
 double Exponential::mass_cdf_inv(double u) const
@@ -68,6 +68,6 @@ double Exponential::mass_cdf_inv(double u) const
 		cerr<<"# WARNING: Attempted to call inverse CDF on ";
 		cerr<<"an argument not in [0, 1]."<<endl;
 	}
-	return -log(1. - u);
+	return -mu*log(1. - u);
 }
 
