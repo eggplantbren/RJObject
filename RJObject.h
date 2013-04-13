@@ -14,6 +14,7 @@
 #include <vector>
 #include <ostream>
 
+template<class MassDist>
 class RJObject
 {
 	protected:
@@ -28,11 +29,8 @@ class RJObject
 		std::vector< std::vector<double> > positions;
 		std::vector<double> masses;
 
-		// These define the mass distribution
-		// but can be overridden in subclasses
-		virtual double mass_log_pdf(double x) const;
-		virtual double mass_cdf(double x) const;
-		virtual double mass_cdf_inv(double u) const;
+		// The mass distribution
+		MassDist mass_dist;
 
 	public:
 		// Constructor. Specify the number of spatial dimensions,
@@ -46,8 +44,10 @@ class RJObject
 
 		// For output
 		friend std::ostream& operator << (std::ostream& out,
-							const RJObject& obj);
+							const RJObject<MassDist>& obj);
 };
+
+#include "RJObjectImpl.h"
 
 #endif
 
