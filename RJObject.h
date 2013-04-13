@@ -16,12 +16,22 @@
 class RJObject
 {
 	protected:
+		// How many dimensions for the components' positions
 		const int num_dimensions;
+
+		// Maximum number of components allowed (minimum is zero)
 		const int max_num_components;
 
+		// The components
 		int num_components;
 		std::vector< std::vector<double> > positions;
 		std::vector<double> masses;
+
+		// These define the mass distribution
+		// but can be overridden in subclasses
+		virtual double mass_log_pdf(double x) const;
+		virtual double mass_cdf(double x) const;
+		virtual double mass_cdf_inv(double u) const;
 
 	public:
 		// Constructor. Specify the number of spatial dimensions,
