@@ -1,6 +1,9 @@
 #ifndef _RJObject_
 #define _RJObject_
 
+#include <vector>
+#include <ostream>
+
 /*
 * A class that implements basic birth-death Metropolis-Hastings
 * proposals using an exponential prior on the masses and a
@@ -10,9 +13,6 @@
 * any other properties. If your components have more properties
 * you may derive from this class or store them externally.
 */
-
-#include <vector>
-#include <ostream>
 
 template<class MassDist>
 class RJObject
@@ -24,13 +24,13 @@ class RJObject
 		// Maximum number of components allowed (minimum is zero)
 		const int max_num_components;
 
+		// The mass distribution
+		MassDist mass_dist;
+
 		// The components
 		int num_components;
 		std::vector< std::vector<double> > positions;
 		std::vector<double> masses;
-
-		// The mass distribution
-		MassDist mass_dist;
 
 	public:
 		// Constructor. Specify the number of spatial dimensions,
@@ -43,8 +43,7 @@ class RJObject
 		double perturb();
 
 		// For output
-		friend std::ostream& operator << (std::ostream& out,
-							const RJObject<MassDist>& obj);
+		void print(std::ostream& out);
 };
 
 #include "RJObjectImpl.h"

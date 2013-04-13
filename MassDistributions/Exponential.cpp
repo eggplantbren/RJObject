@@ -4,7 +4,11 @@
 
 using namespace std;
 
-// Exponential distribution
+Exponential::Exponential()
+{
+
+}
+
 double Exponential::mass_log_pdf(double x) const
 {
 	if(x <= 0.)

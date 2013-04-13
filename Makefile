@@ -3,7 +3,7 @@ LIBS = -ldnest3 -lgsl -lgslcblas -lboost_thread -lboost_system
 
 default:
 	# Compile the .cpp files into .o files
-	g++ $(CFLAGS) -c *.cpp
+	g++ $(CFLAGS) -c *.cpp MassDistributions/*.cpp
 	# Link the RJObject demo binary
 	g++ -o RJObject RJObject.o $(LIBS)
 
