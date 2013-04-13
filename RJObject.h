@@ -29,13 +29,13 @@ class RJObject
 
 		// The components
 		int num_components;
-		std::vector< std::vector<double> > positions;
 		std::vector<double> masses;
+		std::vector< std::vector<double> > positions;
 
 		// Helper methods -- these do one thing at a time
-		double perturb_mass(int i, double scale);
-		double perturb_position(int i, double scale);
 		double perturb_num_components(double scale);
+		double perturb_masses(double chance, double scale);
+		double perturb_positions(double chance, double scale);
 
 		// Helper methods -- add or remove single component
 		double add_component();

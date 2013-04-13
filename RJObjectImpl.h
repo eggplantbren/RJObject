@@ -24,8 +24,8 @@ void RJObject<MassDist>::fromPrior()
 	num_components = DNest3::randInt(max_num_components + 1);
 
 	// Resize the vectors of positions and masses
-	positions.resize(max_num_components, std::vector<double>(num_dimensions));
 	masses.resize(max_num_components);
+	positions.resize(max_num_components, std::vector<double>(num_dimensions));
 
 	// Generate positions and masses
 	for(int i=0; i<num_components; i++)
@@ -37,29 +37,79 @@ void RJObject<MassDist>::fromPrior()
 }
 
 template<class MassDist>
-double RJObject<MassDist>::perturb_mass(int i, double scale)
+double RJObject<MassDist>::perturb_masses(double chance, double scale)
 {
-	// Transform to U(0, 1)
-	masses[i] = mass_dist.mass_cdf(masses[i]);
+	if(num_components == 0)
+		return 0.;
 
-	// Perturb
-	masses[i] += scale*DNest3::randn();
-	masses[i] = DNest3::mod(masses[i], 1.);
+	// A flag for whether each component gets changed or not
+	std::vector<bool> change(num_components, false);
+	int count = 0;
+	for(int i=0; i<num_components; i++)
+	{
+		if(DNest3::randomU() <= chance)
+		{
+			change[i] = true;
+			count++;
+		}
+	}
+	// At least do one...
+	if(count == 0)
+		change[DNest3::randInt(num_components)] = true;
 
-	// Transform back
-	masses[i] = mass_dist.mass_cdf_inv(masses[i]);
+	for(int i=0; i<num_components; i++)
+	{
+		if(change[i])
+		{
+			// Transform to U(0, 1)
+			masses[i] = mass_dist.mass_cdf(masses[i]);
+
+			// Perturb
+			masses[i] += scale*DNest3::randn();
+			masses[i] = DNest3::mod(masses[i], 1.);
+
+			// Transform back
+			masses[i] = mass_dist.mass_cdf_inv(masses[i]);
+		}
+	}
+
 	return 0.;
 }
 
 template<class MassDist>
-double RJObject<MassDist>::perturb_position(int i, double scale)
+double RJObject<MassDist>::perturb_positions(double chance, double scale)
 {
-	// Perturb
-	for(int j=0; j<num_dimensions; j++)
+	if(num_components == 0)
+		return 0.;
+
+	// A flag for whether each component gets changed or not
+	std::vector<bool> change(num_components, false);
+	int count = 0;
+	for(int i=0; i<num_components; i++)
 	{
-		positions[i][j] += 2.*scale*DNest3::randn();
-		positions[i][j] = DNest3::mod(positions[i][j] + 1., 2.) - 1.;
+		if(DNest3::randomU() <= chance)
+		{
+			change[i] = true;
+			count++;
+		}
 	}
+	// At least do one...
+	if(count == 0)
+		change[DNest3::randInt(num_components)] = true;
+
+	for(int i=0; i<num_components; i++)
+	{
+		if(change[i])
+		{
+			// Perturb
+			for(int j=0; j<num_dimensions; j++)
+			{
+				positions[i][j] += 2.*scale*DNest3::randn();
+				positions[i][j] = DNest3::mod(positions[i][j] + 1., 2.) - 1.;
+			}
+		}
+	}
+
 	return 0.;
 }
 
@@ -122,6 +172,40 @@ double RJObject<MassDist>::perturb_num_components(double scale)
 	return logH;
 }
 
+template<class MassDist>
+double RJObject<MassDist>::perturb()
+{
+	double logH = 0.;
+
+	int which = DNest3::randInt(4);
+
+	if(which == 0)
+	{
+		// Do some birth or death
+		logH += perturb_num_components(
+				pow(10., 1.5 - 6.*DNest3::randomU()));
+	}
+	else if(which == 1)
+	{
+		// Change the mass distribution parameters
+		if(DNest3::randomU() <= 0.5)
+			logH += mass_dist.perturb1(masses);
+		else
+			logH += mass_dist.perturb2(masses);
+	}
+	else if(which == 2)
+	{
+		logH += perturb_masses(pow(10., 0.5 - 4.*DNest3::randomU()),
+					pow(10., 1.5 - 6.*DNest3::randomU()));
+	}
+	else if(which == 3)
+	{
+		logH += perturb_positions(pow(10., 0.5 - 4.*DNest3::randomU()),
+					pow(10., 1.5 - 6.*DNest3::randomU()));
+	}
+
+	return logH;
+}
 
 template<class MassDist>
 double RJObject<MassDist>::remove_component()
