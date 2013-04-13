@@ -88,6 +88,30 @@ double RJObject<MassDist>::add_component()
 	return 0.;
 }
 
+template<class MassDist>
+double RJObject<MassDist>::remove_component()
+{
+	if(num_components <= 0)
+	{
+		std::cerr<<"# WARNING: Trying to remove component ";
+		std::cerr<<"but already empty!"<<std::endl;
+		return 0.;
+	}
+
+	// Find one to delete
+	int i = DNest3::randInt(num_components);
+
+	// Delete mass
+	masses.erase(masses.begin() + i);
+
+	// Delete position
+	positions.erase(positions.begin() + i);
+
+	// Decrement counter
+	num_components--;
+
+	return 0.;
+}
 
 template<class MassDist>
 void RJObject<MassDist>::print(std::ostream& out)
