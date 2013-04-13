@@ -30,7 +30,7 @@ void Exponential::fromPrior()
 	mu = exp(log(mu_min) + log(mu_max/mu_min)*randomU());
 }
 
-void Exponential::print(ostream& out)
+void Exponential::print(ostream& out) const
 {
 	out<<mu<<' ';
 }
