@@ -56,3 +56,16 @@ double RJObject::mass_cdf_inv(double u) const
 	return -log(1. - u);
 }
 
+ostream& operator << (ostream& out, const RJObject& r)
+{
+	out<<r.num_dimensions<<' '<<r.max_num_components<<' ';
+	// Write out positions and masses
+	for(int i=0; i<r.num_components; i++)
+	{
+		for(int j=0; j<r.num_dimensions; j++)
+			out<<r.positions[i][j]<<' ';
+		out<<r.masses[i]<<' ';
+	}
+	return out;
+}
+

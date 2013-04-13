@@ -12,6 +12,7 @@
 */
 
 #include <vector>
+#include <ostream>
 
 class RJObject
 {
@@ -42,6 +43,10 @@ class RJObject
 
 		void fromPrior();
 		double perturb();
+
+		// For output
+		friend std::ostream& operator << (std::ostream& out,
+							const RJObject& obj);
 };
 
 #endif
