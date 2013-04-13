@@ -1,7 +1,9 @@
 #ifndef _Exponential_
 #define _Exponential_
 
-class Exponential
+#include "MassDistribution.h"
+
+class Exponential:public MassDistribution
 {
 	private:
 
