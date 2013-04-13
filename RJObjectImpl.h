@@ -19,7 +19,10 @@ void RJObject<MassDist>::fromPrior()
 	// Generate from {0, 1, 2, ..., max_num_components}
 	num_components = DNest3::randInt(max_num_components + 1);
 
-	// Assign positions and masses
+	// Generate the mass distribution parameters
+	mass_dist.fromPrior();
+
+	// Generate positions and masses
 	for(int i=0; i<num_components; i++)
 	{
 		for(int j=0; j<num_dimensions; j++)
