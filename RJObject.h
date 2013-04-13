@@ -48,7 +48,10 @@ class RJObject
 		// [-1, 1]^num_dimensions.
 		RJObject(int num_dimensions, int max_num_components, const MassDist& mass_dist);
 
+		// Generate everything from the prior
 		void fromPrior();
+
+		// The top-level perturb method
 		double perturb();
 
 		// For output
