@@ -23,8 +23,14 @@ class RJObject
 		std::vector<double> masses;
 
 	public:
+		// Constructor. Specify the number of spatial dimensions,
+		// and the maximum number of components. By default (for now)
+		// the positions will be assumed to be in
+		// [-1, 1]^num_dimensions.
 		RJObject(int num_dimensions, int max_num_objects);
 
+		void fromPrior();
+		double perturb();
 };
 
 #endif
