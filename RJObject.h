@@ -16,8 +16,8 @@
 class RJObject
 {
 	protected:
-		int num_dimensions;
-		int max_num_objects;
+		const int num_dimensions;
+		const int max_num_objects;
 
 		std::vector< std::vector<double> > positions;
 		std::vector<double> masses;
