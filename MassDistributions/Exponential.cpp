@@ -4,8 +4,21 @@
 
 using namespace std;
 
-Exponential::Exponential()
+Exponential::Exponential(double mu_min, double mu_max)
+:mu_min(mu_min)
+,mu_max(mu_max)
 {
+	if(mu_min < 0. || mu_max < 0.)
+	{
+		cerr<<"# Warning: negative values possible for ";
+		cerr<<"mean of exponential distribution."<<endl;
+	}
+
+	if(mu_min > mu_max)
+	{
+		cerr<<"# Warning: backwards limits for ";
+		cerr<<"mean of exponential distribution."<<endl;
+	}
 
 }
 

@@ -6,9 +6,13 @@
 class Exponential:public MassDistribution
 {
 	private:
+		// Range allowed for mu
+		const double mu_min, mu_max;
+
+		double mu;
 
 	public:
-		Exponential();
+		Exponential(double mu_min, double mu_max);
 
 		double mass_log_pdf(double x) const;
 		double mass_cdf(double x) const;
