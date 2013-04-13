@@ -19,6 +19,7 @@ class RJObject
 		const int num_dimensions;
 		const int max_num_components;
 
+		int num_components;
 		std::vector< std::vector<double> > positions;
 		std::vector<double> masses;
 
