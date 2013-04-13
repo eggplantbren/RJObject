@@ -36,6 +36,8 @@ class RJObject
 		double perturb_mass(int i, double scale);
 		double perturb_position(int i, double scale);
 		double perturb_num_components(double scale);
+
+		// Helper methods -- add or remove single component
 		double add_component();
 		double remove_component();
 
