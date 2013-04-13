@@ -7,7 +7,7 @@ class Exponential:public MassDistribution
 {
 	private:
 		// Range allowed for mu
-		const double mu_min, mu_max;
+		double mu_min, mu_max;
 
 		double mu;
 

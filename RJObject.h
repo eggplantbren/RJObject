@@ -19,10 +19,10 @@ class RJObject
 {
 	protected:
 		// How many dimensions for the components' positions
-		const int num_dimensions;
+		int num_dimensions;
 
 		// Maximum number of components allowed (minimum is zero)
-		const int max_num_components;
+		int max_num_components;
 
 		// The mass distribution
 		MassDist mass_dist;
