@@ -240,6 +240,14 @@ void RJObject<MassDist>::print(std::ostream& out)
 	mass_dist.print(out); out<<' ';
 	out<<num_components<<' ';
 
+	// Write out masses
+	for(int i=0; i<num_components; i++)
+		out<<masses[i]<<' ';
+
+	// Pad with zeros (turned-off components)
+	for(int i=num_components; i<max_num_components; i++)
+		out<<0.<<' ';
+
 	// Write out positions (all of first coordinate,
 	// then all of second coordinate, etc)
 	for(int j=0; j<num_dimensions; j++)
@@ -251,13 +259,5 @@ void RJObject<MassDist>::print(std::ostream& out)
 		for(int i=num_components; i<max_num_components; i++)
 			out<<0.<<' ';
 	}
-
-	// Write out masses
-	for(int i=0; i<num_components; i++)
-		out<<masses[i]<<' ';
-
-	// Pad with zeros (turned-off components)
-	for(int i=num_components; i<max_num_components; i++)
-		out<<0.<<' ';
 }
 
