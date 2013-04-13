@@ -12,6 +12,7 @@
 */
 
 #include <vector>
+#include <ostream>
 
 class MassDistribution
 {
@@ -24,6 +25,9 @@ class MassDistribution
 	public:
 		MassDistribution();
 
+		// Generate parameters from the prior
+		virtual void fromPrior() = 0;
+
 		// These must be implemented
 		virtual double mass_log_pdf(double x) const = 0;
 		virtual double mass_cdf(double x) const = 0;
@@ -34,6 +38,9 @@ class MassDistribution
 
 		// Type 2 proposal as defined above
 		double perturb2(std::vector<double>& masses);
+
+		// Print parameters to stream
+		virtual void print(std::ostream& out) const = 0;
 };
 
 #endif
