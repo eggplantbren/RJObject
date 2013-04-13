@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include "RandomNumberGenerator.h"
+#include "Utils.h"
 
 template<class MassDist>
 RJObject<MassDist>::RJObject(int num_dimensions, int max_num_components,
@@ -34,6 +35,22 @@ void RJObject<MassDist>::fromPrior()
 		masses[i] = mass_dist.mass_cdf_inv(DNest3::randomU());
 	}
 }
+
+template<class MassDist>
+double RJObject<MassDist>::perturb_mass(int i, double scale)
+{
+	// Transform to U(0, 1)
+	masses[i] = mass_dist.mass_cdf(masses[i]);
+
+	// Perturb
+	masses[i] += scale*DNest3::randn();
+	masses[i] = DNest3::mod(masses[i], 1.);
+
+	// Transform back
+	masses[i] = mass_dist.mass_cdf_inv(masses[i]);
+	return 0.;
+}
+
 
 template<class MassDist>
 void RJObject<MassDist>::print(std::ostream& out)
