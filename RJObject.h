@@ -17,7 +17,7 @@ class RJObject
 {
 	protected:
 		const int num_dimensions;
-		const int max_num_objects;
+		const int max_num_components;
 
 		std::vector< std::vector<double> > positions;
 		std::vector<double> masses;
@@ -27,7 +27,7 @@ class RJObject
 		// and the maximum number of components. By default (for now)
 		// the positions will be assumed to be in
 		// [-1, 1]^num_dimensions.
-		RJObject(int num_dimensions, int max_num_objects);
+		RJObject(int num_dimensions, int max_num_components);
 
 		void fromPrior();
 		double perturb();
