@@ -68,8 +68,8 @@ double RJObject<MassDist>::add_component()
 {
 	if(num_components >= max_num_components)
 	{
-		cerr<<"# WARNING: Trying to add component but already full!";
-		cerr<<endl;
+		std::cerr<<"# WARNING: Trying to add component ";
+		std::cerr<<"but already full!"<<std::endl;
 		return 0.;
 	}
 
@@ -83,7 +83,7 @@ double RJObject<MassDist>::add_component()
 	std::vector<double> pos(num_dimensions);
 	for(int j=0; j<num_dimensions; j++)
 		pos[j] = -1. + 2.*DNest3::randomU();
-	positions.push_back(pos)
+	positions.push_back(pos);
 
 	return 0.;
 }
