@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include <iomanip>
 #include "RandomNumberGenerator.h"
 
 #include "RJObject.h"
@@ -58,22 +59,40 @@ double RJObject::mass_cdf_inv(double u) const
 
 ostream& operator << (ostream& out, const RJObject& r)
 {
+	out<<setprecision(12);
 	out<<r.num_dimensions<<' '<<r.max_num_components<<' ';
-	// Write out positions and masses
-	for(int i=0; i<r.num_components; i++)
+
+	// Write out positions (all of first coordinate,
+	// then all of second coordinate, etc)
+	for(int j=0; j<r.num_dimensions; j++)
 	{
-		for(int j=0; j<r.num_dimensions; j++)
+		for(int i=0; i<r.num_components; i++)
 			out<<r.positions[i][j]<<' ';
-		out<<r.masses[i]<<' ';
+
+		// Pad with zeros (turned-off components)
+		for(int i=r.num_components; i<r.max_num_components; i++)
+			out<<0.<<' ';
 	}
+
+	// Write out masses
+	for(int i=0; i<r.num_components; i++)
+		out<<r.masses[i]<<' ';
+
+	// Pad with zeros (turned-off components)
+	for(int i=r.num_components; i<r.max_num_components; i++)
+		out<<0.<<' ';
+
 	return out;
 }
 
 
-
+#include <ctime>
 // Demonstration of the class
 int main()
 {
+	RandomNumberGenerator::initialise_instance();
+	RandomNumberGenerator::get_instance().set_seed(time(0));
+
 	RJObject r(2, 100);
 	r.fromPrior();
 	cout<<r<<endl;
