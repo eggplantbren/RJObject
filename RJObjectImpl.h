@@ -63,6 +63,31 @@ double RJObject<MassDist>::perturb_position(int i, double scale)
 	return 0.;
 }
 
+template<class MassDist>
+double RJObject<MassDist>::add_component()
+{
+	if(num_components >= max_num_components)
+	{
+		cerr<<"# WARNING: Trying to add component but already full!";
+		cerr<<endl;
+		return 0.;
+	}
+
+	// Increment counter
+	num_components++;
+
+	// Generate mass
+	masses.push_back(mass_dist.mass_cdf_inv(DNest3::randomU()));
+
+	// Generate position
+	std::vector<double> pos(num_dimensions);
+	for(int j=0; j<num_dimensions; j++)
+		pos[j] = -1. + 2.*DNest3::randomU();
+	positions.push_back(pos)
+
+	return 0.;
+}
+
 
 template<class MassDist>
 void RJObject<MassDist>::print(std::ostream& out)
