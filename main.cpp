@@ -12,7 +12,7 @@ int main()
 	RandomNumberGenerator::initialise_instance();
 	RandomNumberGenerator::get_instance().set_seed(time(0));
 
-	RJObject<Exponential> r(2, 100);
+	RJObject<Exponential> r(2, 100, Exponential(1E-3, 1E3));
 	r.fromPrior();
 	r.print(cout); cout<<endl;
 	return 0;

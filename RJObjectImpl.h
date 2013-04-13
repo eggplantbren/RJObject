@@ -4,9 +4,11 @@
 #include "RandomNumberGenerator.h"
 
 template<class MassDist>
-RJObject<MassDist>::RJObject(int num_dimensions, int max_num_components)
+RJObject<MassDist>::RJObject(int num_dimensions, int max_num_components,
+				const MassDist& mass_dist)
 :num_dimensions(num_dimensions)
 ,max_num_components(max_num_components)
+,mass_dist(mass_dist)
 {
 
 }

@@ -14,7 +14,7 @@ class Exponential:public MassDistribution
 		double perturb_parameters();
 
 	public:
-		Exponential();
+		Exponential(double mu_min, double mu_max);
 
 		void fromPrior();
 		double mass_log_pdf(double x) const;

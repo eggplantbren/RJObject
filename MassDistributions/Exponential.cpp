@@ -7,9 +7,9 @@
 using namespace DNest3;
 using namespace std;
 
-Exponential::Exponential()
-:mu_min(1E-3)
-,mu_max(1E3)
+Exponential::Exponential(double mu_min, double mu_max)
+:mu_min(mu_min)
+,mu_max(mu_max)
 {
 	if(mu_min < 0. || mu_max < 0.)
 	{

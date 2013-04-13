@@ -37,7 +37,7 @@ class RJObject
 		// and the maximum number of components. By default (for now)
 		// the positions will be assumed to be in
 		// [-1, 1]^num_dimensions.
-		RJObject(int num_dimensions, int max_num_components);
+		RJObject(int num_dimensions, int max_num_components, const MassDist& mass_dist);
 
 		void fromPrior();
 		double perturb();
