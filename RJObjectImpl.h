@@ -89,6 +89,41 @@ double RJObject<MassDist>::add_component()
 }
 
 template<class MassDist>
+double RJObject<MassDist>::perturb_num_components(double scale)
+{
+	double logH = 0.;
+
+	// Work out how many components we will have after the change
+	double delta = max_num_components*scale*DNest3::randn();
+	int diff = (int)floor(delta);
+	// In case diff is zero, make it + 1
+	if(diff == 0)
+	{
+		if(DNest3::randomU() <= 0.5)
+			diff = -1;
+		else
+			diff =  1;
+	}
+	int new_num_components = (num_components + diff)%(max_num_components + 1);
+	diff = new_num_components - num_components;
+
+	// Now do the required changes
+	if(diff > 0)
+	{
+		for(int i=0; i<diff; i++)
+			logH += add_component();
+	}
+	else
+	{
+		for(int i=0; i<-diff; i++)
+			logH += remove_component();
+	}
+
+	return logH;
+}
+
+
+template<class MassDist>
 double RJObject<MassDist>::remove_component()
 {
 	if(num_components <= 0)

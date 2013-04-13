@@ -35,6 +35,7 @@ class RJObject
 		// Helper methods -- these do one thing at a time
 		double perturb_mass(int i, double scale);
 		double perturb_position(int i, double scale);
+		double perturb_num_components(double scale);
 		double add_component();
 		double remove_component();
 
