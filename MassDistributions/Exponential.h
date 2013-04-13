@@ -11,13 +11,16 @@ class Exponential:public MassDistribution
 
 		double mu;
 
+		double perturb_parameters();
+
 	public:
 		Exponential(double mu_min, double mu_max);
 
+		void fromPrior();
 		double mass_log_pdf(double x) const;
 		double mass_cdf(double x) const;
 		double mass_cdf_inv(double u) const;
-
+		void print(std::ostream& out) const;
 };
 
 #endif
