@@ -24,3 +24,8 @@ double SpatialDistribution::perturb1(const vector< vector<double> >& positions)
 	return logH;
 }
 
+double SpatialDistribution::perturb2(vector< vector<double> >& positions)
+{
+	return perturb1(positions);
+}
+

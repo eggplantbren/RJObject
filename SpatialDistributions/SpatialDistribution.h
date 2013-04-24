@@ -36,7 +36,9 @@ class SpatialDistribution
 		double perturb1(const std::vector< std::vector<double> >& positions);
 
 		// Type 2 proposal as defined above
-		double perturb2(std::vector< std::vector<double> >& positions);
+		// THIS CURRENTLY JUST CALLS PERTURB1 -- YOU MUST OVERRIDE IT
+		// IF YOU WANT TYPE 2 PROPOSALS
+		virtual double perturb2(std::vector< std::vector<double> >& positions);
 
 		// Print parameters to stream
 		virtual void print(std::ostream& out) const = 0;
