@@ -26,7 +26,7 @@ int main()
 	fstream fout("output.txt", ios::out);
 
 	// How many MCMC steps to do
-	int steps = 10000;
+	int steps = 100;
 
 	for(int i=0; i<steps; i++)
 	{
@@ -38,12 +38,8 @@ int main()
 		if(randomU() <= exp(logH))
 			r = r2;
 
-		// Save every 100 steps
-		if((i+1)%100 == 0)
-		{
-			r.print(fout);
-			fout<<endl;
-		}
+		r.print(fout);
+		fout<<endl;
 		cout<<(i+1)<<'/'<<steps<<endl;
 	}
 	fout.close();
