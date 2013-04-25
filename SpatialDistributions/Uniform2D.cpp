@@ -42,3 +42,15 @@ double Uniform2D::position_log_pdf(const vector<double>& position) const
 	return 0.;
 }
 
+void Uniform2D::position_from_uniform(vector<double>& vec) const
+{
+	vec[0] = x_min + (x_max - x_min)*vec[0];
+	vec[1] = y_min + (y_max - y_min)*vec[1];
+}
+
+void Uniform2D::position_to_uniform(vector<double>& vec) const
+{
+	vec[0] = (vec[0] - x_min)/(x_max - x_min);
+	vec[1] = (vec[1] - y_min)/(y_max - y_min);
+}
+

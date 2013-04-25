@@ -26,6 +26,18 @@ double SpatialDistribution::perturb1(const vector< vector<double> >& positions)
 
 double SpatialDistribution::perturb2(vector< vector<double> >& positions)
 {
-	return perturb1(positions);
+	double logH = 0.;
+
+	// Transform positions to U(0, 1)
+	for(size_t i=0; i<positions.size(); i++)
+		position_to_uniform(positions[i]);
+
+	logH += perturb_parameters();
+
+	// Transform back
+	for(size_t i=0; i<positions.size(); i++)
+		position_from_uniform(positions[i]);
+
+	return logH;
 }
 
