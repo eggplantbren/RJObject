@@ -14,7 +14,7 @@
 * you may derive from this class or store them externally.
 */
 
-template<class MassDist>
+template<class SpatialDist, class MassDist>
 class RJObject
 {
 	protected:
@@ -23,6 +23,9 @@ class RJObject
 
 		// Maximum number of components allowed (minimum is zero)
 		int max_num_components;
+
+		// The spatial distribution
+		SpatialDist spatial_dist;
 
 		// The mass distribution
 		MassDist mass_dist;
@@ -46,7 +49,9 @@ class RJObject
 		// and the maximum number of components. By default (for now)
 		// the positions will be assumed to be in
 		// [-1, 1]^num_dimensions.
-		RJObject(int num_dimensions, int max_num_components, const MassDist& mass_dist);
+		RJObject(int num_dimensions, int max_num_components,
+				const SpatialDist& spatial_dist,
+				const MassDist& mass_dist);
 
 		// Generate everything from the prior
 		void fromPrior();

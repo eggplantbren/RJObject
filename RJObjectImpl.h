@@ -4,19 +4,24 @@
 #include "RandomNumberGenerator.h"
 #include "Utils.h"
 
-template<class MassDist>
-RJObject<MassDist>::RJObject(int num_dimensions, int max_num_components,
+template<class SpatialDist, class MassDist>
+RJObject<SpatialDist, MassDist>::RJObject(int num_dimensions, int max_num_components,
+				const SpatialDist& spatial_dist,
 				const MassDist& mass_dist)
 :num_dimensions(num_dimensions)
 ,max_num_components(max_num_components)
+,spatial_dist(spatial_dist)
 ,mass_dist(mass_dist)
 {
 
 }
 
-template<class MassDist>
-void RJObject<MassDist>::fromPrior()
+template<class SpatialDist, class MassDist>
+void RJObject<SpatialDist, MassDist>::fromPrior()
 {
+	// Generate the spatial distribution parameters
+	spatial_dist.fromPrior();
+
 	// Generate the mass distribution parameters
 	mass_dist.fromPrior();
 
@@ -31,13 +36,14 @@ void RJObject<MassDist>::fromPrior()
 	for(int i=0; i<num_components; i++)
 	{
 		for(int j=0; j<num_dimensions; j++)
-			positions[i][j] = -1. + 2.*DNest3::randomU(); // Default domain
+			positions[i][j] = DNest3::randomU();
+		spatial_dist.position_from_uniform(positions[i]);
 		masses[i] = mass_dist.mass_cdf_inv(DNest3::randomU());
 	}
 }
 
-template<class MassDist>
-double RJObject<MassDist>::perturb_masses(double chance, double scale)
+template<class SpatialDist, class MassDist>
+double RJObject<SpatialDist, MassDist>::perturb_masses(double chance, double scale)
 {
 	if(num_components == 0)
 		return 0.;
@@ -76,8 +82,8 @@ double RJObject<MassDist>::perturb_masses(double chance, double scale)
 	return 0.;
 }
 
-template<class MassDist>
-double RJObject<MassDist>::perturb_positions(double chance, double scale)
+template<class SpatialDist, class MassDist>
+double RJObject<SpatialDist, MassDist>::perturb_positions(double chance, double scale)
 {
 	if(num_components == 0)
 		return 0.;
@@ -101,20 +107,24 @@ double RJObject<MassDist>::perturb_positions(double chance, double scale)
 	{
 		if(change[i])
 		{
+			spatial_dist.position_to_uniform(positions[i]);
+
 			// Perturb
 			for(int j=0; j<num_dimensions; j++)
 			{
-				positions[i][j] += 2.*scale*DNest3::randn();
-				positions[i][j] = DNest3::mod(positions[i][j] + 1., 2.) - 1.;
+				positions[i][j] += scale*DNest3::randn();
+				positions[i][j] = DNest3::mod(positions[i][j],
+								1.);
 			}
+			spatial_dist.position_from_uniform(positions[i]);
 		}
 	}
 
 	return 0.;
 }
 
-template<class MassDist>
-double RJObject<MassDist>::add_component()
+template<class SpatialDist, class MassDist>
+double RJObject<SpatialDist, MassDist>::add_component()
 {
 	if(num_components >= max_num_components)
 	{
@@ -126,20 +136,21 @@ double RJObject<MassDist>::add_component()
 	// Increment counter
 	num_components++;
 
-	// Generate mass
-	masses.push_back(mass_dist.mass_cdf_inv(DNest3::randomU()));
-
 	// Generate position
 	std::vector<double> pos(num_dimensions);
 	for(int j=0; j<num_dimensions; j++)
-		pos[j] = -1. + 2.*DNest3::randomU();
+		pos[j] = DNest3::randomU();
+	spatial_dist.position_from_uniform(pos);
 	positions.push_back(pos);
+
+	// Generate mass
+	masses.push_back(mass_dist.mass_cdf_inv(DNest3::randomU()));
 
 	return 0.;
 }
 
-template<class MassDist>
-double RJObject<MassDist>::perturb_num_components(double scale)
+template<class SpatialDist, class MassDist>
+double RJObject<SpatialDist, MassDist>::perturb_num_components(double scale)
 {
 	double logH = 0.;
 
@@ -172,12 +183,12 @@ double RJObject<MassDist>::perturb_num_components(double scale)
 	return logH;
 }
 
-template<class MassDist>
-double RJObject<MassDist>::perturb()
+template<class SpatialDist, class MassDist>
+double RJObject<SpatialDist, MassDist>::perturb()
 {
 	double logH = 0.;
 
-	int which = DNest3::randInt(4);
+	int which = DNest3::randInt(5);
 
 	if(which == 0)
 	{
@@ -187,28 +198,36 @@ double RJObject<MassDist>::perturb()
 	}
 	else if(which == 1)
 	{
+		// Change the spatial distribution parameters
+		if(DNest3::randomU() <= 0.5)
+			logH += spatial_dist.perturb1(positions);
+		else
+			logH += spatial_dist.perturb2(positions);
+	}
+	else if(which == 2)
+	{
+		logH += perturb_positions(pow(10., 0.5 - 4.*DNest3::randomU()),
+					pow(10., 1.5 - 6.*DNest3::randomU()));
+	}
+	else if(which == 3)
+	{
 		// Change the mass distribution parameters
 		if(DNest3::randomU() <= 0.5)
 			logH += mass_dist.perturb1(masses);
 		else
 			logH += mass_dist.perturb2(masses);
 	}
-	else if(which == 2)
+	else if(which == 4)
 	{
 		logH += perturb_masses(pow(10., 0.5 - 4.*DNest3::randomU()),
-					pow(10., 1.5 - 6.*DNest3::randomU()));
-	}
-	else if(which == 3)
-	{
-		logH += perturb_positions(pow(10., 0.5 - 4.*DNest3::randomU()),
 					pow(10., 1.5 - 6.*DNest3::randomU()));
 	}
 
 	return logH;
 }
 
-template<class MassDist>
-double RJObject<MassDist>::remove_component()
+template<class SpatialDist, class MassDist>
+double RJObject<SpatialDist, MassDist>::remove_component()
 {
 	if(num_components <= 0)
 	{
@@ -232,11 +251,12 @@ double RJObject<MassDist>::remove_component()
 	return 0.;
 }
 
-template<class MassDist>
-void RJObject<MassDist>::print(std::ostream& out)
+template<class SpatialDist, class MassDist>
+void RJObject<SpatialDist, MassDist>::print(std::ostream& out)
 {
 	out<<std::setprecision(12);
 	out<<num_dimensions<<' '<<max_num_components<<' ';
+	spatial_dist.print(out); out<<' ';
 	mass_dist.print(out); out<<' ';
 	out<<num_components<<' ';
 
