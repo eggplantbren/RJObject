@@ -10,6 +10,9 @@ class Elliptical2D:public SpatialDistribution
 		double x_min, x_max;
 		double y_min, y_max;
 
+		// A length scale
+		double length_scale;
+
 		// Parameters
 		double xc, yc;
 		double q, theta;

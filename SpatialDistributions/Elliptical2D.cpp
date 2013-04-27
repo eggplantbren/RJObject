@@ -16,11 +16,18 @@ Elliptical2D::Elliptical2D(double x_min, double x_max,
 {
 	if(x_min > x_max || y_min > y_max)
 		cerr<<"# WARNING: Oddness in Elliptical2D constructor"<<endl;
+	length_scale = sqrt((x_max - x_min)*
+				(y_max - y_min));
 }
 
 void Elliptical2D::fromPrior()
 {
-
+	xc = x_min + (x_max - x_min)*randomU();
+	yc = y_min + (y_max - y_min)*randomU();
+	q = exp(log(0.2) + log(5./0.2)*randomU());
+	theta = 2.*M_PI*randomU();
+	mu_r = exp(log(0.01*length_scale) + log(100.)*randomU());
+	beta_r = 2.*randomU();
 }
 
 void Elliptical2D::print(ostream& out) const
