@@ -26,13 +26,18 @@ void Elliptical2D::fromPrior()
 	yc = y_min + (y_max - y_min)*randomU();
 	q = exp(log(0.2) + log(5./0.2)*randomU());
 	theta = 2.*M_PI*randomU();
+	cos_theta = cos(theta);
+	sin_theta = sin(theta);
+
 	mu_r = exp(log(0.01*length_scale) + log(100.)*randomU());
 	beta_r = 2.*randomU();
 }
 
 void Elliptical2D::print(ostream& out) const
 {
-	out<<"";
+	out<<xc<<' '<<yc<<' ';
+	out<<q<<' '<<theta<<' ';
+	out<<mu_r<<' '<<beta_r<<' ';
 }
 
 double Elliptical2D::perturb_parameters()

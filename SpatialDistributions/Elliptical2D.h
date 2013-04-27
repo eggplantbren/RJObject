@@ -15,10 +15,8 @@ class Elliptical2D:public SpatialDistribution
 
 		// Parameters
 		double xc, yc;
-		double q, theta;
+		double q, theta, cos_theta, sin_theta;
 		double mu_r, beta_r;
-
-
 
 		double perturb_parameters();
 
