@@ -83,28 +83,7 @@ double Elliptical2D::position_log_pdf(const vector<double>& position) const
 {
 	vector<double> vec = position;
 	position_to_uniform(vec);
-
-	double r = -mu_r*log(1. - vec[0]);
-	double phi = 2.*M_PI*vec[1];
-
-	double J11, J12, J21, J22;
-	J11 = (1./sqrt(q)*cos_theta*cos(phi) - sqrt(q)*sin_theta*sin(phi))*
-			(mu_r/(vec[0] - 1.));
-	J12 = -2.*M_PI*r/sqrt(q)*cos_theta*sin(phi) -
-		2.*M_PI*r*sqrt(q)*sin_theta*cos(phi);
-	J21 = J12;
-	J22 = -2.*M_PI*r/sqrt(q)*sin_theta*sin(phi) -
-		2.*M_PI*r*sqrt(q)*cos_theta*cos(phi);
-
-	vector<double> test1 = position;
-	vector<double> test2 = position;
-	test1[0] += 1E-7;
-	test2[0] -= 1E-7;
-	position_to_uniform(test1);
-	position_to_uniform(test2);
-	cout<<(test2[0] - test1[0])/2E-7<<' '<<1./J11<<endl;
-
-	return 1./abs(J11*J22 - J12*J21);
+	return -log(abs(mu_r*log(1. - vec[0])/(1. - vec[0])));
 }
 
 void Elliptical2D::position_from_uniform(vector<double>& vec) const
