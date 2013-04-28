@@ -46,10 +46,21 @@ where $\mathbf{J}$ is the Jacobian of the transformation:
 \end{eqnarray}
 Let's calculate the terms. Here they are:
 \begin{eqnarray}
-\frac{\partial x}{\partial u_1} &=& \frac{\mathcal{R}'(u_1)}{\sqrt{q}}\cos\left(2\pi u_2\right)\\
-\frac{\partial x}{\partial u_2} &=& -\frac{2\pi\mathcal{R}(u_1)}{\sqrt{q}}\sin\left(2\pi u_2\right)\\
-\frac{\partial y}{\partial u_1} &=& \mathcal{R}'(u_1)\sqrt{q}\sin\left(2\pi u_2\right)\\
-\frac{\partial y}{\partial u_2} &=&  2\pi\mathcal{R}(u_1)\sqrt{q}\cos\left(2\pi u_2\right)
+J_{11} &=& \frac{\mathcal{R}'(u_1)}{\sqrt{q}}\cos\left(2\pi u_2\right)\\
+J_{12} &=& -\frac{2\pi\mathcal{R}(u_1)}{\sqrt{q}}\sin\left(2\pi u_2\right)\\
+J_{21} &=& \mathcal{R}'(u_1)\sqrt{q}\sin\left(2\pi u_2\right)\\
+J_{22} &=&  2\pi\mathcal{R}(u_1)\sqrt{q}\cos\left(2\pi u_2\right)
+\end{eqnarray}
+The determinant is:
+\begin{eqnarray}
+\det \mathbf{J} &=& J_{11}J_{22} - J_{12}J_{21}\\
+&=& 2\pi\mathcal{R}(u_1)\mathcal{R}'(u_1)\cos^2\left(2\pi u_2\right)
++2\pi\mathcal{R}(u_1)\mathcal{R}'(u_1)\sin^2\left(2\pi u_2\right)\\
+&=& 2\pi\mathcal{R}(u_1)\mathcal{R}'(u_1)
+\end{eqnarray}
+With the exponential choice, this is:
+\begin{eqnarray}
+\det \mathbf{J} &=& -2\pi\mu\frac{\log(1 - u_1)}{1 - u_1}
 \end{eqnarray}
 
 
