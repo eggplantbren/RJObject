@@ -28,7 +28,7 @@ int main()
 	fstream fout("output.txt", ios::out);
 
 	// How many MCMC steps to do
-	int steps = 10000;
+	int steps = 5000;
 
 	for(int i=0; i<steps; i++)
 	{
@@ -40,7 +40,7 @@ int main()
 		if(randomU() <= exp(logH))
 			r = r2;
 
-		if(i%100 == 0)
+		if(i%5 == 0)
 		{
 			r.print(fout);
 			fout<<endl;
