@@ -16,7 +16,7 @@ for i in xrange(0, output.shape[0]):
 	m = m[m > 0.]
 
 	if x.size > 0:
-		plt.scatter(x, y, s=100.*m/m.max(), alpha=0.25, color='k')
+		plt.scatter(x, y, s=100.*m/m.max(), alpha=0.1, color='k')
 	plt.axis('scaled')
 	plt.axis([-1., 1., -1., 1.])
 	plt.title('{i}/{N}'.format(i=(i+1), N=output.shape[0]))
