@@ -29,7 +29,9 @@ void RJObject<SpatialDist, MassDist>::fromPrior()
 	num_components = DNest3::randInt(max_num_components + 1);
 
 	// Resize the vectors of positions and masses
-	masses.resize(max_num_components);
+	masses.resize(num_components);
+	u_masses.resize(num_components);
+
 	positions.resize(max_num_components, std::vector<double>(num_dimensions));
 
 	// Generate positions and masses
@@ -38,7 +40,9 @@ void RJObject<SpatialDist, MassDist>::fromPrior()
 		for(int j=0; j<num_dimensions; j++)
 			positions[i][j] = DNest3::randomU();
 		spatial_dist.position_from_uniform(positions[i]);
-		masses[i] = mass_dist.mass_cdf_inv(DNest3::randomU());
+
+		u_masses[i] = DNest3::randomU();
+		masses[i] = mass_dist.mass_cdf_inv(u_masses[i]);
 	}
 }
 
@@ -67,15 +71,12 @@ double RJObject<SpatialDist, MassDist>::perturb_masses(double chance, double sca
 	{
 		if(change[i])
 		{
-			// Transform to U(0, 1)
-			masses[i] = mass_dist.mass_cdf(masses[i]);
+			// Perturb (in uniform coordinate system)
+			u_masses[i] += scale*DNest3::randn();
+			u_masses[i] = DNest3::mod(u_masses[i], 1.);
 
-			// Perturb
-			masses[i] += scale*DNest3::randn();
-			masses[i] = DNest3::mod(masses[i], 1.);
-
-			// Transform back
-			masses[i] = mass_dist.mass_cdf_inv(masses[i]);
+			// Transform
+			masses[i] = mass_dist.mass_cdf_inv(u_masses[i]);
 		}
 	}
 
@@ -144,7 +145,8 @@ double RJObject<SpatialDist, MassDist>::add_component()
 	positions.push_back(pos);
 
 	// Generate mass
-	masses.push_back(mass_dist.mass_cdf_inv(DNest3::randomU()));
+	u_masses.push_back(DNest3::randomU());
+	masses.push_back(mass_dist.mass_cdf_inv(u_masses.back()));
 
 	return 0.;
 }
@@ -213,9 +215,9 @@ double RJObject<SpatialDist, MassDist>::perturb()
 	{
 		// Change the mass distribution parameters
 		if(DNest3::randomU() <= 0.5)
-			logH += mass_dist.perturb1(masses);
+			logH += mass_dist.perturb1(u_masses, masses);
 		else
-			logH += mass_dist.perturb2(masses);
+			logH += mass_dist.perturb2(u_masses, masses);
 	}
 	else if(which == 4)
 	{
@@ -240,6 +242,7 @@ double RJObject<SpatialDist, MassDist>::remove_component()
 	int i = DNest3::randInt(num_components);
 
 	// Delete mass
+	u_masses.erase(u_masses.begin() + i);
 	masses.erase(masses.begin() + i);
 
 	// Delete position

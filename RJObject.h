@@ -32,7 +32,7 @@ class RJObject
 
 		// The components
 		int num_components;
-		std::vector<double> masses;
+		std::vector<double> masses, u_masses;
 		std::vector< std::vector<double> > positions;
 
 		// Helper methods -- these do one thing at a time
