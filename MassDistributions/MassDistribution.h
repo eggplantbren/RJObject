@@ -7,7 +7,7 @@
 * (usually non-negative reals, but it can be otherwise).
 * They have parameters, and two kinds of proposal
 * distributions are available:
-* 1) Move the parameters, keep some masses fixed
+* 1) Move the parameters, masses fixed
 * 2) Move the parameters, move the masses as well
 */
 
@@ -34,10 +34,12 @@ class MassDistribution
 		virtual double mass_cdf_inv(double u) const = 0;		
 
 		// Type 1 proposal as defined above
-		double perturb1(const std::vector<double>& masses);
+		double perturb1(std::vector<double>& u_masses,
+					const std::vector<double>& masses);
 
 		// Type 2 proposal as defined above
-		double perturb2(std::vector<double>& masses);
+		double perturb2(const std::vector<double>& u_masses,
+					std::vector<double>& masses);
 
 		// Print parameters to stream
 		virtual void print(std::ostream& out) const = 0;

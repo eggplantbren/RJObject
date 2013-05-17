@@ -7,7 +7,8 @@ MassDistribution::MassDistribution()
 
 }
 
-double MassDistribution::perturb1(const vector<double>& masses)
+double MassDistribution::perturb1(vector<double>& u_masses,
+					const vector<double>& masses)
 {
 	double logH = 0.;
 
@@ -19,24 +20,24 @@ double MassDistribution::perturb1(const vector<double>& masses)
 
 	// (new density)
 	for(size_t i=0; i<masses.size(); i++)
+	{
 		logH += mass_log_pdf(masses[i]);
+		u_masses[i] = mass_cdf(masses[i]);
+	}
 
 	return logH;
 }
 
-double MassDistribution::perturb2(vector<double>& masses)
+double MassDistribution::perturb2(const vector<double>& u_masses,
+					vector<double>& masses)
 {
 	double logH = 0.;
-
-	// Transform masses to [0, 1] using cdf
-	for(size_t i=0; i<masses.size(); i++)
-		masses[i] = mass_cdf(masses[i]);
 
 	logH += perturb_parameters();
 
 	// Transform back using inverse cdf
 	for(size_t i=0; i<masses.size(); i++)
-		masses[i] = mass_cdf_inv(masses[i]);
+		masses[i] = mass_cdf_inv(u_masses[i]);
 
 	return logH;
 }
