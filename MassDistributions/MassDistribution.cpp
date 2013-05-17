@@ -35,7 +35,7 @@ double MassDistribution::perturb2(const vector<double>& u_masses,
 
 	logH += perturb_parameters();
 
-	// Transform back using inverse cdf
+	// Find new masses
 	for(size_t i=0; i<masses.size(); i++)
 		masses[i] = mass_cdf_inv(u_masses[i]);
 

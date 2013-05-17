@@ -32,8 +32,8 @@ class RJObject
 
 		// The components
 		int num_components;
-		std::vector<double> masses, u_masses;
-		std::vector< std::vector<double> > positions;
+		std::vector<double> u_masses, masses;
+		std::vector< std::vector<double> > u_positions, positions;
 
 		// Helper methods -- these do one thing at a time
 		double perturb_num_components(double scale);

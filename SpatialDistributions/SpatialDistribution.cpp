@@ -7,7 +7,8 @@ SpatialDistribution::SpatialDistribution()
 
 }
 
-double SpatialDistribution::perturb1(const vector< vector<double> >& positions)
+double SpatialDistribution::perturb1(vector< vector<double> >& u_positions,
+					const vector< vector<double> >& positions)
 {
 	double logH = 0.;
 
@@ -19,24 +20,28 @@ double SpatialDistribution::perturb1(const vector< vector<double> >& positions)
 
 	// (new density)
 	for(size_t i=0; i<positions.size(); i++)
+	{
 		logH += position_log_pdf(positions[i]);
+		u_positions[i] = positions[i];
+		position_to_uniform(u_positions[i]);
+	}
 
 	return logH;
 }
 
-double SpatialDistribution::perturb2(vector< vector<double> >& positions)
+double SpatialDistribution::perturb2(const vector< vector<double> >& u_positions,
+					vector< vector<double> >& positions)
 {
 	double logH = 0.;
 
-	// Transform positions to U(0, 1)
-	for(size_t i=0; i<positions.size(); i++)
-		position_to_uniform(positions[i]);
-
 	logH += perturb_parameters();
 
-	// Transform back
+	// Find new positions
 	for(size_t i=0; i<positions.size(); i++)
+	{
+		positions[i] = u_positions[i];
 		position_from_uniform(positions[i]);
+	}
 
 	return logH;
 }

@@ -32,13 +32,17 @@ void RJObject<SpatialDist, MassDist>::fromPrior()
 	masses.resize(num_components);
 	u_masses.resize(num_components);
 
-	positions.resize(max_num_components, std::vector<double>(num_dimensions));
+	u_positions.resize(num_components, std::vector<double>(num_dimensions));
+	positions.resize(num_components, std::vector<double>(num_dimensions));
 
 	// Generate positions and masses
 	for(int i=0; i<num_components; i++)
 	{
 		for(int j=0; j<num_dimensions; j++)
-			positions[i][j] = DNest3::randomU();
+		{
+			u_positions[i][j] = DNest3::randomU();
+			positions[i][j] = u_positions[i][j];
+		}
 		spatial_dist.position_from_uniform(positions[i]);
 
 		u_masses[i] = DNest3::randomU();
@@ -108,14 +112,13 @@ double RJObject<SpatialDist, MassDist>::perturb_positions(double chance, double 
 	{
 		if(change[i])
 		{
-			spatial_dist.position_to_uniform(positions[i]);
-
 			// Perturb
 			for(int j=0; j<num_dimensions; j++)
 			{
-				positions[i][j] += scale*DNest3::randn();
-				positions[i][j] = DNest3::mod(positions[i][j],
+				u_positions[i][j] += scale*DNest3::randn();
+				u_positions[i][j] = DNest3::mod(u_positions[i][j],
 								1.);
+				positions[i][j] = u_positions[i][j];
 			}
 			spatial_dist.position_from_uniform(positions[i]);
 		}
@@ -141,6 +144,7 @@ double RJObject<SpatialDist, MassDist>::add_component()
 	std::vector<double> pos(num_dimensions);
 	for(int j=0; j<num_dimensions; j++)
 		pos[j] = DNest3::randomU();
+	u_positions.push_back(pos);
 	spatial_dist.position_from_uniform(pos);
 	positions.push_back(pos);
 
@@ -202,9 +206,9 @@ double RJObject<SpatialDist, MassDist>::perturb()
 	{
 		// Change the spatial distribution parameters
 		if(DNest3::randomU() <= 0.5)
-			logH += spatial_dist.perturb1(positions);
+			logH += spatial_dist.perturb1(u_positions, positions);
 		else
-			logH += spatial_dist.perturb2(positions);
+			logH += spatial_dist.perturb2(u_positions, positions);
 	}
 	else if(which == 2)
 	{
@@ -246,6 +250,7 @@ double RJObject<SpatialDist, MassDist>::remove_component()
 	masses.erase(masses.begin() + i);
 
 	// Delete position
+	u_positions.erase(u_positions.begin() + i);
 	positions.erase(positions.begin() + i);
 
 	// Decrement counter

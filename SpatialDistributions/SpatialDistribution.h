@@ -39,10 +39,12 @@ class SpatialDistribution
 		virtual void position_to_uniform(std::vector<double>& vec) const = 0;
 
 		// Type 1 proposal as defined above
-		double perturb1(const std::vector< std::vector<double> >& positions);
+		double perturb1(std::vector< std::vector<double> >& u_positions,
+				const std::vector< std::vector<double> >& positions);
 
 		// Type 2 proposal as defined above
-		double perturb2(std::vector< std::vector<double> >& positions);
+		double perturb2(const std::vector< std::vector<double> >& u_positions,
+				std::vector< std::vector<double> >& positions);
 
 		// Print parameters to stream
 		virtual void print(std::ostream& out) const = 0;
