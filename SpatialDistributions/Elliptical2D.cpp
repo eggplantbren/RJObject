@@ -81,9 +81,11 @@ double Elliptical2D::perturb_parameters()
 
 double Elliptical2D::position_log_pdf(const vector<double>& position) const
 {
-	vector<double> vec = position;
-	position_to_uniform(vec);
-	return -log(abs(mu_r*log(1. - vec[0])/(1. - vec[0])));
+	double xx =  cos_theta*(position[0] - xc) + sin_theta*(position[1] - yc);
+	double yy = -sin_theta*(position[0] - xc) + cos_theta*(position[1] - yc);
+	double R = sqrt(q*xx*xx + yy*yy/q);
+	double Rprime = mu_r*exp(R/mu_r);
+	return 1./abs(2.*M_PI*R*Rprime);
 }
 
 void Elliptical2D::position_from_uniform(vector<double>& vec) const

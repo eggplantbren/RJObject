@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "RJObject.h"
-#include "SpatialDistributions/Uniform2D.h"
+#include "SpatialDistributions/Elliptical2D.h"
 #include "MassDistributions/Exponential.h"
 
 using namespace DNest3;
@@ -18,8 +18,8 @@ int main()
 	// Make an object with 2 spatial dimensions, maximum
 	// of 100 components, and exponential prior on the masses
 	// given a mean, which is log-uniform between 1E-3 and 1E3.
-	RJObject<Uniform2D, Exponential> r
-		(2, 1000, Uniform2D(-1., 1., -1., 1.), Exponential(1E-3, 1E3));
+	RJObject<Elliptical2D, Exponential> r
+		(2, 1000, Elliptical2D(-1., 1., -1., 1.), Exponential(1E-3, 1E3));
 
 	// Generate the object from the prior
 	r.fromPrior();
@@ -33,7 +33,7 @@ int main()
 	for(int i=0; i<steps; i++)
 	{
 		// Make a proposal
-		RJObject<Uniform2D, Exponential> r2 = r;
+		RJObject<Elliptical2D, Exponential> r2 = r;
 		double logH = r2.perturb();
 
 		// Accept the proposal?
