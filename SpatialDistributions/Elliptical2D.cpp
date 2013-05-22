@@ -107,7 +107,7 @@ void Elliptical2D::position_to_uniform(vector<double>& vec) const
 	if(phi < 0.)
 		phi += 2.*M_PI;
 	r = xx*sqrt(q)/cos(phi);
-	vec[0] = 1. - exp(-r/mu_r);
+	vec[0] = Rinv(r);
 	vec[1] = phi/(2.*M_PI);
 }
 

@@ -7,9 +7,9 @@ plt.ion()
 plt.figure()
 plt.hold(False)
 for i in xrange(0, output.shape[0]):
-	m = output[i, 10:504]
-	x = output[i, 510:1004]
-	y = output[i, 1010:1504]
+	m = output[i, 9:509]
+	x = output[i, 509:1009]
+	y = output[i, 1009:1509]
 
 	x = x[m > 0.]
 	y = y[m > 0.]
