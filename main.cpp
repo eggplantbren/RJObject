@@ -19,7 +19,7 @@ int main()
 	// of 100 components, and exponential prior on the masses
 	// given a mean, which is log-uniform between 1E-3 and 1E3.
 	RJObject<Elliptical2D, Exponential> r
-		(2, 1000, Elliptical2D(-1., 1., -1., 1.), Exponential(1E-3, 1E3));
+		(2, 500, Elliptical2D(-1., 1., -1., 1.), Exponential(1E-3, 1E3));
 
 	// Generate the object from the prior
 	r.fromPrior();
@@ -28,7 +28,7 @@ int main()
 	fstream fout("output.txt", ios::out);
 
 	// How many MCMC steps to do
-	int steps = 5000;
+	int steps = 1000;
 
 	for(int i=0; i<steps; i++)
 	{
@@ -40,7 +40,7 @@ int main()
 		if(randomU() <= exp(logH))
 			r = r2;
 
-		if(i%5 == 0)
+		if(i%1 == 0)
 		{
 			r.print(fout);
 			fout<<endl;
