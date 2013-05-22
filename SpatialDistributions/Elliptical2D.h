@@ -18,13 +18,19 @@ class Elliptical2D:public SpatialDistribution
 		double q, theta, cos_theta, sin_theta;
 		double mu_r;
 
-		double perturb_parameters();
+		virtual double perturb_parameters();
+
+		// Methods to do with the radial distribution
+		virtual double R(double u) const;
+		virtual double Rinv(double u) const;
+		virtual double Rprime(double u) const;
 
 	public:
 		Elliptical2D(double x_min, double x_max,
 				double y_min, double y_max);
 
-		void fromPrior();
+		virtual void fromPrior();
+
 		// These must be implemented
 		double position_log_pdf(const std::vector<double>& position) const;
 

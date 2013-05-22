@@ -83,14 +83,14 @@ double Elliptical2D::position_log_pdf(const vector<double>& position) const
 {
 	double xx =  cos_theta*(position[0] - xc) + sin_theta*(position[1] - yc);
 	double yy = -sin_theta*(position[0] - xc) + cos_theta*(position[1] - yc);
-	double R = sqrt(q*xx*xx + yy*yy/q);
-	double Rprime = mu_r*exp(R/mu_r);
-	return 1./abs(2.*M_PI*R*Rprime);
+	double r = sqrt(q*xx*xx + yy*yy/q);
+	double r_prime = Rprime(Rinv(r));
+	return 1./abs(2.*M_PI*r*r_prime);
 }
 
 void Elliptical2D::position_from_uniform(vector<double>& vec) const
 {
-	double r = -mu_r*log(1. - vec[0]);
+	double r = R(vec[0]);
 	double phi = 2.*M_PI*vec[1];
 	double xx = r*cos(phi)/sqrt(q);
 	double yy = r*sin(phi)*sqrt(q);
@@ -109,5 +109,20 @@ void Elliptical2D::position_to_uniform(vector<double>& vec) const
 	r = xx*sqrt(q)/cos(phi);
 	vec[0] = 1. - exp(-r/mu_r);
 	vec[1] = phi/(2.*M_PI);
+}
+
+double Elliptical2D::R(double u) const
+{
+	return -mu_r*log(1. - u);
+}
+
+double Elliptical2D::Rinv(double u) const
+{
+	return 1. - exp(-u/mu_r);
+}
+
+double Elliptical2D::Rprime(double u) const
+{
+	return mu_r/(1. - u);
 }
 
