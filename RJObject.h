@@ -14,44 +14,47 @@
 * you may derive from this class or store them externally.
 */
 
-template<class SpatialDist, class MassDist>
+template<class Distribution>
 class RJObject
 {
 	protected:
-		// How many dimensions for the components' positions
+		// How many parameters for each component
 		int num_dimensions;
 
 		// Maximum number of components allowed (minimum is zero)
 		int max_num_components;
 
-		// The spatial distribution
-		SpatialDist spatial_dist;
-
-		// The mass distribution
-		MassDist mass_dist;
+		// The hyperparameters that specify the conditional prior
+		// for the components
+		Distribution dist;
 
 		// The components
 		int num_components;
-		std::vector<double> u_masses, masses;
-		std::vector< std::vector<double> > u_positions, positions;
+		std::vector< std::vector<double> > components;
+
+		// Transformed into iid U(0, 1) priors
+		std::vector< std::vector<double> > u_components;
 
 		// Helper methods -- these do one thing at a time
 		double perturb_num_components(double scale);
-		double perturb_masses(double chance, double scale);
-		double perturb_positions(double chance, double scale);
+		double perturb_components(double chance, double scale);
 
 		// Helper methods -- add or remove single component
 		double add_component();
 		double remove_component();
 
 	public:
-		// Constructor. Specify the number of spatial dimensions,
-		// and the maximum number of components. By default (for now)
-		// the positions will be assumed to be in
-		// [-1, 1]^num_dimensions.
-		RJObject(int num_dimensions, int max_num_components,
-				const SpatialDist& spatial_dist,
-				const MassDist& mass_dist);
+		/*
+		* num_dimensions: number of dimensions for each object.
+		* "mass" etc count. E.g. in StarField problem (x, y, flux)
+		* specifies a star, so num_dimensions = 3.
+		*
+		* max_num_components: obvious
+		* fix: if true, doesn't do RJ steps. N will be fixed at
+		* max_num_components
+		*/
+		RJObject(int num_dimensions, int max_num_components, bool fix,
+				const Distribution& dist);
 
 		// Generate everything from the prior
 		void fromPrior();
@@ -63,7 +66,7 @@ class RJObject
 		void print(std::ostream& out);
 };
 
-#include "RJObjectImpl.h"
+//#include "RJObjectImpl.h"
 
 #endif
 
