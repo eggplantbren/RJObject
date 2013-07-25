@@ -20,9 +20,9 @@ class ClassicMassInf:public Distribution
 					double y_min, double y_max,
 					double mu_min, double mu_max);
 
-		void fromPrior() = 0;
+		void fromPrior();
 
-		double log_pdf(const std::vector<double>& position) const;
+		double log_pdf(const std::vector<double>& vec) const;
 		void from_uniform(std::vector<double>& vec) const;
 		void to_uniform(std::vector<double>& vec) const;
 

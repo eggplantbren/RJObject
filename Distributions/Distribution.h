@@ -30,7 +30,7 @@ class Distribution
 		virtual void fromPrior() = 0;
 
 		// These must be implemented
-		virtual double log_pdf(const std::vector<double>& position) const = 0;
+		virtual double log_pdf(const std::vector<double>& vec) const = 0;
 
 		// Method to transform uniform(0, 1)s to and from
 		// the distribution
