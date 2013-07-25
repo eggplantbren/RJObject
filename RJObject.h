@@ -24,6 +24,9 @@ class RJObject
 		// Maximum number of components allowed (minimum is zero)
 		int max_num_components;
 
+		// fixed num_components = max_num_components?
+		bool fixed;
+
 		// The hyperparameters that specify the conditional prior
 		// for the components
 		Distribution dist;
@@ -50,10 +53,10 @@ class RJObject
 		* specifies a star, so num_dimensions = 3.
 		*
 		* max_num_components: obvious
-		* fix: if true, doesn't do RJ steps. N will be fixed at
+		* fixed: if true, doesn't do RJ steps. N will be fixeded at
 		* max_num_components
 		*/
-		RJObject(int num_dimensions, int max_num_components, bool fix,
+		RJObject(int num_dimensions, int max_num_components, bool fixed,
 				const Distribution& dist);
 
 		// Generate everything from the prior

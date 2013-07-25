@@ -4,91 +4,46 @@
 #include "RandomNumberGenerator.h"
 #include "Utils.h"
 
-template<class SpatialDist, class MassDist>
-RJObject<SpatialDist, MassDist>::RJObject(int num_dimensions, int max_num_components,
-				const SpatialDist& spatial_dist,
-				const MassDist& mass_dist)
+template<class Distribution>
+RJObject<Distribution>::RJObject(int num_dimensions, int max_num_components, bool fixed,
+				const Distribution& dist)
 :num_dimensions(num_dimensions)
 ,max_num_components(max_num_components)
-,spatial_dist(spatial_dist)
-,mass_dist(mass_dist)
+,fixed(fixed)
+,dist(dist)
+,num_components((fixed)?(max_num_components):(0))
 {
 
 }
 
-template<class SpatialDist, class MassDist>
-void RJObject<SpatialDist, MassDist>::fromPrior()
+template<class Distribution>
+void RJObject<Distribution>::fromPrior()
 {
-	// Generate the spatial distribution parameters
-	spatial_dist.fromPrior();
-
-	// Generate the mass distribution parameters
-	mass_dist.fromPrior();
+	// Generate the hyperparameters from their prior
+	dist.fromPrior();
 
 	// Generate from {0, 1, 2, ..., max_num_components}
-	num_components = DNest3::randInt(max_num_components + 1);
+	if(!fixed)
+		num_components = DNest3::randInt(max_num_components + 1);
 
-	// Resize the vectors of positions and masses
-	masses.resize(num_components);
-	u_masses.resize(num_components);
+	// Resize the vectors of component properties
+	components.resize  (num_components, std::vector<double>(num_dimensions));
+	u_components.resize(num_components, std::vector<double>(num_dimensions));
 
-	u_positions.resize(num_components, std::vector<double>(num_dimensions));
-	positions.resize(num_components, std::vector<double>(num_dimensions));
-
-	// Generate positions and masses
+	// Generate components
 	for(int i=0; i<num_components; i++)
 	{
 		for(int j=0; j<num_dimensions; j++)
 		{
-			u_positions[i][j] = DNest3::randomU();
-			positions[i][j] = u_positions[i][j];
+			u_components[i][j] = DNest3::randomU();
+			components  [i][j] = u_positions[i][j];
 		}
-		spatial_dist.position_from_uniform(positions[i]);
-
-		u_masses[i] = DNest3::randomU();
-		masses[i] = mass_dist.mass_cdf_inv(u_masses[i]);
+		spatial_dist.from_uniform(components[i]);
 	}
 }
 
-template<class SpatialDist, class MassDist>
-double RJObject<SpatialDist, MassDist>::perturb_masses(double chance, double scale)
-{
-	if(num_components == 0)
-		return 0.;
-
-	// A flag for whether each component gets changed or not
-	std::vector<bool> change(num_components, false);
-	int count = 0;
-	for(int i=0; i<num_components; i++)
-	{
-		if(DNest3::randomU() <= chance)
-		{
-			change[i] = true;
-			count++;
-		}
-	}
-	// At least do one...
-	if(count == 0)
-		change[DNest3::randInt(num_components)] = true;
-
-	for(int i=0; i<num_components; i++)
-	{
-		if(change[i])
-		{
-			// Perturb (in uniform coordinate system)
-			u_masses[i] += scale*DNest3::randn();
-			u_masses[i] = DNest3::mod(u_masses[i], 1.);
-
-			// Transform
-			masses[i] = mass_dist.mass_cdf_inv(u_masses[i]);
-		}
-	}
-
-	return 0.;
-}
-
-template<class SpatialDist, class MassDist>
-double RJObject<SpatialDist, MassDist>::perturb_positions(double chance, double scale)
+template<class Distribution>
+double RJObject<Distribution>::perturb_components(double chance, double scale)
 {
 	if(num_components == 0)
 		return 0.;
@@ -115,20 +70,20 @@ double RJObject<SpatialDist, MassDist>::perturb_positions(double chance, double 
 			// Perturb
 			for(int j=0; j<num_dimensions; j++)
 			{
-				u_positions[i][j] += scale*DNest3::randn();
-				u_positions[i][j] = DNest3::mod(u_positions[i][j],
-								1.);
-				positions[i][j] = u_positions[i][j];
+				u_components[i][j] += scale*DNest3::randn();
+				u_components[i][j] = DNest3::mod(
+							u_components[i][j], 1.);
+				components[i][j] = u_components[i][j];
 			}
-			spatial_dist.position_from_uniform(positions[i]);
+			dist.from_uniform(components[i]);
 		}
 	}
 
 	return 0.;
 }
 
-template<class SpatialDist, class MassDist>
-double RJObject<SpatialDist, MassDist>::add_component()
+template<class Distribution>
+double RJObject<Distribution>::add_component()
 {
 	if(num_components >= max_num_components)
 	{
@@ -140,23 +95,19 @@ double RJObject<SpatialDist, MassDist>::add_component()
 	// Increment counter
 	num_components++;
 
-	// Generate position
-	std::vector<double> pos(num_dimensions);
+	// Generate component
+	std::vector<double> component(num_dimensions);
 	for(int j=0; j<num_dimensions; j++)
-		pos[j] = DNest3::randomU();
-	u_positions.push_back(pos);
-	spatial_dist.position_from_uniform(pos);
-	positions.push_back(pos);
-
-	// Generate mass
-	u_masses.push_back(DNest3::randomU());
-	masses.push_back(mass_dist.mass_cdf_inv(u_masses.back()));
+		component[j] = DNest3::randomU();
+	u_components.push_back(component);
+	dist.from_uniform(component);
+	components.push_back(component);
 
 	return 0.;
 }
 
-template<class SpatialDist, class MassDist>
-double RJObject<SpatialDist, MassDist>::perturb_num_components(double scale)
+template<class Distribution>
+double RJObject<Distribution>::perturb_num_components(double scale)
 {
 	double logH = 0.;
 
@@ -189,12 +140,12 @@ double RJObject<SpatialDist, MassDist>::perturb_num_components(double scale)
 	return logH;
 }
 
-template<class SpatialDist, class MassDist>
-double RJObject<SpatialDist, MassDist>::perturb()
+template<class Distribution>
+double RJObject<Distribution>::perturb()
 {
 	double logH = 0.;
 
-	int which = DNest3::randInt(5);
+	int which = (fixed)?(1 + randInt(2)):(randInt(3));
 
 	if(which == 0)
 	{
@@ -204,36 +155,23 @@ double RJObject<SpatialDist, MassDist>::perturb()
 	}
 	else if(which == 1)
 	{
-		// Change the spatial distribution parameters
+		// Change the hyperparameters
 		if(DNest3::randomU() <= 0.5)
-			logH += spatial_dist.perturb1(u_positions, positions);
+			logH += dist.perturb1(components, u_components);
 		else
-			logH += spatial_dist.perturb2(u_positions, positions);
+			logH += dist.perturb2(components, u_components);
 	}
 	else if(which == 2)
 	{
-		logH += perturb_positions(pow(10., 0.5 - 4.*DNest3::randomU()),
-					pow(10., 1.5 - 6.*DNest3::randomU()));
-	}
-	else if(which == 3)
-	{
-		// Change the mass distribution parameters
-		if(DNest3::randomU() <= 0.5)
-			logH += mass_dist.perturb1(u_masses, masses);
-		else
-			logH += mass_dist.perturb2(u_masses, masses);
-	}
-	else if(which == 4)
-	{
-		logH += perturb_masses(pow(10., 0.5 - 4.*DNest3::randomU()),
+		logH += perturb_components(pow(10., 0.5 - 4.*DNest3::randomU()),
 					pow(10., 1.5 - 6.*DNest3::randomU()));
 	}
 
 	return logH;
 }
 
-template<class SpatialDist, class MassDist>
-double RJObject<SpatialDist, MassDist>::remove_component()
+template<class Distribution>
+double RJObject<Distribution>::remove_component()
 {
 	if(num_components <= 0)
 	{
@@ -245,13 +183,9 @@ double RJObject<SpatialDist, MassDist>::remove_component()
 	// Find one to delete
 	int i = DNest3::randInt(num_components);
 
-	// Delete mass
-	u_masses.erase(u_masses.begin() + i);
-	masses.erase(masses.begin() + i);
-
-	// Delete position
-	u_positions.erase(u_positions.begin() + i);
-	positions.erase(positions.begin() + i);
+	// Delete it
+	u_components.erase(u_components.begin() + i);
+	components.erase(components.begin() + i);
 
 	// Decrement counter
 	num_components--;
@@ -259,29 +193,19 @@ double RJObject<SpatialDist, MassDist>::remove_component()
 	return 0.;
 }
 
-template<class SpatialDist, class MassDist>
-void RJObject<SpatialDist, MassDist>::print(std::ostream& out)
+template<class Distribution>
+void RJObject<Distribution>::print(std::ostream& out)
 {
 	out<<std::setprecision(12);
 	out<<num_dimensions<<' '<<max_num_components<<' ';
-	spatial_dist.print(out); out<<' ';
-	mass_dist.print(out); out<<' ';
+	dist.print(out); out<<' ';
 	out<<num_components<<' ';
 
-	// Write out masses
-	for(int i=0; i<num_components; i++)
-		out<<masses[i]<<' ';
-
-	// Pad with zeros (turned-off components)
-	for(int i=num_components; i<max_num_components; i++)
-		out<<0.<<' ';
-
-	// Write out positions (all of first coordinate,
-	// then all of second coordinate, etc)
+	// Write out components
 	for(int j=0; j<num_dimensions; j++)
 	{
 		for(int i=0; i<num_components; i++)
-			out<<positions[i][j]<<' ';
+			out<<components[i][j]<<' ';
 
 		// Pad with zeros (turned-off components)
 		for(int i=num_components; i<max_num_components; i++)
