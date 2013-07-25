@@ -3,7 +3,7 @@
 
 /*
 * An object of this class represents a probability
-* distribution over the space of possible positions
+* distribution over the space of possible "components"
 * in N dimensions.
 * They have parameters, and two kinds of proposal
 * distributions are available:
@@ -30,21 +30,21 @@ class Distribution
 		virtual void fromPrior() = 0;
 
 		// These must be implemented
-		virtual double position_log_pdf(const std::vector<double>& position) const = 0;
+		virtual double log_pdf(const std::vector<double>& position) const = 0;
 
 		// Method to transform uniform(0, 1)s to and from
 		// the distribution
 		// (analogous to cdf and inverse cdf)
-		virtual void position_from_uniform(std::vector<double>& vec) const = 0;
-		virtual void position_to_uniform(std::vector<double>& vec) const = 0;
+		virtual void from_uniform(std::vector<double>& vec) const = 0;
+		virtual void to_uniform(std::vector<double>& vec) const = 0;
 
 		// Type 1 proposal as defined above
-		double perturb1(std::vector< std::vector<double> >& u_positions,
-				const std::vector< std::vector<double> >& positions);
+		double perturb1(const std::vector< std::vector<double> >& components,
+				std::vector< std::vector<double> >& u_components);
 
 		// Type 2 proposal as defined above
-		double perturb2(const std::vector< std::vector<double> >& u_positions,
-				std::vector< std::vector<double> >& positions);
+		double perturb2(std::vector< std::vector<double> >& components,
+				const std::vector< std::vector<double> >& u_components);
 
 		// Print parameters to stream
 		virtual void print(std::ostream& out) const = 0;
