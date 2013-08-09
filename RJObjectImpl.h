@@ -36,9 +36,9 @@ void RJObject<Distribution>::fromPrior()
 		for(int j=0; j<num_dimensions; j++)
 		{
 			u_components[i][j] = DNest3::randomU();
-			components  [i][j] = u_positions[i][j];
+			components  [i][j] = u_components[i][j];
 		}
-		spatial_dist.from_uniform(components[i]);
+		dist.from_uniform(components[i]);
 	}
 }
 
@@ -145,7 +145,7 @@ double RJObject<Distribution>::perturb()
 {
 	double logH = 0.;
 
-	int which = (fixed)?(1 + randInt(2)):(randInt(3));
+	int which = (fixed)?(1 + DNest3::randInt(2)):(DNest3::randInt(3));
 
 	if(which == 0)
 	{

@@ -69,7 +69,7 @@ class RJObject
 		void print(std::ostream& out);
 };
 
-//#include "RJObjectImpl.h"
+#include "RJObjectImpl.h"
 
 #endif
 
