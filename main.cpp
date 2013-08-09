@@ -17,6 +17,7 @@ int main()
 
 	RJObject<ClassicMassInf> r1(3, 100, false, ClassicMassInf(-1., 1., -1., 1., 1E-3, 1E3));
 	RJObject<ClassicMassInf> r2(3, 100, false, ClassicMassInf(-1., 1., -1., 1., 1E-3, 1E3));
+	r1.fromPrior();
 
 	fstream fout("output.txt", ios::out);
 	for(int i=0; i<1000; i++)
