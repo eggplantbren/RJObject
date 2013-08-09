@@ -1,5 +1,6 @@
 #include "ClassicMassInf.h"
 #include "RandomNumberGenerator.h"
+#include "Utils.h"
 #include <cmath>
 
 using namespace DNest3;
@@ -20,6 +21,18 @@ ClassicMassInf::ClassicMassInf(double x_min, double x_max,
 void ClassicMassInf::fromPrior()
 {
 	mu = exp(log(mu_min) + log(mu_max/mu_min)*randomU());
+}
+
+double ClassicMassInf::perturb_parameters()
+{
+	double logH = 0.;
+
+	mu = log(mu);
+	mu += log(mu_max/mu_min)*pow(10., 1.5 - 6.*randomU())*randn();
+	mu = mod(mu - log(mu_min), log(mu_max/mu_min)) + log(mu_min);
+	mu = exp(mu);
+
+	return logH;
 }
 
 double ClassicMassInf::log_pdf(const std::vector<double>& vec) const
