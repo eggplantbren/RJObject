@@ -15,7 +15,23 @@ int main()
 	RandomNumberGenerator::initialise_instance();
 	RandomNumberGenerator::get_instance().set_seed(time(0));
 
-	RJObject<ClassicMassInf> r(3, 100, false, ClassicMassInf(-1., 1., -1., 1., 1E-3, 1E3));
+	RJObject<ClassicMassInf> r1(3, 100, false, ClassicMassInf(-1., 1., -1., 1., 1E-3, 1E3));
+	RJObject<ClassicMassInf> r2(3, 100, false, ClassicMassInf(-1., 1., -1., 1., 1E-3, 1E3));
+
+	fstream fout("output.txt", ios::out);
+	for(int i=0; i<1000; i++)
+	{
+		r2 = r1;
+		double logH = r2.perturb();
+
+		if(randomU() <= exp(logH))
+			r1 = r2;
+
+		r1.print(fout);
+		fout<<endl;
+		cout<<(i+1)<<endl;
+	}
+	fout.close();
 
 	return 0;
 }
