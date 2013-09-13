@@ -71,6 +71,14 @@ class RJObject
 
 		// For output
 		void print(std::ostream& out);
+
+		// Getters for the diff
+		const std::vector< std::vector<double> >& get_added()
+		{ return added; }
+
+		// Getters for the diff
+		const std::vector< std::vector<double> >& get_removed()
+		{ return removed; }
 };
 
 #include "RJObjectImpl.h"
