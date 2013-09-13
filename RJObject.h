@@ -38,6 +38,10 @@ class RJObject
 		// Transformed into iid U(0, 1) priors
 		std::vector< std::vector<double> > u_components;
 
+		// Added/removed components
+		std::vector< std::vector<double> > added;
+		std::vector< std::vector<double> > removed;
+
 		// Helper methods -- these do one thing at a time
 		double perturb_num_components(double scale);
 		double perturb_components(double chance, double scale);

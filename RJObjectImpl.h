@@ -19,6 +19,9 @@ RJObject<Distribution>::RJObject(int num_dimensions, int max_num_components, boo
 template<class Distribution>
 void RJObject<Distribution>::fromPrior()
 {
+	added.resize(0);
+	removed.resize(0);
+
 	// Generate the hyperparameters from their prior
 	dist.fromPrior();
 
@@ -32,14 +35,7 @@ void RJObject<Distribution>::fromPrior()
 
 	// Generate components
 	for(int i=0; i<num_components; i++)
-	{
-		for(int j=0; j<num_dimensions; j++)
-		{
-			u_components[i][j] = DNest3::randomU();
-			components  [i][j] = u_components[i][j];
-		}
-		dist.from_uniform(components[i]);
-	}
+		add_component();
 }
 
 template<class Distribution>
@@ -67,6 +63,9 @@ double RJObject<Distribution>::perturb_components(double chance, double scale)
 	{
 		if(change[i])
 		{
+			// Accumulate added/removed component info
+			removed.push_back(components[i]);
+
 			// Perturb
 			for(int j=0; j<num_dimensions; j++)
 			{
@@ -76,6 +75,9 @@ double RJObject<Distribution>::perturb_components(double chance, double scale)
 				components[i][j] = u_components[i][j];
 			}
 			dist.from_uniform(components[i]);
+
+			// Accumulate added/removed component info
+			added.push_back(components[i]);
 		}
 	}
 
@@ -102,6 +104,9 @@ double RJObject<Distribution>::add_component()
 	u_components.push_back(component);
 	dist.from_uniform(component);
 	components.push_back(component);
+
+	// Accumulate added/removed component info
+	added.push_back(component);
 
 	return 0.;
 }
@@ -143,6 +148,9 @@ double RJObject<Distribution>::perturb_num_components(double scale)
 template<class Distribution>
 double RJObject<Distribution>::perturb()
 {
+	added.resize(0);
+	removed.resize(0);
+
 	double logH = 0.;
 
 	int which = (fixed)?(1 + DNest3::randInt(2)):(DNest3::randInt(3));
@@ -157,9 +165,15 @@ double RJObject<Distribution>::perturb()
 	{
 		// Change the hyperparameters
 		if(DNest3::randomU() <= 0.5)
+		{
 			logH += dist.perturb1(components, u_components);
+		}
 		else
+		{
+			removed = components;
 			logH += dist.perturb2(components, u_components);
+			added = components;
+		}
 	}
 	else if(which == 2)
 	{
@@ -182,6 +196,9 @@ double RJObject<Distribution>::remove_component()
 
 	// Find one to delete
 	int i = DNest3::randInt(num_components);
+
+	// Accumulate added/removed component info
+	removed.push_back(components[i]);
 
 	// Delete it
 	u_components.erase(u_components.begin() + i);
