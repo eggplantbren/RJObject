@@ -11,7 +11,7 @@ RJObject<Distribution>::RJObject(int num_dimensions, int max_num_components, boo
 ,max_num_components(max_num_components)
 ,fixed(fixed)
 ,dist(dist)
-,num_components((fixed)?(max_num_components):(0))
+,num_components(0)
 {
 
 }
@@ -25,16 +25,17 @@ void RJObject<Distribution>::fromPrior()
 	// Generate the hyperparameters from their prior
 	dist.fromPrior();
 
+	int num = max_num_components;
 	// Generate from {0, 1, 2, ..., max_num_components}
 	if(!fixed)
-		num_components = DNest3::randInt(max_num_components + 1);
+		num = DNest3::randInt(max_num_components + 1);
 
 	// Resize the vectors of component properties
 	components.resize  (num_components, std::vector<double>(num_dimensions));
 	u_components.resize(num_components, std::vector<double>(num_dimensions));
 
 	// Generate components
-	for(int i=0; i<num_components; i++)
+	for(int i=0; i<num; i++)
 		add_component();
 }
 
