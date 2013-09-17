@@ -1,6 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+import os
+saveFrames = True # For making movies
+if saveFrames:
+	os.system('rm Frames/*.png')
+
 output = np.atleast_2d(np.loadtxt('output.txt'))
 
 num_hyperparameters = 4
@@ -26,6 +31,11 @@ for i in xrange(0, output.shape[0]):
 	plt.title('{i}/{N}'.format(i=(i+1), N=output.shape[0]))
 	plt.xlabel('$x$', fontsize=20)
 	plt.ylabel('$y$', fontsize=20)
+
+	if saveFrames:
+		plt.savefig('Frames/' + '%0.4d'%(i+1) + '.png', bbox_inches='tight')
+		print('Frames/' + '%0.4d'%(i+1) + '.png')
+
 	plt.draw()
 
 plt.ioff()
