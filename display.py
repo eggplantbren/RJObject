@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 output = np.atleast_2d(np.loadtxt('output.txt'))
 
-num_hyperparameters = 1
+num_hyperparameters = 4
 num_dimensions = output[0, 0]
 max_num_components = output[0, 1]
 

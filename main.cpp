@@ -3,7 +3,7 @@
 #include <fstream>
 #include "RJObject.h"
 #include "RandomNumberGenerator.h"
-#include "Distributions/ClassicMassInf.h"
+#include "Distributions/BasicCircular.h"
 
 using namespace DNest3;
 using namespace std;
@@ -15,8 +15,8 @@ int main()
 	RandomNumberGenerator::initialise_instance();
 	RandomNumberGenerator::get_instance().set_seed(time(0));
 
-	RJObject<ClassicMassInf> r1(3, 1000, false, ClassicMassInf(-1., 1., -1., 1., 1E-3, 1E3));
-	RJObject<ClassicMassInf> r2(3, 1000, false, ClassicMassInf(-1., 1., -1., 1., 1E-3, 1E3));
+	RJObject<BasicCircular> r1(3, 1000, false, BasicCircular(-1., 1., -1., 1., 1E-3, 1E3));
+	RJObject<BasicCircular> r2(3, 1000, false, BasicCircular(-1., 1., -1., 1., 1E-3, 1E3));
 	r1.fromPrior();
 
 	fstream fout("output.txt", ios::out);
