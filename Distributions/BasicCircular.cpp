@@ -54,9 +54,7 @@ double BasicCircular::perturb_parameters()
 
 double BasicCircular::log_pdf(const std::vector<double>& vec) const
 {
-	if(vec[0] < x_min || vec[0] > x_max ||
-		vec[1] < y_min || vec[1] > y_max ||
-		vec[2] < 0.)
+	if(vec[2] < 0.)
 		return -1E300;
 
 	double logp = 0.;
@@ -82,6 +80,8 @@ void BasicCircular::to_uniform(std::vector<double>& vec) const
 {
 	double r = sqrt(pow(vec[0] - xc, 2) + pow(vec[1] - yc, 2));
 	double phi = atan2(vec[1] - yc, vec[0] - xc);
+	if(phi < 0.)
+		phi += 2.*M_PI;
 
 	vec[0] = 1. - exp(-r/width);
 	vec[1] = phi/(2.*M_PI);
