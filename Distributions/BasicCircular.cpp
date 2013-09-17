@@ -31,7 +31,7 @@ void BasicCircular::fromPrior()
 double BasicCircular::perturb_parameters()
 {
 	double logH = 0.;
-	int which = randInt(2);
+	int which = randInt(3);
 
 	if(which == 0)
 	{
@@ -42,6 +42,13 @@ double BasicCircular::perturb_parameters()
 		yc = mod(yc - y_min, y_max - y_min) + y_min;
 	}
 	else if(which == 1)
+	{
+		width = log(width);
+		width += log(1E3)*pow(10., 1.5 - 6.*randomU())*randn();
+		width = mod(width - log(1E-2*size), log(1E3)) + log(1E-2*size);
+		width = exp(width);
+	}
+	else if(which == 2)
 	{
 		mu = log(mu);
 		mu += log(mu_max/mu_min)*pow(10., 1.5 - 6.*randomU())*randn();
