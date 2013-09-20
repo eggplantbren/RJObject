@@ -15,8 +15,8 @@ int main()
 	RandomNumberGenerator::initialise_instance();
 	RandomNumberGenerator::get_instance().set_seed(time(0));
 
-	RJObject<BasicCircular> r1(3, 1000, false, BasicCircular(-1., 1., -1., 1., 1E-3, 1E3));
-	RJObject<BasicCircular> r2(3, 1000, false, BasicCircular(-1., 1., -1., 1., 1E-3, 1E3));
+	RJObject<BasicCircular> r1(3, 2000, false, BasicCircular(-1., 1., -1., 1., 1E-3, 1E3));
+	RJObject<BasicCircular> r2(3, 2000, false, BasicCircular(-1., 1., -1., 1., 1E-3, 1E3));
 	r1.fromPrior();
 
 	fstream fout("output.txt", ios::out);
@@ -28,9 +28,12 @@ int main()
 		if(randomU() <= exp(logH))
 			r1 = r2;
 
-		r1.print(fout);
-		fout<<endl;
-		cout<<(i+1)<<endl;
+		if((i+1)%10 == 0)
+		{
+			r1.print(fout);
+			fout<<endl;
+			cout<<(i+1)<<endl;
+		}
 	}
 	fout.close();
 
