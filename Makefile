@@ -1,9 +1,10 @@
-CFLAGS = -O2 -Wall -Wextra -ansi -pedantic -DNDEBUG
+CFLAGS = -O2 -fPIC -Wall -Wextra -ansi -pedantic -DNDEBUG
 LIBS = -ldnest3 -lgsl -lgslcblas -lboost_thread -lboost_system
 
 default:
 	g++ $(CFLAGS) -c *.cpp Distributions/*.cpp
 	g++ -o main *.o $(LIBS)
+	g++ -shared -o librjobject.so BasicCircular.o  ClassicMassInf.o  Distribution.o  main.o  Pareto.o
 	rm -f *.o
 
 clean:
