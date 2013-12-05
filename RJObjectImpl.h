@@ -212,7 +212,7 @@ double RJObject<Distribution>::remove_component()
 }
 
 template<class Distribution>
-void RJObject<Distribution>::print(std::ostream& out)
+void RJObject<Distribution>::print(std::ostream& out) const
 {
 	out<<std::setprecision(12);
 	out<<num_dimensions<<' '<<max_num_components<<' ';

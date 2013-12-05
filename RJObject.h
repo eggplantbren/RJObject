@@ -70,7 +70,7 @@ class RJObject
 		double perturb();
 
 		// For output
-		void print(std::ostream& out);
+		void print(std::ostream& out) const;
 
 		// Getters for the diff
 		const std::vector< std::vector<double> >& get_added()
