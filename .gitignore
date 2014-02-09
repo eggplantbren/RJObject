@@ -5,4 +5,5 @@ output.txt
 *.pdf
 Frames/*.png
 Frames/movie.avi
+*.so
 
