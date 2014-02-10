@@ -72,6 +72,10 @@ class RJObject
 		// For output
 		void print(std::ostream& out) const;
 
+		// Getter for components
+		const std::vector< std::vector<double> >& get_components()
+		{ return components; }
+
 		// Getters for the diff
 		const std::vector< std::vector<double> >& get_added()
 		{ return added; }
