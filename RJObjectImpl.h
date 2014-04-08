@@ -31,10 +31,11 @@ void RJObject<Distribution>::fromPrior()
 		num = DNest3::randInt(max_num_components + 1);
 
 	// Resize the vectors of component properties
-	components.resize  (num_components, std::vector<double>(num_dimensions));
-	u_components.resize(num_components, std::vector<double>(num_dimensions));
+	components.resize(0);
+	u_components.resize(0);
 
 	// Generate components
+	num_components = 0;
 	for(int i=0; i<num; i++)
 		add_component();
 }
