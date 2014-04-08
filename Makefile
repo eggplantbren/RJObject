@@ -4,7 +4,7 @@ LIBS = -ldnest3 -lgsl -lgslcblas -lboost_thread -lboost_system
 default:
 	g++ $(CFLAGS) -c *.cpp Distributions/*.cpp
 	g++ -o main *.o $(LIBS)
-	g++ -shared -o librjobject.so BasicCircular.o  ClassicMassInf.o  Distribution.o  main.o  Pareto.o
+	g++ -shared -o librjobject.so BasicCircular.o  ClassicMassInf.o  Distribution.o Pareto.o
 	rm -f *.o
 
 clean:
