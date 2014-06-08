@@ -20,6 +20,9 @@ number, $N$, of objects in a region. Each of the $N$ objects has a property
 $x$, which may be a single scalar value (for example, a mass), or a set of
 values (e.g. a position and a mass).
 
+We would like to assign a prior to the objects' properties $\{x_i\}_{i=1}^N$.
+Since $N$ may be large, it is usually easier to assign an ``interim prior''
+conditional on some hyperparameters $\alpha$.
 
 
 \section{Sinusoidal Example}
