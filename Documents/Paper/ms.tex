@@ -37,6 +37,16 @@ Here we have assumed the priors for $N$ and $\alpha$ are independent, and
 the interim prior for $\{x_i\}$ is iid and does not depend on $N$.
 
 
+In other studies, it has been common to do separate runs of Nested Sampling
+with different values of $N$. Then, the posterior for $N$ can be calculated
+based on the estimates of the evidence or marginal likelihood. Our motivation
+for using Nested Sampling is different. With reversible jump MCMC it is possible
+to obtain the posterior for $N$ with a single run. However, the exploration
+of the posterior may be very difficult, and sometimes the problem may even
+contain a phase transition. We use Nested Sampling to overcome these
+difficulties.
+
+
 \section{Sinusoidal Example}
 Phase transition
 
