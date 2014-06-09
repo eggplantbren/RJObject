@@ -25,6 +25,17 @@ Since $N$ may be large, it is usually easier to assign an ``interim prior''
 conditional on some hyperparameters $\alpha$, and then assign a prior to
 $\alpha$. This kind of model is usually called {\it hierarchical}.
 
+The prior for $N$, $\alpha$, and $\{x_i\}$ is usually factorised
+in the following way:
+
+\begin{eqnarray}
+p(N, \alpha, \{x_i\}) &=& p(N) p(\alpha | N) p(\{x_i\} | \alpha, N) \\
+&=& p(N) p(\alpha) \prod_{i=1}^N p(\{x_i\} | \alpha).
+\end{eqnarray}
+
+Here we have assumed the priors for $N$ and $\alpha$ are independent, and
+the interim prior for $\{x_i\}$ is iid and does not depend on $N$.
+
 
 \section{Sinusoidal Example}
 Phase transition
