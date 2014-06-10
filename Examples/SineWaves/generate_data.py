@@ -2,7 +2,8 @@ from pylab import *
 
 """
 Original example with two phase transations, but they do not interfere
-with the posterior.
+with the posterior. This is here for no reason other than to make sure
+the second example is identical to what Courtney has been using.
 """
 seed(123)
 
@@ -10,16 +11,6 @@ t = linspace(0., 100., 1001)
 y = sin(2.*pi*t/30.) + sin(2.*pi*t/2. + 1.)
 sig = 1.
 Y = y + sig*randn(y.size)
-
-data = empty((t.size, 3))
-data[:,0], data[:,1], data[:,2] = t, Y, sig
-
-savetxt('fake_data.txt', data)
-
-plot(t, y, 'r')
-plot(t, Y, 'bo')
-show()
-
 
 """
 This one has a phase transition at temperature = 1 :-D
