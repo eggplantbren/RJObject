@@ -35,7 +35,11 @@ data[:,0], data[:,1], data[:,2] = t, Y, sig
 
 savetxt('fake_data.txt', data)
 
-plot(t, y, 'r')
-plot(t, Y, 'bo')
+plot(t, y, 'r', linewidth=2, label='Noise-free signal')
+plot(t, Y, 'bo', alpha=0.4, label='Noisy measurements')
+ylim([-5., 5.])
+legend(numpoints=1)
+xlabel('Time')
+ylabel('Signal')
 show()
 
