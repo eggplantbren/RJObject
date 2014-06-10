@@ -26,6 +26,8 @@ data[:,0], data[:,1], data[:,2] = t, Y, sig
 
 savetxt('fake_data.txt', data)
 
+rc("font", size=14, family="serif", serif="Computer Sans")
+rc("text", usetex=True)
 plot(t, y, 'r', linewidth=2, label='Noise-free signal')
 plot(t, Y, 'bo', alpha=0.4, label='Noisy measurements')
 ylim([-5., 5.])
