@@ -41,5 +41,6 @@ ylim([-5., 5.])
 legend(numpoints=1)
 xlabel('Time')
 ylabel('Signal')
+savefig('sinewave_data.pdf', bbox_inches='tight')
 show()
 
