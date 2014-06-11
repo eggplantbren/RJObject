@@ -4,7 +4,8 @@
 #include <Distributions/Distribution.h>
 
 // Based on ClassicMassInf1D from RJObject
-
+// Think of "position x" as log-period
+// and mass as amplitude
 class MyDistribution:public Distribution
 {
 	private:
@@ -12,7 +13,7 @@ class MyDistribution:public Distribution
 		double x_min, x_max;
 		double mu_min, mu_max;
 
-		// Mean of exponential distribution for masses
+		// Mean of exponential distribution for amplitudes
 		double mu;
 
 		double perturb_parameters();
