@@ -65,7 +65,15 @@ double MyModel::perturb()
 
 double MyModel::logLikelihood() const
 {
-	return 0.;
+	// Get the data
+	const vector<double>& y = Data::get_instance().get_y();
+
+	double logL = 0.;
+	double var = sigma*sigma;
+	for(size_t i=0; i<y.size(); i++)
+		logL += -0.5*log(2.*M_PI*var) - 0.5*pow(y[i] - mu[i], 2)/var;
+
+	return logL;
 }
 
 void MyModel::print(std::ostream& out) const
