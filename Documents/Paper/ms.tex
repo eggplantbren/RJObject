@@ -60,7 +60,7 @@ Phase transition
 
 The model for the signal is
 \begin{eqnarray}
-y(t) &=& \sum_{i=1}^N A_i \sin \left(\frac{2\pi t}{T_i} + \phi_i\right)
+\mu(t) &=& \sum_{i=1}^N A_i \sin \left(\frac{2\pi t}{T_i} + \phi_i\right)
 \end{eqnarray}
 where there are $N$ sinusoids in the signal, the
 amplitudes are $\{A_i\}$, the periods are $\{T_i\}$, and the phases are
@@ -68,8 +68,11 @@ $\{\phi_i\}$.
 
 The sampling distribution (probability distribution for the data given the
 parameters) is a normal (gaussian) distribution with mean zero and standard
-deviation $\sigma$, applied independently to each data point.
-
+deviation $\sigma$, applied independently to each data point:
+\begin{eqnarray}
+y_i | N, \{A_i\}, \{T_i\}, \{\phi_i\} \sim
+\mathcal{N}\left(\mu(t_i), \sigma^2\right).
+\end{eqnarray}
 The simulated data is shown in Figure~\ref{fig:sinewave_data}.
 
 \begin{figure}
