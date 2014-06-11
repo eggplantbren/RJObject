@@ -10,6 +10,7 @@ class MyModel:public DNest3::Model
 {
 	private:
 		RJObject<MyDistribution> objects;
+		double sigma; // Noise standard deviation
 
 	public:
 		MyModel();
