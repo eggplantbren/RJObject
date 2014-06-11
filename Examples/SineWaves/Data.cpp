@@ -30,7 +30,8 @@ void Data::load(const char* filename)
 		t.push_back(temp1);
 		y.push_back(temp2);
 	}
-	cout<<"# Loaded "<<t.size()<<" data points from file "<<filename<<endl;
+	cout<<"# Loaded "<<t.size()<<" data points from file "
+			<<filename<<"."<<endl;
 	fin.close();
 }
 
