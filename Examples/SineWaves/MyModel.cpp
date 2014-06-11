@@ -7,6 +7,7 @@ using namespace std;
 using namespace DNest3;
 
 MyModel::MyModel()
+:objects(3, 10, false, MyDistribution(-10., 10., 1E-3, 1E3))
 {
 
 }
