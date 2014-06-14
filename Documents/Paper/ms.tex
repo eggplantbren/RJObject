@@ -3,7 +3,7 @@
 \usepackage{natbib}
 \usepackage[left=3cm,top=3cm,right=3cm]{geometry}
 \usepackage{parskip}
-
+\usepackage{amsmath}
 
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\textfraction}{0.1}
@@ -85,6 +85,11 @@ The simulated data is shown in Figure~\ref{fig:sinewave_data}, and shows a
 large, low period oscillation with a smaller, much faster oscillation
 superimposed. The noise level is such that the fast oscillation is difficult
 to detect.
+
+The true values of the parameters are $N=2$, $\mathbf{A} = \{1, 0.3\}$,
+$\mathbf{T}=\{30, 2\}$, and $\boldsymbol{\phi} = \{0, 1\}$. The signal was
+observed at $n=1001$ points equally spaced between $t=0$ and $t=100$. The data
+is displayed in Figure~\ref{fig:sinewave_data}.
 
 \begin{figure}
 \begin{center}
