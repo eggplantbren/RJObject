@@ -58,7 +58,11 @@ difficulties.
 \section{Sinusoidal Example}
 In this section we demonstrate a seemingly simple example which exhibits
 a phase transition, making a standard MCMC approach difficult. Suppose
-a signal is composed of $N$ sinusoids, of different frequencies and amplitudes.
+a signal is composed of $N$ sinusoids, of different periods, amplitudes,
+and phases. The signal is observed at various times $\{t_i\}_{i=1}^N$ with
+noise, and we want to use the resulting data to infer the number of sinusoids
+$N$, along with the periods $\{T_i\}_{i=1}^N$, amplitudes $\{A_i\}_{i=1}^N$,
+and phases $\{\phi_i\}_{i=1}^N$.
 This kind of model has many applications\citep[see e.g.][]{bretthorst}.
 
 The model for the signal is
