@@ -59,8 +59,14 @@ We will now define a set of proposal distributions that could be used to
 sample the prior distribution
 $p(N, \alpha, \{x_i\}) = p(N) p(\alpha) \prod_{i=1}^N p(\{x_i\} | \alpha)$.
 These proposals will need to satisfy detailed balance in order to be valid
-when used inside DNS.
-
+when used inside DNS. The proposals will also be very heavy tailed. When
+DNS is exploring a distribution close to the prior, large proposals will
+generally be needed. When DNS is exploring a distribution constrained to
+very high values of the likelihood function, much smaller proposals will be
+appropriate. Rather than attempting expensive tuning (since the number of
+distributions involved may number in the hundreds or even thousands), we will
+apply the heavy tailed proposal distributions and simply accept that there will
+be some waste.
 
 \section{Sinusoidal example}
 In this section we demonstrate a seemingly simple example which exhibits
