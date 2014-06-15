@@ -54,8 +54,15 @@ difficulties.
 % to the same prior as a hierarchical model.                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Metropolis proposals for the general problem}
+We will now define a set of proposal distributions that could be used to
+sample the prior distribution
+$p(N, \alpha, \{x_i\}) = p(N) p(\alpha) \prod_{i=1}^N p(\{x_i\} | \alpha)$.
+These proposals will need to satisfy detailed balance in order to be valid
+when used inside DNS.
 
-\section{Sinusoidal Example}
+
+\section{Sinusoidal example}
 In this section we demonstrate a seemingly simple example which exhibits
 a phase transition, making a standard MCMC approach difficult. Suppose
 a signal is composed of $N$ sinusoids, of different periods, amplitudes,
@@ -100,7 +107,7 @@ is displayed in Figure~\ref{fig:sinewave_data}.
 \end{figure}
 
 
-%\section{``Transit'' Example}
+%\section{``Transit'' example}
 
 
 
@@ -110,7 +117,7 @@ This work is supported by a Marsden Fast-Start grant
 from the Royal Society of New Zealand. I would like to thank the following
 people for valuable conversations and inspiration:
 Anna Pancoast (UCSB), David Hogg (NYU), Daniel Foreman-Mackey (NYU),
-Courtney Donovan (Auckland), Tom Loredo (),
+Courtney Donovan (Auckland), Tom Loredo (), Iain Murray (Edinburgh),
 John Skilling (MaxEnt Data Consultants), and Daniela Huppenkothen ().
 
 
