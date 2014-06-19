@@ -60,7 +60,7 @@ Phase transition
 
 The model for the signal is
 \begin{eqnarray}
-\mu(t) &=& \sum_{i=1}^N A_i \sin \left(\frac{2\pi t}{T_i} + \phi_i\right)
+y(t) &=& \sum_{i=1}^N A_i \sin \left(\frac{2\pi t}{T_i} + \phi_i\right)
 \end{eqnarray}
 where there are $N$ sinusoids in the signal, the
 amplitudes are $\{A_i\}$, the periods are $\{T_i\}$, and the phases are
@@ -70,19 +70,26 @@ The sampling distribution (probability distribution for the data given the
 parameters) is a normal (gaussian) distribution with mean zero and standard
 deviation $\sigma$, applied independently to each data point:
 \begin{eqnarray}
-y_i | N, \{A_i\}, \{T_i\}, \{\phi_i\} \sim
+Y_i | N, \{A_i\}, \{T_i\}, \{\phi_i\} \sim
 \mathcal{N}\left(\mu(t_i), \sigma^2\right).
 \end{eqnarray}
 We simulated some data based on the assumption $N=2$.
 The simulated data is shown in Figure~\ref{fig:sinewave_data}, and shows a
 large, low period oscillation with a smaller, much faster oscillation
 superimposed. The noise level is such that the fast oscillation is difficult
-to detect.
+to detect. The true form of the signal is:
+\begin{eqnarray}
+y(t) = \sin\left(\frac{2\pi t}{30}\right) +
+0.3 \sin\left(\frac{2\pi t}{2} + 1\right)
+\end{eqnarray}
+and the noise standard deviation was $\sigma = 1$.
 
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{sinewave_data.pdf}
-\caption{The simulated data for the sinusoidal example.
+\caption{The simulated data for the sinusoidal example. The solid line shows
+the true signal and the points are the measurements, simulated based on a
+noise standard deviation of $\sigma = 1$.
 \label{fig:sinewave_data}}
 \end{center}
 \end{figure}
