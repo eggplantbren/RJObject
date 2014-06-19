@@ -3,7 +3,7 @@
 \usepackage{natbib}
 \usepackage[left=3cm,top=3cm,right=3cm]{geometry}
 \usepackage{parskip}
-
+\usepackage{amsmath}
 
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\textfraction}{0.1}
@@ -54,9 +54,29 @@ difficulties.
 % to the same prior as a hierarchical model.                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Metropolis proposals for the general problem}
+We will now define a set of proposal distributions that could be used to
+sample the prior distribution
+$p(N, \alpha, \{x_i\}) = p(N) p(\alpha) \prod_{i=1}^N p(\{x_i\} | \alpha)$.
+These proposals will need to satisfy detailed balance in order to be valid
+when used inside DNS. The proposals will also be very heavy tailed. When
+DNS is exploring a distribution close to the prior, large proposals will
+generally be needed. When DNS is exploring a distribution constrained to
+very high values of the likelihood function, much smaller proposals will be
+appropriate. Rather than attempting expensive tuning (since the number of
+distributions involved may number in the hundreds or even thousands), we will
+apply the heavy tailed proposal distributions and simply accept that there will
+be some waste.
 
-\section{Sinusoidal Example}
-Phase transition
+\section{Sinusoidal example}
+In this section we demonstrate a seemingly simple example which exhibits
+a phase transition, making a standard MCMC approach difficult. Suppose
+a signal is composed of $N$ sinusoids, of different periods, amplitudes,
+and phases. The signal is observed at various times $\{t_i\}_{i=1}^N$ with
+noise, and we want to use the resulting data to infer the number of sinusoids
+$N$, along with the periods $\{T_i\}_{i=1}^N$, amplitudes $\{A_i\}_{i=1}^N$,
+and phases $\{\phi_i\}_{i=1}^N$.
+This kind of model has many applications\citep[see e.g.][]{bretthorst}.
 
 The model for the signal is
 \begin{eqnarray}
@@ -77,12 +97,17 @@ We simulated some data based on the assumption $N=2$.
 The simulated data is shown in Figure~\ref{fig:sinewave_data}, and shows a
 large, low period oscillation with a smaller, much faster oscillation
 superimposed. The noise level is such that the fast oscillation is difficult
-to detect. The true form of the signal is:
+to detect. The true values of the parameters were
+$N=2$, $\mathbf{A} = \{1, 0.3\}$,
+$\mathbf{T}=\{30, 2\}$, and $\boldsymbol{\phi} = \{0, 1\}$. The signal was
+observed at $n=1001$ points equally spaced between $t=0$ and $t=100$.
+The true form of the signal is:
 \begin{eqnarray}
 y(t) = \sin\left(\frac{2\pi t}{30}\right) +
 0.3 \sin\left(\frac{2\pi t}{2} + 1\right)
 \end{eqnarray}
-and the noise standard deviation was $\sigma = 1$.
+and the noise standard deviation was $\sigma = 1$. The data $\{Y_i\}_{i=1}^n$
+is displayed in Figure~\ref{fig:sinewave_data}.
 
 \begin{figure}
 \begin{center}
@@ -98,6 +123,7 @@ noise standard deviation of $\sigma = 1$.
 %\section{``Transit'' Example}
 %\section{``Asteroseismology'' Example}
 %\section{``Galaxy Field'' Example}
+%\section{``Transit'' example}
 
 
 
@@ -107,11 +133,16 @@ This work is supported by a Marsden Fast-Start grant
 from the Royal Society of New Zealand. I would like to thank the following
 people for valuable conversations and inspiration:
 Anna Pancoast (UCSB), David Hogg (NYU), Daniel Foreman-Mackey (NYU),
-Courtney Donovan (Auckland), Tom Loredo (),
+Courtney Donovan (Auckland), Tom Loredo (), Iain Murray (Edinburgh),
 John Skilling (MaxEnt Data Consultants), and Daniela Huppenkothen ().
 
 
 \begin{thebibliography}{}
+
+\bibitem[Brewer et al.(2013)]{2013AJ....146....7B} Brewer, B.~J., 
+Foreman-Mackey, D., Hogg, D.~W.\ 2013.\ Probabilistic Catalogs for Crowded 
+Stellar Fields.\ The Astronomical Journal 146, 7. 
+
 \bibitem[\protect\citeauthoryear{Brewer, P{\'a}rtay,
 \& Cs{\'a}nyi}{2011b}]{dnest} Brewer B.~J., P{\'a}rtay L.~B., Cs{\'a}nyi G., 2011,
 Statistics and Computing, 21, 4, 649-656. arXiv:0912.2380
