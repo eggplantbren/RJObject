@@ -68,6 +68,15 @@ distributions involved may number in the hundreds or even thousands), we will
 apply the heavy tailed proposal distributions and simply accept that there will
 be some waste.
 
+Most of the proposals involve changing one (or a subset) of the parameters
+and/or hyperparameters while keeping the others fixed.
+
+\subsection{Proposals that modify $N$}
+The first kind of proposal we consider are proposals that change the
+dimension of the model, i.e. proposals that change the value of $N$. By
+necessity, these will also change the parameters $\{x_i\}_{i=1}^N$ because
+the number of parameters will be changed.
+
 \section{Sinusoidal example}
 In this section we demonstrate a seemingly simple example which exhibits
 a phase transition, making a standard MCMC approach difficult. Suppose
