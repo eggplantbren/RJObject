@@ -59,7 +59,7 @@ difficulties.
 \section{Metropolis proposals for the general problem}
 We will now define a set of proposal distributions that could be used to
 sample the prior distribution
-$p(N, \alpha, \{x_i\}) = p(N) p(\alpha) \prod_{i=1}^N p(\{x_i\} | \alpha)$.
+$p(N, \alpha, \{x_i\}) = p(N) p(\alpha) \prod_{i=1}^N p(x_i | \alpha)$.
 These proposals will need to satisfy detailed balance in order to be valid
 when used inside DNS. The proposals will also be very heavy tailed. When
 DNS is exploring a distribution close to the prior, large proposals will
