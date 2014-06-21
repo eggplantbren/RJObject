@@ -33,7 +33,7 @@ in the following way:
 
 \begin{eqnarray}
 p(N, \alpha, \{x_i\}) &=& p(N) p(\alpha | N) p(\{x_i\} | \alpha, N) \\
-&=& p(N) p(\alpha) \prod_{i=1}^N p(\{x_i\} | \alpha).
+&=& p(N) p(\alpha) \prod_{i=1}^N p(x_i | \alpha).
 \end{eqnarray}
 
 Here we have assumed the priors for $N$ and $\alpha$ are independent, and
@@ -86,6 +86,13 @@ N' &=& \textnormal{mod}\left(N + \delta_N, N_{\rm max} + 1\right)
 \end{eqnarray}
 where $\delta_N$ is drawn from a heavy tailed
 distribution.
+
+If $N' > N$, the extra parameters needed, $\{x_i\}_{i=N+1}^{N'}$,
+are drawn from their prior conditional on the current value of the
+hyperparameters, i.e. the interim prior $p(x | \alpha)$.
+
+If $N' < N$, then $N - N'$ components must be removed from the model. The
+components all have an equal probability of being selected for removal.
 
 \section{Sinusoidal example}
 In this section we demonstrate a seemingly simple example which exhibits
