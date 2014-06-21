@@ -54,6 +54,8 @@ difficulties.
 % to the same prior as a hierarchical model.                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Consider terminology: "objects" vs. "components"
+
 \section{Metropolis proposals for the general problem}
 We will now define a set of proposal distributions that could be used to
 sample the prior distribution
@@ -96,6 +98,11 @@ hyperparameters, i.e. the interim prior $p(x | \alpha)$.
 If $N' < N$, then $N - N'$ objects must be removed from the model. All
 of the objects have the same probability of being selected for removal.
 
+\subsection{Proposals that modify objects}
+
+\subsection{Proposals that change the hyperparameters, keeping the objects fixed}
+
+\subsection{Proposals that change the hyperparameters and all of the objects}
 
 \section{Sinusoidal example}
 In this section we demonstrate a seemingly simple example which exhibits
