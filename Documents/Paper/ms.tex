@@ -75,7 +75,17 @@ and/or hyperparameters while keeping the others fixed.
 The first kind of proposal we consider are proposals that change the
 dimension of the model, i.e. proposals that change the value of $N$. By
 necessity, these will also change the parameters $\{x_i\}_{i=1}^N$ because
-the number of parameters will be changed.
+the number of parameters will be changed. The proposals used here are
+traditionally called {\it birth and death} proposals.
+
+We will assume that the prior for $N$ is a discrete uniform distribution
+between 0 and some $N_{\rm max}$, inclusive. The proposal starts by choosing
+a new value $N'$ according to
+\begin{eqnarray}
+N' &=& \textnormal{mod}\left(N + \delta_N, N_{\rm max} + 1\right)
+\end{eqnarray}
+where $\delta_N$ is drawn from a heavy tailed
+distribution.
 
 \section{Sinusoidal example}
 In this section we demonstrate a seemingly simple example which exhibits
