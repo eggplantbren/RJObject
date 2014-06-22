@@ -99,6 +99,11 @@ If $N' < N$, then $N - N'$ objects must be removed from the model. All
 of the objects have the same probability of being selected for removal.
 
 \subsection{Proposals that modify objects}
+Let $F(x | \alpha)$ be the cumulative distribution corresponding to the interim
+prior $p(x | \alpha)$, and $F^{-1}(x | \alpha)$ its inverse.
+Then $F(x_i)$ (for all $i$) has a uniform prior between 0 and 1. A proposal
+for an object involves transforming its parameters to $[0, 1]$ using $F^{-1}$,
+make the proposal, and then transform back.
 
 \subsection{Proposals that change the hyperparameters, keeping the objects fixed}
 
