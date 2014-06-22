@@ -103,7 +103,13 @@ Let $F(x | \alpha)$ be the cumulative distribution corresponding to the interim
 prior $p(x | \alpha)$, and $F^{-1}(x | \alpha)$ its inverse.
 Then $F(x_i)$ (for all $i$) has a uniform prior between 0 and 1. A proposal
 for an object involves transforming its parameters to $[0, 1]$ using $F^{-1}$,
-make the proposal, and then transform back.
+make the proposal, and then transform back. Specifically, the proposal chooses
+a new value $x_i'$ as follows:
+\begin{eqnarray}
+u_i &=& F(x_i; \alpha)\\
+u_i' &=& \textnormal{mod}\left(u_i + \delta_u, 1\right)\\
+x_i' &=& F^{-1}(u_i'; \alpha).
+\end{eqnarray}
 
 \subsection{Proposals that change the hyperparameters, keeping the objects fixed}
 
