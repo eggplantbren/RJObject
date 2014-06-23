@@ -144,6 +144,12 @@ affect the value of the likelihood, and therefore the likelihood will not need
 to be recomputed.
 
 \subsection{Proposals that change the hyperparameters and all of the objects}
+The above proposals allow for changes to $N$, $\alpha$, and $\{x_i\}$,
+and are therefore sufficient to allow for ``correct'' exploration of the
+prior distribution, and the constrained prior distributions used in DNS.
+However, they do not necessarily allow for {\it efficient} exploration, even
+of the prior itself. The main reason for this is the inability for large
+changes to be made to the hyperparameters $\alpha$.
 
 \section{Sinusoidal example}
 In this section we demonstrate a seemingly simple example which exhibits
