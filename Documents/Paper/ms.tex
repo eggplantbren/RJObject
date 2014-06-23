@@ -8,6 +8,9 @@
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\textfraction}{0.1}
 
+\newcommand{\hyperparams}{\boldsymbol{\alpha}}
+\newcommand{\xx}{\mathbf{x}}
+
 \title{RJObject Paper}
 \author{Brendon J. Brewer}
 
@@ -20,24 +23,24 @@
 \setlength{\parskip}{3mm}
 Many inference problems have the following structure. There is some unknown
 number, $N$, of objects in a region. Each of the $N$ objects has a property
-$x$, which may be a single scalar value (for example, a mass), or a set of
+$\xx$, which may be a single scalar value (for example, a mass), or a set of
 values (e.g. a position and a mass).
 
-We would like to assign a prior to the objects' properties $\{x_i\}_{i=1}^N$.
+We would like to assign a prior to the objects' properties $\{\xx_i\}_{i=1}^N$.
 Since $N$ may be large, it is usually easier to assign an ``interim prior''
-conditional on some hyperparameters $\alpha$, and then assign a prior to
-$\alpha$. This kind of model is usually called {\it hierarchical}.
+conditional on some hyperparameters $\hyperparams$, and then assign a prior to
+$\hyperparams$. This kind of model is usually called {\it hierarchical}.
 
-The prior for $N$, $\alpha$, and $\{x_i\}$ is usually factorised
+The prior for $N$, $\hyperparams$, and $\{\xx_i\}$ is usually factorised
 in the following way:
 
 \begin{eqnarray}
-p(N, \alpha, \{x_i\}) &=& p(N) p(\alpha | N) p(\{x_i\} | \alpha, N) \\
-&=& p(N) p(\alpha) \prod_{i=1}^N p(x_i | \alpha).
+p(N, \hyperparams, \{\xx_i\}) &=& p(N) p(\hyperparams | N) p(\{\xx_i\} | \hyperparams, N) \\
+&=& p(N) p(\hyperparams) \prod_{i=1}^N p(\xx_i | \hyperparams).
 \end{eqnarray}
 
-Here we have assumed the priors for $N$ and $\alpha$ are independent, and
-the interim prior for $\{x_i\}$ is iid and does not depend on $N$.
+Here we have assumed the priors for $N$ and $\hyperparams$ are independent, and
+the interim prior for $\{\xx_i\}$ is iid and does not depend on $N$.
 
 
 In other studies, it has been common to do separate runs of Nested Sampling
@@ -59,7 +62,7 @@ difficulties.
 \section{Metropolis proposals for the general problem}
 We will now define a set of proposal distributions that could be used to
 sample the prior distribution
-$p(N, \alpha, \{x_i\}) = p(N) p(\alpha) \prod_{i=1}^N p(x_i | \alpha)$.
+$p(N, \hyperparams, \{\xx_i\}) = p(N) p(\hyperparams) \prod_{i=1}^N p(\xx_i | \hyperparams)$.
 These proposals will need to satisfy detailed balance in order to be valid
 when used inside DNS. The proposals will also be very heavy tailed. When
 DNS is exploring a distribution close to the prior, large proposals will
@@ -76,7 +79,7 @@ and/or hyperparameters while keeping the others fixed.
 \subsection{Proposals that modify $N$}\label{sec:proposal1}
 The first kind of proposal we consider are proposals that change the
 dimension of the model, i.e. proposals that change the value of $N$. By
-necessity, these will also change the parameters $\{x_i\}_{i=1}^N$ because
+necessity, these will also change the parameters $\{\xx_i\}_{i=1}^N$ because
 the number of parameters will be changed. The proposals used here are
 traditionally called {\it birth and death} proposals.
 
@@ -91,20 +94,20 @@ distribution. The most probable values of $\delta_N$ are $\pm 1$, but values
 of order $N_{\rm max}$ also have some probability, to allow fast exploration
 when the target distribution is similar to the prior.
 
-If $N' > N$, the extra parameters needed, $\{x_i\}_{i=N+1}^{N'}$,
+If $N' > N$, the extra parameters needed, $\{\xx_i\}_{i=N+1}^{N'}$,
 are drawn from their prior conditional on the current value of the
-hyperparameters, i.e. the interim prior $p(x | \alpha)$.
+hyperparameters, i.e. the interim prior $p(x | \hyperparams)$.
 
 If $N' < N$, then $N - N'$ objects must be removed from the model. All
 of the objects have the same probability of being selected for removal.
 
 \subsection{Proposals that modify objects}\label{sec:proposal2}
 We now consider a proposal distribution that modifies one or more of the
-objects $\{x_i\}$, while keeping the number of objects $N$, as well as the
-hyperparameters $\alpha$, fixed.
+objects $\{\xx_i\}$, while keeping the number of objects $N$, as well as the
+hyperparameters $\hyperparams$, fixed.
 
-Let $F(x; \alpha)$ be a function that takes an object $x$ and transforms it
-to a value $u$ that has a uniform distribution between 0 and 1, given $\alpha$.
+Let $F(x; \hyperparams)$ be a function that takes an object $x$ and transforms it
+to a value $u$ that has a uniform distribution between 0 and 1, given $\hyperparams$.
 If the object $x$ consists of a single scalar value, $F$ is the cumulative
 distribution of the interim prior. Denote the inverse of $F$ by $G$.
 
@@ -112,11 +115,11 @@ A proposal
 for an object involves transforming its parameters to $[0, 1]$ using $F$,
 making the proposal in terms of $u$, and then transforming back.
 Specifically, the proposal chooses
-a new value $x_i'$ from the current value $x_i$ as follows:
+a new value $\xx_i'$ from the current value $\xx_i$ as follows:
 \begin{eqnarray}
-u_i &:=& F(x_i; \alpha)\\
+u_i &:=& F(\xx_i; \hyperparams)\\
 u_i' &:=& \textnormal{mod}\left(u_i + \delta_u, 1\right)\\
-x_i' &:=& G(u_i'; \alpha).
+\xx_i' &:=& G(u_i'; \hyperparams).
 \end{eqnarray}
 where $\delta_u$ is drawn from a heavy-tailed distribution.
 
@@ -130,45 +133,45 @@ of proposing to change $\sim N$ objects at once.
 \subsection{Proposals that change the hyperparameters,
 keeping the objects fixed}\label{sec:proposal3}
 Another kind of proposal that we will consider is a proposal that keeps all of
-the objects fixed in place (i.e. leaves $\{x_i\}$) unchanged, but changes
-the hyperparameter(s) from their current value $\alpha$
-to a new value $\alpha'$. The proposal for the hyperparameter(s) is chosen
-to satisfy detailed balance with respect to $p(\alpha)$.
+the objects fixed in place (i.e. leaves $\{\xx_i\}$) unchanged, but changes
+the hyperparameter(s) from their current value $\hyperparams$
+to a new value $\hyperparams'$. The proposal for the hyperparameter(s) is chosen
+to satisfy detailed balance with respect to $p(\hyperparams)$.
 
 The overall Metropolis acceptance probability
 for this kind of move, if sampling the prior (or the constrained prior of DNS)
 must include the following factor:
 \begin{eqnarray}
-\frac{\prod_{i=1}^N p(x_i | \alpha')}{\prod_{i=1}^N p(x_i | \alpha)}
+\frac{\prod_{i=1}^N p(\xx_i | \hyperparams')}{\prod_{i=1}^N p(\xx_i | \hyperparams)}
 \label{eqn:acceptance_prob}
 \end{eqnarray}
-Since this proposal leaves the objects $\{x_i\}$ fixed, it will usually not
+Since this proposal leaves the objects $\{\xx_i\}$ fixed, it will usually not
 affect the value of the likelihood, and therefore the likelihood will not need
 to be recomputed.
 
 \subsection{Proposals that change the hyperparameters
 and all of the objects}\label{sec:proposal4}
-The above proposals allow for changes to $N$, $\alpha$, and $\{x_i\}$,
+The above proposals allow for changes to $N$, $\hyperparams$, and $\{\xx_i\}$,
 and are therefore sufficient to allow for ``correct'' exploration of the
 prior distribution, and the constrained prior distributions used in DNS.
 However, they do not necessarily allow for {\it efficient} exploration, even
 of the prior itself. The main reason for this is the inability for large
-changes to be made to the hyperparameters $\alpha$. If the proposed change
-from $\alpha$ to $\alpha'$ is large, the ratio in
+changes to be made to the hyperparameters $\hyperparams$. If the proposed change
+from $\hyperparams$ to $\hyperparams'$ is large, the ratio in
 Equation~\ref{eqn:acceptance_prob} is likely to be very small, and the move
 will probably be rejected.
 
-Therefore, we allow an additional move that changes $\alpha$ to a new
-value $\alpha'$, but rather than leaving the objects $\{x_i\}$ fixed, we
-drag them so they represent the distribution $p(x | \alpha')$ rather than
-$p(x|\alpha)$. We do this by making use of the transformation functions
-$F(x; \alpha)$ and $G(x; \alpha)$ defined in Section~\ref{sec:proposal2}.
+Therefore, we allow an additional move that changes $\hyperparams$ to a new
+value $\hyperparams'$, but rather than leaving the objects $\{\xx_i\}$ fixed, we
+drag them so they represent the distribution $p(x | \hyperparams')$ rather than
+$p(x|\hyperparams)$. We do this by making use of the transformation functions
+$F(x; \hyperparams)$ and $G(x; \hyperparams)$ defined in Section~\ref{sec:proposal2}.
 
 The ``dragging'' process works as follows, and must be carried out on
 each object:
 \begin{eqnarray}
-u_i &:=& F(x_i; \alpha)\\
-x_i' &:=& G(x_i; \alpha')
+u_i &:=& F(\xx_i; \hyperparams)\\
+\xx_i' &:=& G(\xx_i; \hyperparams')
 \end{eqnarray}
 
 \section{Sinusoidal example}
