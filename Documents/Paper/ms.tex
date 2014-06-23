@@ -42,6 +42,14 @@ p(N, \hyperparams, \{\xx_i\}) &=& p(N) p(\hyperparams | N) p(\{\xx_i\} | \hyperp
 Here we have assumed the priors for $N$ and $\hyperparams$ are independent, and
 the interim prior for $\{\xx_i\}$ is iid and does not depend on $N$.
 
+\begin{figure}
+\begin{center}
+\includegraphics{pgm.pdf}
+\caption{\it A probabilistic graphical model (PGM) depicting the kind
+of model discussed in this paper. Produced using daft ({\tt daft-pgm.org}).
+\label{fig:pgm}}
+\end{center}
+\end{figure}
 
 In other studies, it has been common to do separate runs of Nested Sampling
 with different values of $N$. Then, the posterior for $N$ can be calculated
