@@ -1,3 +1,6 @@
+*.txt
+*.eps
+*.png
 fake_data.txt
 *.o
 main
