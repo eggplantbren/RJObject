@@ -12,7 +12,7 @@ pgm = daft.PGM([4., 4.], origin=[-1.5, -1.5])
 
 # Create the nodes
 pgm.add_node(daft.Node('alpha', r'$\alpha$', 0., 2.))
-pgm.add_node(daft.Node('x', r'$x_i$', 0., 0.))
+pgm.add_node(daft.Node('x', r'$\mathbf{x}_i$', 0., 0.))
 pgm.add_node(daft.Node('data', r'$\mathcal{D}$', 2., 0., observed=True))
 
 # Add the edges
