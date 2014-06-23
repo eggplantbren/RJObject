@@ -139,6 +139,10 @@ The Metropolis acceptance probability must include the following factor:
 \frac{\prod_{i=1}^N p(x_i | \alpha')}{\prod_{i=1}^N p(x_i | \alpha)}
 \end{eqnarray}
 
+Since this proposal leaves the objects $\{x_i\}$ fixed, it will usually not
+affect the value of the likelihood, and therefore the likelihood will not need
+to be recomputed.
+
 \subsection{Proposals that change the hyperparameters and all of the objects}
 
 \section{Sinusoidal example}
