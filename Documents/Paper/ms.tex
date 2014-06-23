@@ -114,9 +114,9 @@ making the proposal in terms of $u$, and then transforming back.
 Specifically, the proposal chooses
 a new value $x_i'$ from the current value $x_i$ as follows:
 \begin{eqnarray}
-u_i &=& F(x_i; \alpha)\\
-u_i' &=& \textnormal{mod}\left(u_i + \delta_u, 1\right)\\
-x_i' &=& G(u_i'; \alpha).
+u_i &:=& F(x_i; \alpha)\\
+u_i' &:=& \textnormal{mod}\left(u_i + \delta_u, 1\right)\\
+x_i' &:=& G(u_i'; \alpha).
 \end{eqnarray}
 where $\delta_u$ is drawn from a heavy-tailed distribution.
 
@@ -167,8 +167,8 @@ $F(x; \alpha)$ and $G(x; \alpha)$ defined in Section~\ref{sec:proposal2}.
 The ``dragging'' process works as follows, and must be carried out on
 each object:
 \begin{eqnarray}
-u_i &=& F(x_i; \alpha)\\
-x_i' &=& G(x_i; \alpha')
+u_i &:=& F(x_i; \alpha)\\
+x_i' &:=& G(x_i; \alpha')
 \end{eqnarray}
 
 \section{Sinusoidal example}
