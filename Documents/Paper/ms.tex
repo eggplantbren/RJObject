@@ -116,8 +116,9 @@ a new value $x_i'$ from the current value $x_i$ as follows:
 \begin{eqnarray}
 u_i &=& F(x_i; \alpha)\\
 u_i' &=& \textnormal{mod}\left(u_i + \delta_u, 1\right)\\
-x_i' &=& F^{-1}(u_i'; \alpha).
+x_i' &=& G(u_i'; \alpha).
 \end{eqnarray}
+where $\delta_u$ is drawn from a heavy-tailed distribution.
 
 \subsection{Proposals that change the hyperparameters, keeping the objects fixed}
 
