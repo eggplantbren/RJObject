@@ -128,6 +128,16 @@ wherer the most probable value is 1 but there is also a nontrivial probability
 of proposing to change $\sim N$ objects at once.
 
 \subsection{Proposals that change the hyperparameters, keeping the objects fixed}
+Another kind of proposal that we will consider is a proposal that keeps all of
+the objects fixed in place (i.e. leaves $\{x_i\}$) unchanged, but changes
+the hyperparameter(s) from their current value $\alpha$
+to a new value $\alpha'$. The proposal for the hyperparameter(s) is chosen
+to satisfy detailed balance with respect to $p(\alpha)$.
+
+The Metropolis acceptance probability must include the following factor:
+\begin{eqnarray}
+\frac{\prod_{i=1}^N p(x_i | \alpha')}{\prod_{i=1}^N p(x_i | \alpha)}
+\end{eqnarray}
 
 \subsection{Proposals that change the hyperparameters and all of the objects}
 
@@ -186,7 +196,6 @@ noise standard deviation of $\sigma = 1$.
 %\section{``Transit'' Example}
 %\section{``Asteroseismology'' Example}
 %\section{``Galaxy Field'' Example}
-%\section{``Transit'' example}
 
 
 
