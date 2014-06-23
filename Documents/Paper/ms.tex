@@ -164,7 +164,12 @@ drag them so they represent the distribution $p(x | \alpha')$ rather than
 $p(x|\alpha)$. We do this by making use of the transformation functions
 $F(x; \alpha)$ and $G(x; \alpha)$ defined in Section~\ref{sec:proposal2}.
 
-
+The ``dragging'' process works as follows, and must be carried out on
+each object:
+\begin{eqnarray}
+u_i &=& F(x_i; \alpha)\\
+x_i' &=& G(x_i; \alpha')
+\end{eqnarray}
 
 \section{Sinusoidal example}
 In this section we demonstrate a seemingly simple example which exhibits
