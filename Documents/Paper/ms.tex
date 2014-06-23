@@ -99,12 +99,20 @@ If $N' < N$, then $N - N'$ objects must be removed from the model. All
 of the objects have the same probability of being selected for removal.
 
 \subsection{Proposals that modify objects}
-Let $F(x | \alpha)$ be the cumulative distribution corresponding to the interim
-prior $p(x | \alpha)$, and $F^{-1}(x | \alpha)$ its inverse.
-Then $F(x_i)$ (for all $i$) has a uniform prior between 0 and 1. A proposal
-for an object involves transforming its parameters to $[0, 1]$ using $F^{-1}$,
-make the proposal, and then transform back. Specifically, the proposal chooses
-a new value $x_i'$ as follows:
+We now consider a proposal distribution that modifies one or more of the
+objects $\{x_i\}$, while keeping the number of objects $N$, as well as the
+hyperparameters $\alpha$, fixed.
+
+Let $F(x; \alpha)$ be a function that takes an object $x$ and transforms it
+to a value $u$ that has a uniform distribution between 0 and 1, given $\alpha$.
+If the object $x$ consists of a single scalar value, $F$ is the cumulative
+distribution of the interim prior. Denote the inverse of $F$ by $G$.
+
+A proposal
+for an object involves transforming its parameters to $[0, 1]$ using $F$,
+making the proposal in terms of $u$, and then transforming back.
+Specifically, the proposal chooses
+a new value $x_i'$ from the current value $x_i$ as follows:
 \begin{eqnarray}
 u_i &=& F(x_i; \alpha)\\
 u_i' &=& \textnormal{mod}\left(u_i + \delta_u, 1\right)\\
