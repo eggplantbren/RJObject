@@ -73,7 +73,7 @@ be some waste.
 Most of the proposals involve changing one (or a subset) of the parameters
 and/or hyperparameters while keeping the others fixed.
 
-\subsection{Proposals that modify $N$}
+\subsection{Proposals that modify $N$}\label{sec:proposal1}
 The first kind of proposal we consider are proposals that change the
 dimension of the model, i.e. proposals that change the value of $N$. By
 necessity, these will also change the parameters $\{x_i\}_{i=1}^N$ because
@@ -98,7 +98,7 @@ hyperparameters, i.e. the interim prior $p(x | \alpha)$.
 If $N' < N$, then $N - N'$ objects must be removed from the model. All
 of the objects have the same probability of being selected for removal.
 
-\subsection{Proposals that modify objects}
+\subsection{Proposals that modify objects}\label{sec:proposal2}
 We now consider a proposal distribution that modifies one or more of the
 objects $\{x_i\}$, while keeping the number of objects $N$, as well as the
 hyperparameters $\alpha$, fixed.
@@ -127,7 +127,8 @@ we choose the number of objects to change from a heavy tailed distribution
 wherer the most probable value is 1 but there is also a nontrivial probability
 of proposing to change $\sim N$ objects at once.
 
-\subsection{Proposals that change the hyperparameters, keeping the objects fixed}
+\subsection{Proposals that change the hyperparameters,
+keeping the objects fixed}\label{sec:proposal3}
 Another kind of proposal that we will consider is a proposal that keeps all of
 the objects fixed in place (i.e. leaves $\{x_i\}$) unchanged, but changes
 the hyperparameter(s) from their current value $\alpha$
@@ -139,18 +140,31 @@ for this kind of move, if sampling the prior (or the constrained prior of DNS)
 must include the following factor:
 \begin{eqnarray}
 \frac{\prod_{i=1}^N p(x_i | \alpha')}{\prod_{i=1}^N p(x_i | \alpha)}
+\label{eqn:acceptance_prob}
 \end{eqnarray}
 Since this proposal leaves the objects $\{x_i\}$ fixed, it will usually not
 affect the value of the likelihood, and therefore the likelihood will not need
 to be recomputed.
 
-\subsection{Proposals that change the hyperparameters and all of the objects}
+\subsection{Proposals that change the hyperparameters
+and all of the objects}\label{sec:proposal4}
 The above proposals allow for changes to $N$, $\alpha$, and $\{x_i\}$,
 and are therefore sufficient to allow for ``correct'' exploration of the
 prior distribution, and the constrained prior distributions used in DNS.
 However, they do not necessarily allow for {\it efficient} exploration, even
 of the prior itself. The main reason for this is the inability for large
-changes to be made to the hyperparameters $\alpha$.
+changes to be made to the hyperparameters $\alpha$. If the proposed change
+from $\alpha$ to $\alpha'$ is large, the ratio in
+Equation~\ref{eqn:acceptance_prob} is likely to be very small, and the move
+will probably be rejected.
+
+Therefore, we allow an additional move that changes $\alpha$ to a new
+value $\alpha'$, but rather than leaving the objects $\{x_i\}$ fixed, we
+drag them so they represent the distribution $p(x | \alpha')$ rather than
+$p(x|\alpha)$. We do this by making use of the transformation functions
+$F(x; \alpha)$ and $G(x; \alpha)$ defined in Section~\ref{sec:proposal2}.
+
+
 
 \section{Sinusoidal example}
 In this section we demonstrate a seemingly simple example which exhibits
