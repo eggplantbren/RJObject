@@ -120,6 +120,13 @@ x_i' &=& G(u_i'; \alpha).
 \end{eqnarray}
 where $\delta_u$ is drawn from a heavy-tailed distribution.
 
+Choosing just one object to change is most appropriate when the DNS
+distribution is very constrained. When it is close to the prior, bolder
+proposals that change more than one object at a time are possible. Hence,
+we choose the number of objects to change from a heavy tailed distribution
+wherer the most probable value is 1 but there is also a nontrivial probability
+of proposing to change $\sim N$ objects at once.
+
 \subsection{Proposals that change the hyperparameters, keeping the objects fixed}
 
 \subsection{Proposals that change the hyperparameters and all of the objects}
