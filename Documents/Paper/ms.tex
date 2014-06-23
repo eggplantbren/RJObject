@@ -134,11 +134,12 @@ the hyperparameter(s) from their current value $\alpha$
 to a new value $\alpha'$. The proposal for the hyperparameter(s) is chosen
 to satisfy detailed balance with respect to $p(\alpha)$.
 
-The Metropolis acceptance probability must include the following factor:
+The overall Metropolis acceptance probability
+for this kind of move, if sampling the prior (or the constrained prior of DNS)
+must include the following factor:
 \begin{eqnarray}
 \frac{\prod_{i=1}^N p(x_i | \alpha')}{\prod_{i=1}^N p(x_i | \alpha)}
 \end{eqnarray}
-
 Since this proposal leaves the objects $\{x_i\}$ fixed, it will usually not
 affect the value of the likelihood, and therefore the likelihood will not need
 to be recomputed.
