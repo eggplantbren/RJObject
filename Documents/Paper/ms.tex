@@ -96,7 +96,7 @@ when the target distribution is similar to the prior.
 
 If $N' > N$, the extra parameters needed, $\{\xx_i\}_{i=N+1}^{N'}$,
 are drawn from their prior conditional on the current value of the
-hyperparameters, i.e. the interim prior $p(x | \hyperparams)$.
+hyperparameters, i.e. the interim prior $p(\xx | \hyperparams)$.
 
 If $N' < N$, then $N - N'$ objects must be removed from the model. All
 of the objects have the same probability of being selected for removal.
@@ -163,8 +163,8 @@ will probably be rejected.
 
 Therefore, we allow an additional move that changes $\hyperparams$ to a new
 value $\hyperparams'$, but rather than leaving the objects $\{\xx_i\}$ fixed, we
-drag them so they represent the distribution $p(x | \hyperparams')$ rather than
-$p(x|\hyperparams)$. We do this by making use of the transformation functions
+drag them so they represent the distribution $p(\xx | \hyperparams')$ rather than
+$p(\xx|\hyperparams)$. We do this by making use of the transformation functions
 $F(x; \hyperparams)$ and $G(x; \hyperparams)$ defined in Section~\ref{sec:proposal2}.
 
 The ``dragging'' process works as follows, and must be carried out on
