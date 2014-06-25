@@ -30,5 +30,6 @@ pgm.add_plate(daft.Plate([-1., -1., 2., 2.], label=r'Objects $i=1, ..., N$'))
 pgm.render()
 pgm.figure.savefig("pgm.eps")
 pgm.figure.savefig("pgm.pdf")
+pgm.figure.savefig('pgm.png')
 
 
