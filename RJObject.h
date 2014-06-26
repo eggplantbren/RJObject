@@ -44,7 +44,7 @@ class RJObject
 
 		// Helper methods -- these do one thing at a time
 		double perturb_num_components(double scale);
-		double perturb_components(double chance, double scale);
+		double perturb_components(double chance);
 
 		// Helper methods -- add or remove single component
 		double add_component();

@@ -41,10 +41,14 @@ void RJObject<Distribution>::fromPrior()
 }
 
 template<class Distribution>
-double RJObject<Distribution>::perturb_components(double chance, double scale)
+double RJObject<Distribution>::perturb_components(double chance)
 {
 	if(num_components == 0)
 		return 0.;
+
+	// Enforce P(change only one) >~ 0.5
+	if(DNest3::randomU() <= 0.5)
+		chance = 0.;
 
 	// A flag for whether each component gets changed or not
 	std::vector<bool> change(num_components, false);
@@ -71,7 +75,7 @@ double RJObject<Distribution>::perturb_components(double chance, double scale)
 			// Perturb
 			for(int j=0; j<num_dimensions; j++)
 			{
-				u_components[i][j] += scale*DNest3::randn();
+				u_components[i][j] += DNest3::randh();
 				u_components[i][j] = DNest3::mod(
 							u_components[i][j], 1.);
 				components[i][j] = u_components[i][j];
@@ -179,8 +183,7 @@ double RJObject<Distribution>::perturb()
 	}
 	else if(which == 2)
 	{
-		logH += perturb_components(pow(10., 0.5 - 4.*DNest3::randomU()),
-					pow(10., 1.5 - 6.*DNest3::randomU()));
+		logH += perturb_components(pow(10., 0.5 - 4.*DNest3::randomU()));
 	}
 
 	return logH;
