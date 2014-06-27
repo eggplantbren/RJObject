@@ -92,14 +92,20 @@ a heavy-tailed proposal is defined by:
 \begin{eqnarray}
 u' &=& \textnormal{mod}\left(u + 10^{1.5 - 6a}b, 1\right)
 \end{eqnarray}
-where $a \sim \textnormal{Uniform}(0, 1)$ and $b\sim \mathcal{N}(0,1)$. When
+where $a \sim \textnormal{Uniform}(0, 1)$ and $b\sim \mathcal{N}(0,1)$.
+This is like a standard gaussian/normal random walk proposal, but with a
+non-fixed step size, resulting in a scale mixture of normals.
+When
 $a$ is close to zero, the size of the proposal is of order 10, which (because
 of the mod function) effectively randomises $u'$ from the prior. If $a$ is
 close to 1, the scale of the proposal is roughly $10^{-4}$ times the prior
-width.
+width. The coefficient of $a$ was set to 6 because smaller proposals are
+usually not necessary. The value 1.5 in the exponent was found to optimize the
+performance of this proposal when sampling from $U(0, 1)$ and $\mathcal{N}(0,1)$
+priors.
 
 Most of the proposals involve changing one (or a subset) of the parameters
-and/or hyperparameters while keeping the others fixed, and are heavy-t
+and/or hyperparameters while keeping the others fixed.
 
 \subsection{Proposals that modify $N$}\label{sec:proposal1}
 The first kind of proposal we consider are proposals that change the
