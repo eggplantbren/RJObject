@@ -69,21 +69,37 @@ difficulties.
 % Consider terminology: "objects" vs. "components"
 
 \section{Metropolis proposals for the general problem}
-We will now define a set of proposal distributions that could be used to
+We will now define a set of proposal distributions that can be used to
 sample the prior distribution
 $p(N, \hyperparams, \{\xx_i\}) = p(N) p(\hyperparams) \prod_{i=1}^N p(\xx_i | \hyperparams)$.
 These proposals will need to satisfy detailed balance in order to be valid
-when used inside DNS. The proposals will also be very heavy tailed. When
+when used inside DNS. When the proposal satisfies detailed balance with respect
+to the prior, the DNS algorithm can incorporate hard likelihood constraints by
+rejecting any proposal whose likelihood does not satisfy the constraint.
+The overall proposal is a mixture of all of the proposals listed here.
+
+When using DNS,
+the proposals typically should be very heavy tailed. When
 DNS is exploring a distribution close to the prior, large proposals will
-generally be needed. When DNS is exploring a distribution constrained to
+generally be needed to explore the prior efficiently.
+When DNS is exploring a distribution constrained to
 very high values of the likelihood function, much smaller proposals will be
 appropriate. Rather than attempting expensive tuning (since the number of
 distributions involved may number in the hundreds or even thousands), we will
 apply the heavy tailed proposal distributions and simply accept that there will
-be some waste.
+be some waste. If a parameter $u$ has a uniform prior between 0 and 1, then
+a heavy-tailed proposal is defined by:
+\begin{eqnarray}
+u' &=& \textnormal{mod}\left(u + 10^{1.5 - 6a}b, 1\right)
+\end{eqnarray}
+where $a \sim \textnormal{Uniform}(0, 1)$ and $b\sim \mathcal{N}(0,1)$. When
+$a$ is close to zero, the size of the proposal is of order 10, which (because
+of the mod function) effectively randomises $u'$ from the prior. If $a$ is
+close to 1, the scale of the proposal is roughly $10^{-4}$ times the prior
+width.
 
 Most of the proposals involve changing one (or a subset) of the parameters
-and/or hyperparameters while keeping the others fixed.
+and/or hyperparameters while keeping the others fixed, and are heavy-t
 
 \subsection{Proposals that modify $N$}\label{sec:proposal1}
 The first kind of proposal we consider are proposals that change the
