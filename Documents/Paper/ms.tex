@@ -42,6 +42,22 @@ p(N, \hyperparams, \{\xx_i\}) &=& p(N) p(\hyperparams | N) p(\{\xx_i\} | \hyperp
 
 Here we have assumed the priors for $N$ and $\hyperparams$ are independent, and
 the interim prior for $\{\xx_i\}$ is iid and does not depend on $N$.
+Given data $\mathcal{D}$, we usually want to generate samples from the
+posterior distribution given by:
+\begin{eqnarray}
+p(N, \hyperparams, \{\xx_i\} | \mathcal{D}) \propto
+p(N, \hyperparams, \{\xx_i\})
+p(\mathcal{D} | N, \hyperparams, \{\xx_i\})\label{eq:bayes}
+\end{eqnarray}
+The marginal likelihood, or evidence, is also an important quantity, and is
+the normalisation constant of the posterior given in Equation~\ref{eq:bayes}:
+\begin{eqnarray}
+\mathcal{Z} &=& p(\mathcal{D})\\
+&=& \sum_{i=0}^{N_{\rm max}} \int
+p(N, \hyperparams, \{\xx_i\})p(\mathcal{D} | N, \hyperparams, \{\xx_i\})
+\, d^N \xx_i \, d\hyperparams \label{eq:evidence}
+\end{eqnarray}
+
 
 \begin{figure}
 \begin{center}
@@ -53,13 +69,25 @@ of model discussed in this paper. Produced using daft ({\tt daft-pgm.org}).
 \end{figure}
 
 In other studies, it has been common to do separate runs of Nested Sampling
-with different values of $N$. Then, the posterior for $N$ can be calculated
-based on the estimates of the evidence or marginal likelihood. Our motivation
-for using Nested Sampling is different. With reversible jump MCMC it is possible
-to obtain the posterior for $N$ with a single run. However, the exploration
-of the posterior may be very difficult, and sometimes the problem may even
-contain a phase transition. We use Nested Sampling to overcome these
-difficulties.
+$N$ fixed at various trial values. Then, the posterior for $N$ can be calculated
+based on the estimates of the evidence obtained as a function of $N$. However,
+in this paper, we use trans-dimensional MCMC moves to infer $N$. In other words,
+$N$ is treated as just another parameter, and the marginal likelihood defined
+in Equation~\ref{eq:evidence}, which we can compute, also includes the sum over
+the unknown parameter $N$. Our motivation
+for using Nested Sampling is not primarily to calculate $\mathcal{Z}$.
+The motivation for using Nested Sampling, rather than just sampling the
+posterior using trans-dimensional MCMC, is that the posterior often contains
+difficult features, such as strong dependencies or multiple modes, that cause
+problems with mixing. Diffusive Nested Sampling
+(DNS) replaces the posterior distribution with an alternative target
+distribution composed of a mixture of the prior distribution with other, more
+constrained distributions. This is similar to the idea of simulated annealing,
+where the target distribution is modified to something ``easier'', however,
+the sequence of distributions used in Nested Sampling avoids some of the
+problems with simulated annealing: in particular, there is no need to choose
+a temperature schedule, and the method does not fail when phase transitions
+are present.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Consider having a section on what kind of ME constraint would lead  %
