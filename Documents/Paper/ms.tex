@@ -316,8 +316,26 @@ sinusoid data. The true value was $N=2$.
 %\section{``Asteroseismology'' Example}
 %\section{``Galaxy Field'' Example}
 
+\section{Optimisation Techniques}\label{sec:optimisation}
+In both of the examples discussed in this paper, the likelihood evaluation
+involved computing a mock noise-free signal from the current value of the
+model parameters. The mathematical form of the mock signal was a sum over
+all $N$ components present. Computing the mock signal is often the most
+expensive step in the evaluation of the likelihood.
 
+However, many of the proposal distributions used involve changing a subset
+of the parameters, while keeping others fixed. Considerable speedups can be
+achieved by, when appropriate, updating the mock signal to reflect the proposed
+change to the model, rather than computing the entire mock signal from scratch.
+For example, if the proposal is to add two new objects to the model, the
+mock signal can simply be updated by adding the effect of the two new objects
+to the model.
 
+In general, it is possible to compute the number of components that have been
+affected by the proposal. If this is greater than or equal to $N$, we compute
+the mock signal from scratch, otherwise we subtract the effect of those
+components that have been removed and add in the effect of those that have been
+added.
 
 \section*{Acknowledgements}
 This work is supported by a Marsden Fast-Start grant
