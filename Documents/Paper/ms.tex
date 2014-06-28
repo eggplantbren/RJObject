@@ -42,13 +42,16 @@ p(N, \hyperparams, \{\xx_i\}) &=& p(N) p(\hyperparams | N) p(\{\xx_i\} | \hyperp
 
 Here we have assumed the priors for $N$ and $\hyperparams$ are independent, and
 the interim prior for $\{\xx_i\}$ is iid and does not depend on $N$.
-Given data $\mathcal{D}$, we usually want to generate samples from the
+Given data $\mathcal{D}$, we usually want to calculate properties of the
 posterior distribution given by:
 \begin{eqnarray}
 p(N, \hyperparams, \{\xx_i\} | \mathcal{D}) \propto
 p(N, \hyperparams, \{\xx_i\})
 p(\mathcal{D} | N, \hyperparams, \{\xx_i\})\label{eq:bayes}
 \end{eqnarray}
+The general method used to calculate properties of the posterior distribution
+is to generate samples from it using Markov Chain Monte Carlo (MCMC).
+
 The marginal likelihood, or evidence, is also an important quantity, and is
 the normalisation constant of the posterior given in Equation~\ref{eq:bayes}:
 \begin{eqnarray}
