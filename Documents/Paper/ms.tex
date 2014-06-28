@@ -252,11 +252,18 @@ and phases $\{\phi_i\}_{i=1}^N$.
 This kind of model has many applications, and has been solved analytically
 under certain sets of assumptions \citep[see e.g.][]{bretthorst}.
 
+\subsection{Prior Distributions}
 In the notation of Section~\ref{sec:introduction}, the parameters of the
 each object are
 \begin{eqnarray}
 \xx_i &=& \{A_i, T_i, \phi_i\}.
 \end{eqnarray}
+For the interim prior $p(\xx_i | \hyperparams)$, we introduced a single
+hyperparameter $\mu$, such that $A_i$ given $\mu$ has an exponential prior
+with mean $\mu$. For the periods, we assigned a log-uniform distribution for
+the periods between fixed boundaries, and a uniform distribution for the phases
+between 0 and $2\pi$. In other words, our prior is only hierarchical for the
+amplitudes $\{A_i\}$.
 
 The model for the shape of the (noise-free) signal is
 \begin{eqnarray}
@@ -273,8 +280,10 @@ Y_i | N, \{A_i\}, \{T_i\}, \{\phi_i\}, \sigma \sim
 \mathcal{N}\left(\mu(t_i), \sigma^2\right).
 \end{eqnarray}
 This also depends on an additional noise standard deviation parameter $\sigma$
-which will also be inferred.
+which will also be inferred. We used a log-uniform prior for $\sigma$ between
+$10^{-3}$ and $10^{3}$.
 
+\subsection{Simulated Dataset}
 To demonstrate the techniques,
 we simulated some data based on the assumption $N=2$, i.e. the true signal was
 composed of two sinusoids.
