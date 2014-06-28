@@ -19,7 +19,7 @@ Sampling}
 \maketitle
 \abstract{This is the abstract.}
 
-\section{Introduction}
+\section{Introduction}\label{sec:introduction}
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{3mm}
 Many inference problems have the following structure. There is some unknown
@@ -252,22 +252,32 @@ and phases $\{\phi_i\}_{i=1}^N$.
 This kind of model has many applications, and has been solved analytically
 under certain sets of assumptions \citep[see e.g.][]{bretthorst}.
 
-The model for the signal is
+In the notation of Section~\ref{sec:introduction}, the parameters of the
+each object are
+\begin{eqnarray}
+\xx_i &=& \{A_i, T_i, \phi_i\}.
+\end{eqnarray}
+
+The model for the shape of the (noise-free) signal is
 \begin{eqnarray}
 y(t) &=& \sum_{i=1}^N A_i \sin \left(\frac{2\pi t}{T_i} + \phi_i\right)
 \end{eqnarray}
 where there are $N$ sinusoids in the signal, the
 amplitudes are $\{A_i\}$, the periods are $\{T_i\}$, and the phases are
 $\{\phi_i\}$.
-
 The sampling distribution (probability distribution for the data given the
 parameters) is a normal (gaussian) distribution with mean zero and standard
 deviation $\sigma$, applied independently to each data point:
 \begin{eqnarray}
-Y_i | N, \{A_i\}, \{T_i\}, \{\phi_i\} \sim
+Y_i | N, \{A_i\}, \{T_i\}, \{\phi_i\}, \sigma \sim
 \mathcal{N}\left(\mu(t_i), \sigma^2\right).
 \end{eqnarray}
-We simulated some data based on the assumption $N=2$.
+This also depends on an additional noise standard deviation parameter $\sigma$
+which will also be inferred.
+
+To demonstrate the techniques,
+we simulated some data based on the assumption $N=2$, i.e. the true signal was
+composed of two sinusoids.
 The simulated data is shown in Figure~\ref{fig:sinewave_data}, and shows a
 large, low period oscillation with a smaller, much faster oscillation
 superimposed. The noise level is such that the fast oscillation is difficult
