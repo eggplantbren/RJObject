@@ -3,24 +3,25 @@
 
 #include <Distributions/Distribution.h>
 
-// Based on ClassicMassInf1D from RJObject
-// Think of "position x" as log-period
-// and mass as amplitude
+// Hyperparameters setting interim prior for galaxy properties
 class MyDistribution:public Distribution
 {
 	private:
 		// Limits
-		double x_min, x_max;
-		double mu_min, mu_max;
+		double x_min, x_max, y_min, y_max;
+		double fluxlim_min, fluxlim_max;
 
-		// Mean of exponential distribution for amplitudes
-		double mu;
+		// Lower limit for Pareto dist
+		double fluxlim;
+		// Slope for Pareto dist
+		double alpha;
 
 		double perturb_parameters();
 
 	public:
 		MyDistribution(double x_min, double x_max,
-					double mu_min, double mu_max);
+					double y_min, double y_max,
+					double fluxlim_min, double fluxlim_max);
 
 		void fromPrior();
 
