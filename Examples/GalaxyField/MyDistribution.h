@@ -13,8 +13,8 @@ class MyDistribution:public Distribution
 
 		// Lower limit for Pareto dist
 		double fluxlim;
-		// Slope for Pareto dist
-		double alpha;
+		// 1/slope for Pareto dist
+		double gamma;
 
 		double perturb_parameters();
 
