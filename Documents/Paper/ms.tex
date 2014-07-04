@@ -325,7 +325,22 @@ sinusoid data. The true value was $N=2$.
 
 %\section{``Transit'' Example}
 %\section{``Asteroseismology'' Example}
-%\section{``Galaxy Field'' Example}
+\section{``Galaxy Field'' Example}
+
+
+For the interim prior for the total fluxes of the galaxies, we use the Pareto
+distribution. The probability density function is
+\begin{eqnarray}
+p(f | f_{\rm min}, \alpha) &=&
+\left\{
+\begin{array}{lr}
+\frac{\alpha f_{\rm min}^{\alpha}}{f^{\alpha + 1}}, & f \geq f_{\rm min}\\
+0, & \textnormal{otherwise.}
+\end{array}
+\right.
+\end{eqnarray}
+
+
 
 \section{Optimisation Techniques}\label{sec:optimisation}
 In both of the examples discussed in this paper, the likelihood evaluation
