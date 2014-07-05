@@ -13,12 +13,11 @@ Data::Data()
 }
 
 void Data::load(const char* metadata_file, const char* image_file,
-			const char* sigma_file, const char* psf_file)
+			const char* sigma_file)
 {
 	/*
 	* First, read in the metadata
 	*/
-	int psf_size;
 	fstream fin(metadata_file, ios::in);
 	if(!fin)
 		cerr<<"# ERROR: couldn't open file "<<metadata_file<<"."<<endl;

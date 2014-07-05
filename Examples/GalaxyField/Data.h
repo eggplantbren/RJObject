@@ -30,7 +30,7 @@ class Data
 	public:
 		Data();
 		void load(const char* metadata_file, const char* image_file,
-				const char* sigma_file, const char* psf_file);
+				const char* sigma_file);
 
 		// Getters
 		int get_ni() const { return ni; }
