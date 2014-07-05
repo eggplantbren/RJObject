@@ -10,11 +10,17 @@ class MyDistribution:public Distribution
 		// Limits
 		double x_min, x_max, y_min, y_max;
 		double fluxlim_min, fluxlim_max;
+		double radiuslim_min, radiuslim_max;
 
-		// Lower limit for Pareto dist
+		// Lower limit and 1/slope for Pareto interim prior
+		// for masses
 		double fluxlim;
-		// 1/slope for Pareto dist
 		double gamma;
+
+		// Lower limit and 1/slope for Pareto interim prior
+		// for radii
+		double radiuslim;
+		double gamma_radius;
 
 		double perturb_parameters();
 
