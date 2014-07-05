@@ -12,9 +12,9 @@ class MyModel:public DNest3::Model
 		RJObject<MyDistribution> objects;
 		double sigma; // Noise standard deviation
 
-		// The signal
-		std::vector<double> mu;
-		void calculate_mu();
+		// The model image
+		std::vector< std::vector<double> > image;
+		void calculate_image();
 
 	public:
 		MyModel();
