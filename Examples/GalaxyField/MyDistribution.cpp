@@ -63,12 +63,20 @@ double MyDistribution::log_pdf(const std::vector<double>& vec) const
 
 void MyDistribution::from_uniform(std::vector<double>& vec) const
 {
+	double alpha = 1./gamma;
 
+	vec[0] = x_min + (x_max - x_min)*vec[0];
+	vec[1] = y_min + (y_max - y_min)*vec[1];
+	vec[2] = fluxlim*pow(1. - vec[2], -1./alpha)
 }
 
 void MyDistribution::to_uniform(std::vector<double>& vec) const
 {
+	double alpha = 1./gamma;
 
+	vec[0] = (vec[0] - x_min)/(x_max - x_min);
+	vec[1] = (vec[1] - y_min)/(y_max - y_min);
+	vec[2] = 1. - pow(fluxlim/vec[2], alpha);
 }
 
 void MyDistribution::print(std::ostream& out) const
