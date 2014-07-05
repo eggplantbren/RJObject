@@ -50,7 +50,15 @@ double MyDistribution::perturb_parameters()
 // x, y, flux
 double MyDistribution::log_pdf(const std::vector<double>& vec) const
 {
-	return 0.;
+	double alpha = 1./gamma;
+
+	if(vec[0] < x_min || vec[1] > x_max || vec[2] < fluxlim)
+		return -1E300;
+
+	double logp = 0.;
+	logp += log(alpha) + alpha*log(fluxlim) - (alpha + 1.)*log(vec[2]);
+
+	return logp;
 }
 
 void MyDistribution::from_uniform(std::vector<double>& vec) const
