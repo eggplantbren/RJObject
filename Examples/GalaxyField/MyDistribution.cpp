@@ -20,12 +20,29 @@ MyDistribution::MyDistribution(double x_min, double x_max,
 
 void MyDistribution::fromPrior()
 {
-
+	fluxlim = exp(log(fluxlim_min) + log(fluxlim_max/fluxlim_min)*rand());
+	gamma = 2.*randomU();
 }
 
 double MyDistribution::perturb_parameters()
 {
 	double logH = 0.;
+
+	int which = randInt(2);
+
+	if(which == 0)
+	{
+		fluxlim = log(fluxlim);
+		fluxlim += log(fluxlim_max/fluxlim_min)*randh();
+		fluxlim = mod(fluxlim - log(fluxlim_min),
+			log(fluxlim_max/fluxlim_min)) + log(fluxlim_min);
+		fluxlim = exp(fluxlim);
+	}
+	else
+	{
+		gamma += 2.*randh();
+		gamma = mod(gamma, 2.);
+	}
 
 	return logH;
 }
@@ -48,6 +65,6 @@ void MyDistribution::to_uniform(std::vector<double>& vec) const
 
 void MyDistribution::print(std::ostream& out) const
 {
-
+	out<<fluxlim<<' '<<gamma<<' ';
 }
 
