@@ -21,14 +21,20 @@ MyModel::MyModel()
 void MyModel::fromPrior()
 {
 	objects.fromPrior();
+	calculate_image();
 }
 
+void MyModel::calculate_image()
+{
+	image.assign(image.size(), vector<double>(image[0].size(), 0.));
+}
 
 double MyModel::perturb()
 {
 	double logH = 0.;
 
 	logH += objects.perturb();
+	calculate_image();
 
 	return logH;
 }
