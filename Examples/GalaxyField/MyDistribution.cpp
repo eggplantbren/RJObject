@@ -14,7 +14,7 @@ MyDistribution::MyDistribution(double x_min, double x_max,
 ,y_max(y_max)
 ,fluxlim_min(fluxlim_min)
 ,fluxlim_max(fluxlim_max)
-,radiuslim_min(1E-2*sqrt((x_max - x_min)*(y_max - y_min)))
+,radiuslim_min(1E-3*sqrt((x_max - x_min)*(y_max - y_min)))
 ,radiuslim_max(sqrt((x_max - x_min)*(y_max - y_min)))
 {
 
