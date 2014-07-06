@@ -10,11 +10,13 @@ class MyModel:public DNest3::Model
 {
 	private:
 		RJObject<MyDistribution> objects;
-		double sigma; // Noise standard deviation
 
 		// The model image
 		std::vector< std::vector<double> > image;
 		void calculate_image();
+
+		// Noise standard deviation
+		double sigma;
 
 	public:
 		MyModel();

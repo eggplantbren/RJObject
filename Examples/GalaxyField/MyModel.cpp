@@ -22,6 +22,7 @@ void MyModel::fromPrior()
 {
 	objects.fromPrior();
 	calculate_image();
+	sigma = exp(log(1.) + log(1E6)*randomU());
 }
 
 void MyModel::calculate_image()
@@ -74,8 +75,18 @@ double MyModel::perturb()
 {
 	double logH = 0.;
 
-	logH += objects.perturb();
-	calculate_image();
+	if(randomU() <= 0.75)
+	{
+		logH += objects.perturb();
+		calculate_image();
+	}
+	else
+	{
+		sigma = log(sigma);
+		sigma += log(1E6)*randh();
+		sigma = mod(sigma - log(1.), log(1E6)) + log(1.);
+		sigma = exp(sigma);
+	}
 
 	return logH;
 }
@@ -91,7 +102,8 @@ void MyModel::print(std::ostream& out) const
 	for(size_t i=0; i<image.size(); i++)
 		for(size_t j=0; j<image[i].size(); j++)
 			out<<image[i][j]<<' ';
-//	objects.print(out); out<<' ';
+	objects.print(out); out<<' ';
+	out<<sigma<<' ';
 }
 
 string MyModel::description() const
