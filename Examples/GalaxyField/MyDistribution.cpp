@@ -28,15 +28,18 @@ void MyDistribution::fromPrior()
 	radiuslim = exp(log(radiuslim_min) + log(radiuslim_max/radiuslim_min)*randomU());
 	gamma_radius = 2.*randomU();
 
-	b = randomU();
-	a = randomU()*b;
+	b1 = randomU();
+	a1 = randomU()*b1;
+
+	b2 = randomU();
+	a2 = randomU()*b2;
 }
 
 double MyDistribution::perturb_parameters()
 {
 	double logH = 0.;
 
-	int which = randInt(6);
+	int which = randInt(8);
 
 	if(which == 0)
 	{
@@ -66,21 +69,33 @@ double MyDistribution::perturb_parameters()
 	}
 	else if(which == 4)
 	{
-		a /= b;
-		b += randh();
-		b = mod(b, 1.);
-		a *= b;
+		a1 /= b1;
+		b1 += randh();
+		b1 = mod(b1, 1.);
+		a1 *= b1;
+	}
+	else if(which == 5)
+	{
+		a1 += b1*randh();
+		a1 = mod(0., b1);
+	}
+	else if(which == 6)
+	{
+		a2 /= b2;
+		b2 += randh();
+		b2 = mod(b2, 1.);
+		a2 *= b2;
 	}
 	else
 	{
-		a += b*randh();
-		a = mod(0., b);
+		a2 += b2*randh();
+		a2 = mod(0., b2);
 	}
 
 	return logH;
 }
 
-// x, y, flux, radius, q, theta, inner radius
+// x, y, flux, radius, q, theta, rinner/router, Minner/Mouter
 double MyDistribution::log_pdf(const std::vector<double>& vec) const
 {
 	double alpha = 1./gamma;
@@ -90,7 +105,8 @@ double MyDistribution::log_pdf(const std::vector<double>& vec) const
 			vec[2] < fluxlim || vec[3] < radiuslim ||
 			vec[4] < 0.2 || vec[4] > 1. ||
 			vec[5] < 0. || vec[5] > M_PI ||
-			vec[6] < a || vec[6] > b)
+			vec[6] < a1 || vec[6] > b1 ||
+			vec[7] < a2 || vec[7] > b2)
 		return -1E300;
 
 	double logp = 0.;
@@ -98,7 +114,7 @@ double MyDistribution::log_pdf(const std::vector<double>& vec) const
 	logp += log(alpha) + alpha*log(fluxlim) - (alpha + 1.)*log(vec[2]);
 	logp += log(alpha_radius) + alpha_radius*log(radiuslim)
 			- (alpha_radius + 1.)*log(vec[3]);
-	logp += -log(b - a);
+	logp += -log(b1 - a1) - log(b2 - a2);
 
 	return logp;
 }
@@ -111,7 +127,8 @@ void MyDistribution::from_uniform(std::vector<double>& vec) const
 	vec[3] = radiuslim*pow(1. - vec[3], -gamma_radius);
 	vec[4] = 0.2 + 0.8*vec[4];
 	vec[5] = M_PI*vec[5];
-	vec[6] = a + (b - a)*vec[6];
+	vec[6] = a1 + (b1 - a1)*vec[6];
+	vec[7] = a2 + (b2 - a2)*vec[7];
 }
 
 void MyDistribution::to_uniform(std::vector<double>& vec) const
@@ -125,12 +142,13 @@ void MyDistribution::to_uniform(std::vector<double>& vec) const
 	vec[3] = 1. - pow(radiuslim/vec[3], alpha_radius);
 	vec[4] = (vec[4] - 0.2)/0.8;
 	vec[5] = vec[5]/M_PI;
-	vec[6] = (vec[6] - a)/(b - a);
+	vec[6] = (vec[6] - a1)/(b1 - a1);
+	vec[7] = (vec[7] - a2)/(b2 - a2);
 }
 
 void MyDistribution::print(std::ostream& out) const
 {
 	out<<fluxlim<<' '<<gamma<<' '<<radiuslim<<' '<<gamma_radius<<' ';
-	out<<a<<' '<<b<<' ';
+	out<<a1<<' '<<b1<<' '<<a2<<' '<<b2<<' ';
 }
 

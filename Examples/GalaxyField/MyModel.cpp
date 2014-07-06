@@ -8,7 +8,7 @@ using namespace std;
 using namespace DNest3;
 
 MyModel::MyModel()
-:objects(7, 100, false, MyDistribution(
+:objects(8, 100, false, MyDistribution(
 	Data::get_instance().get_x_min(), Data::get_instance().get_x_max(),
 	Data::get_instance().get_y_min(), Data::get_instance().get_y_max(),
 			1E-3, 1E3))
