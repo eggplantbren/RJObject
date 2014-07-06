@@ -22,10 +22,10 @@ MyDistribution::MyDistribution(double x_min, double x_max,
 
 void MyDistribution::fromPrior()
 {
-	fluxlim = exp(log(fluxlim_min) + log(fluxlim_max/fluxlim_min)*rand());
+	fluxlim = exp(log(fluxlim_min) + log(fluxlim_max/fluxlim_min)*randomU());
 	gamma = 2.*randomU();
 
-	radiuslim = exp(log(radiuslim_min) + log(radiuslim_max/radiuslim_min)*rand());
+	radiuslim = exp(log(radiuslim_min) + log(radiuslim_max/radiuslim_min)*randomU());
 	gamma_radius = 2.*randomU();
 }
 
@@ -86,13 +86,10 @@ double MyDistribution::log_pdf(const std::vector<double>& vec) const
 
 void MyDistribution::from_uniform(std::vector<double>& vec) const
 {
-	double alpha = 1./gamma;
-	double alpha_radius = 1./gamma_radius;
-
 	vec[0] = x_min + (x_max - x_min)*vec[0];
 	vec[1] = y_min + (y_max - y_min)*vec[1];
-	vec[2] = fluxlim*pow(1. - vec[2], -1./alpha);
-	vec[3] = radiuslim*pow(1. - vec[3], -1./alpha_radius);
+	vec[2] = fluxlim*pow(1. - vec[2], -gamma);
+	vec[3] = radiuslim*pow(1. - vec[3], -gamma_radius);
 }
 
 void MyDistribution::to_uniform(std::vector<double>& vec) const
