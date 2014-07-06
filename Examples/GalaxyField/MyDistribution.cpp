@@ -65,14 +65,16 @@ double MyDistribution::perturb_parameters()
 	return logH;
 }
 
-// x, y, flux, radius
+// x, y, flux, radius, q, theta
 double MyDistribution::log_pdf(const std::vector<double>& vec) const
 {
 	double alpha = 1./gamma;
 	double alpha_radius = 1./gamma_radius;
 
 	if(vec[0] < x_min || vec[1] > x_max ||
-			vec[2] < fluxlim || vec[3] < radiuslim)
+			vec[2] < fluxlim || vec[3] < radiuslim ||
+			vec[4] < 0.2 || vec[4] > 1. ||
+			vec[5] < 0. || vec[5] > M_PI)
 		return -1E300;
 
 	double logp = 0.;
@@ -90,6 +92,8 @@ void MyDistribution::from_uniform(std::vector<double>& vec) const
 	vec[1] = y_min + (y_max - y_min)*vec[1];
 	vec[2] = fluxlim*pow(1. - vec[2], -gamma);
 	vec[3] = radiuslim*pow(1. - vec[3], -gamma_radius);
+	vec[4] = 0.2 + 0.8*vec[4];
+	vec[5] = M_PI*vec[5];
 }
 
 void MyDistribution::to_uniform(std::vector<double>& vec) const
@@ -101,6 +105,8 @@ void MyDistribution::to_uniform(std::vector<double>& vec) const
 	vec[1] = (vec[1] - y_min)/(y_max - y_min);
 	vec[2] = 1. - pow(fluxlim/vec[2], alpha);
 	vec[3] = 1. - pow(radiuslim/vec[3], alpha_radius);
+	vec[4] = (vec[4] - 0.2)/0.8;
+	vec[5] = vec[5]/M_PI;
 }
 
 void MyDistribution::print(std::ostream& out) const

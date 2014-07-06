@@ -22,6 +22,8 @@ class MyDistribution:public Distribution
 		double radiuslim;
 		double gamma_radius;
 
+		// Lower limit for q
+
 		double perturb_parameters();
 
 	public:
