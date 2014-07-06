@@ -41,6 +41,7 @@ void MyModel::calculate_image()
 		vector<double>(Data::get_instance().get_nj(), 0.));
 
 	double xc, yc, M, w, q, theta, cos_theta, sin_theta, wsq;
+	double rinner, rinnersq, frac;
 	double xx, yy, rsq;
 
 	for(size_t k=0; k<components.size(); k++)
@@ -50,6 +51,9 @@ void MyModel::calculate_image()
 		q = components[k][4]; theta = components[k][5];
 		cos_theta = cos(theta); sin_theta = sin(theta);
 		wsq = w*w;
+		rinner = components[k][6]*w;
+		rinnersq = rinner*rinner;
+		frac = components[k][7];
 
 		for(size_t i=0; i<image.size(); i++)
 		{
@@ -58,8 +62,12 @@ void MyModel::calculate_image()
 				xx =  (x[i][j] - xc)*cos_theta + (y[i][j] - yc)*sin_theta;
 				yy = -(x[i][j] - xc)*sin_theta + (y[i][j] - yc)*cos_theta;
 				rsq = q*xx*xx + yy*yy/q;
+				// Outer gaussian
 				if(rsq < 25.*wsq)
-					image[i][j] += M/(2.*M_PI*wsq)*exp(-0.5*rsq/wsq);
+					image[i][j] += (1. - frac)*M/(2.*M_PI*wsq)*exp(-0.5*rsq/wsq);
+				// Inner gaussian
+				if(rsq < 25.*rinnersq)
+					image[i][j] += frac*M/(2.*M_PI*rinnersq)*exp(-0.5*rsq/rinnersq);
 			}
 		}
 	}
