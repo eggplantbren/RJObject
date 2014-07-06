@@ -93,7 +93,21 @@ double MyModel::perturb()
 
 double MyModel::logLikelihood() const
 {
+	const vector< vector<double> >& data = Data::get_instance().get_image();
+	const vector< vector<double> >& sig = Data::get_instance().get_sigma();
+
 	double logL = 0.;
+	double var;
+	for(size_t i=0; i<data.size(); i++)
+	{
+		for(size_t j=0; j<data[i].size(); j++)
+		{
+			var = sigma*sigma + sig[i][j]*sig[i][j];
+			logL += -0.5*log(2.*M_PI*var)
+				-0.5*pow(data[i][j] - image[i][j], 2)/var;
+		}
+	}
+
 	return logL;
 }
 
