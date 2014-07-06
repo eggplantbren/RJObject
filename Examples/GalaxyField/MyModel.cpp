@@ -29,9 +29,6 @@ void MyModel::calculate_image()
 	// Get coordinate stuff from data
 	const vector< vector<double> >& x = Data::get_instance().get_x_rays();
 	const vector< vector<double> >& y = Data::get_instance().get_y_rays();
-	double xmin = Data::get_instance().get_x_min();
-	double ymax = Data::get_instance().get_y_max();
-	double dx = Data::get_instance().get_dx();
 
 	// Components
 	const vector< vector<double> >& components = objects.get_components();
