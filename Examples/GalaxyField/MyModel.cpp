@@ -51,6 +51,15 @@ void MyModel::calculate_image()
 		j_min = (components[k][0] - 5.*components[k][3] - xmin)/dx;
 		j_max = (components[k][0] + 5.*components[k][3] - xmin)/dx;
 
+		if(i_min < 0)
+			i_min = 0;
+		if(i_max > (int)image.size())
+			i_max = image.size();
+		if(j_min < 0)
+			j_min = 0;
+		if(j_max > (int)image[0].size())
+			j_max = image[0].size();
+
 		widthsq = components[k][3]*components[k][3];
 		recip = 1./widthsq;
 		for(int i=i_min; i<=i_max; i++)
