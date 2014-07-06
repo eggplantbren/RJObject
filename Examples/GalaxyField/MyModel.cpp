@@ -40,40 +40,26 @@ void MyModel::calculate_image()
 	image.assign(Data::get_instance().get_ni(),
 		vector<double>(Data::get_instance().get_nj(), 0.));
 
-	double rsq, widthsq, recip, coeff;
-	coeff = 1./(2.*M_PI);
+	double xc, yc, M, w, q, theta, cos_theta, sin_theta, wsq;
+	double xx, yy, rsq;
 
-	int i_min, i_max, j_min, j_max;
 	for(size_t k=0; k<components.size(); k++)
 	{
-		i_min = (ymax - (components[k][1] + 5.*components[k][3]))/dx;
-		i_max = (ymax - (components[k][1] - 5.*components[k][3]))/dx;
-		j_min = (components[k][0] - 5.*components[k][3] - xmin)/dx;
-		j_max = (components[k][0] + 5.*components[k][3] - xmin)/dx;
+		xc = components[k][0]; yc = components[k][1];
+		M = components[k][2]; w = components[k][3];
+		q = components[k][4]; theta = components[k][5];
+		cos_theta = cos(theta); sin_theta = sin(theta);
+		wsq = w*w;
 
-		if(i_min < 0)
-			i_min = 0;
-		if(i_max > (int)image.size())
-			i_max = image.size();
-		if(j_min < 0)
-			j_min = 0;
-		if(j_max > (int)image[0].size())
-			j_max = image[0].size();
-
-		widthsq = components[k][3]*components[k][3];
-		recip = 1./widthsq;
-		for(int i=i_min; i<=i_max; i++)
+		for(size_t i=0; i<image.size(); i++)
 		{
-			for(int j=j_min; j<=j_max; j++)
+			for(size_t j=0; j<image[i].size(); j++)
 			{
-				if(i >= 0 && i < (int)(image.size())
-					&& j >= 0 && j < (int)(image[i].size()))
-				{
-					rsq = pow(x[i][j] - components[k][0], 2)
-					+ pow(y[i][j] - components[k][1], 2);
-					if(rsq*recip <= 25.)
-						image[i][j] += components[k][2]*exp(-0.5*rsq*recip)*recip*coeff;
-				}
+				xx =  (x[i][j] - xc)*cos_theta + (y[i][j] - yc)*sin_theta;
+				yy = -(x[i][j] - xc)*sin_theta + (y[i][j] - yc)*cos_theta;
+				rsq = q*xx*xx + yy*yy/q;
+				if(rsq < 25.*wsq)
+					image[i][j] += M/(2.*M_PI*wsq)*exp(-0.5*rsq/wsq);
 			}
 		}
 	}
