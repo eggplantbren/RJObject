@@ -22,6 +22,7 @@ void MyModel::fromPrior()
 {
 	objects.fromPrior();
 	calculate_image();
+	exit(0);
 }
 
 void MyModel::calculate_image()
@@ -50,6 +51,8 @@ void MyModel::calculate_image()
 		i_max = (ymax - (components[k][1] - 5.*components[k][3]))/dx;
 		j_min = (components[k][0] - 5.*components[k][3] - xmin)/dx;
 		j_max = (components[k][0] + 5.*components[k][3] - xmin)/dx;
+
+		cout<<components[k][0]<<' '<<components[k][1]<<' '<<components[k][2]<<' '<<components[k][3]<<endl;
 
 		widthsq = components[k][3]*components[k][3];
 		recip = 1./widthsq;
