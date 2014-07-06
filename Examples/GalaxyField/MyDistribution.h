@@ -22,7 +22,8 @@ class MyDistribution:public Distribution
 		double radiuslim;
 		double gamma_radius;
 
-		// Lower limit for q
+		// Uniform interim prior for radius ratio
+		double a, b;
 
 		double perturb_parameters();
 
