@@ -23,10 +23,10 @@ MyDistribution::MyDistribution(double x_min, double x_max,
 void MyDistribution::fromPrior()
 {
 	fluxlim = exp(log(fluxlim_min) + log(fluxlim_max/fluxlim_min)*randomU());
-	gamma = 2.*randomU();
+	gamma = randomU();
 
 	radiuslim = exp(log(radiuslim_min) + log(radiuslim_max/radiuslim_min)*randomU());
-	gamma_radius = 2.*randomU();
+	gamma_radius = randomU();
 
 	b1 = randomU();
 	a1 = randomU()*b1;
@@ -51,8 +51,8 @@ double MyDistribution::perturb_parameters()
 	}
 	else if(which == 1)
 	{
-		gamma += 2.*randh();
-		gamma = mod(gamma, 2.);
+		gamma += randh();
+		gamma = mod(gamma, 1.);
 	}
 	else if(which == 2)
 	{
@@ -64,8 +64,8 @@ double MyDistribution::perturb_parameters()
 	}
 	else if(which == 3)
 	{
-		gamma_radius += 2.*randh();
-		gamma_radius = mod(gamma_radius, 2.);
+		gamma_radius += randh();
+		gamma_radius = mod(gamma_radius, 1.);
 	}
 	else if(which == 4)
 	{
