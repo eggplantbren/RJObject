@@ -4,6 +4,8 @@
 fake_data.txt
 *.o
 main
+GalaxyField
+logfile
 *.pyc
 output.txt
 *.pdf
