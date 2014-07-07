@@ -77,7 +77,7 @@ double MyDistribution::perturb_parameters()
 	else if(which == 5)
 	{
 		a1 += b1*randh();
-		a1 = mod(0., b1);
+		a1 = mod(a1, b1);
 	}
 	else if(which == 6)
 	{
@@ -89,7 +89,7 @@ double MyDistribution::perturb_parameters()
 	else
 	{
 		a2 += b2*randh();
-		a2 = mod(0., b2);
+		a2 = mod(a2, b2);
 	}
 
 	return logH;
