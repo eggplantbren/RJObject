@@ -14,6 +14,7 @@ MyModel::MyModel()
 			1E-3, 1E3))
 ,image(Data::get_instance().get_ni(),
 	vector<double>(Data::get_instance().get_nj()))
+,staleness(0)
 {
 
 }
@@ -34,24 +35,56 @@ void MyModel::calculate_image()
 	// Components
 	const vector< vector<double> >& components = objects.get_components();
 
-	// Zero the image
-	image.assign(Data::get_instance().get_ni(),
-		vector<double>(Data::get_instance().get_nj(), 0.));
+	// Diff
+	const vector< vector<double> >& added = objects.get_added();
+	const vector< vector<double> >& removed = objects.get_removed();
+	bool update = (added.size() + removed.size() < components.size()) &&
+				(staleness < 100);
+	int num = (update)?(added.size() + removed.size()):(components.size());
+
+	if(update)
+		staleness++;
+	else
+	{
+		staleness = 0;
+		// Zero the image
+		image.assign(Data::get_instance().get_ni(),
+			vector<double>(Data::get_instance().get_nj(), 0.));
+	}
 
 	double xc, yc, M, w, q, theta, cos_theta, sin_theta, wsq;
 	double rinner, rinnersq, frac;
 	double xx, yy, rsq;
 
-	for(size_t k=0; k<components.size(); k++)
+	const vector<double>* component;
+	double coeff = 1.; // switches to -1 for removing components
+
+	for(int k=0; k<num; k++)
 	{
-		xc = components[k][0]; yc = components[k][1];
-		M = components[k][2]; w = components[k][3];
-		q = components[k][4]; theta = components[k][5];
+		if(update)
+		{
+			if(k < (int)added.size())
+			{
+				component = &(added[k]);
+				coeff = 1.;
+			}
+			else
+			{
+				component = &(removed[k - (int)added.size()]);
+				coeff = -1.;
+			}
+		}
+		else
+			component = &(components[k]);
+
+		xc = (*component)[0]; yc = (*component)[1];
+		M = (*component)[2]; w = (*component)[3];
+		q = (*component)[4]; theta = (*component)[5];
 		cos_theta = cos(theta); sin_theta = sin(theta);
 		wsq = w*w;
-		rinner = components[k][6]*w;
+		rinner = (*component)[6]*w;
 		rinnersq = rinner*rinner;
-		frac = components[k][7];
+		frac = (*component)[7];
 
 		for(size_t i=0; i<image.size(); i++)
 		{
@@ -62,10 +95,10 @@ void MyModel::calculate_image()
 				rsq = q*xx*xx + yy*yy/q;
 				// Outer gaussian
 				if(rsq < 25.*wsq)
-					image[i][j] += (1. - frac)*M/(2.*M_PI*wsq)*exp(-0.5*rsq/wsq);
+					image[i][j] += coeff*(1. - frac)*M/(2.*M_PI*wsq)*exp(-0.5*rsq/wsq);
 				// Inner gaussian
 				if(rsq < 25.*rinnersq)
-					image[i][j] += frac*M/(2.*M_PI*rinnersq)*exp(-0.5*rsq/rinnersq);
+					image[i][j] += coeff*frac*M/(2.*M_PI*rinnersq)*exp(-0.5*rsq/rinnersq);
 			}
 		}
 	}
@@ -117,7 +150,7 @@ void MyModel::print(std::ostream& out) const
 		for(size_t j=0; j<image[i].size(); j++)
 			out<<image[i][j]<<' ';
 	objects.print(out); out<<' ';
-	out<<sigma<<' ';
+	out<<sigma<<' '<<staleness<<' ';
 }
 
 string MyModel::description() const

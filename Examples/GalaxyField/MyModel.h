@@ -15,6 +15,9 @@ class MyModel:public DNest3::Model
 		std::vector< std::vector<double> > image;
 		void calculate_image();
 
+		// How many steps since image was computed from scratch
+		int staleness;
+
 		// Noise standard deviation
 		double sigma;
 
