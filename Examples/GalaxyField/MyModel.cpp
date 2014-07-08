@@ -13,7 +13,7 @@ MyModel::MyModel()
 	Data::get_instance().get_y_min(), Data::get_instance().get_y_max(),
 			1E-3, 1E3))
 ,image(Data::get_instance().get_ni(),
-	vector<double>(Data::get_instance().get_nj()))
+	vector<long double>(Data::get_instance().get_nj()))
 ,staleness(0)
 {
 
@@ -49,7 +49,7 @@ void MyModel::calculate_image()
 		staleness = 0;
 		// Zero the image
 		image.assign(Data::get_instance().get_ni(),
-			vector<double>(Data::get_instance().get_nj(), 0.));
+			vector<long double>(Data::get_instance().get_nj(), 0.));
 	}
 
 	double xc, yc, M, w, q, theta, cos_theta, sin_theta, wsq;
