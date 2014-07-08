@@ -146,9 +146,11 @@ double MyModel::logLikelihood() const
 
 void MyModel::print(std::ostream& out) const
 {
+	out<<setprecision(5);
 	for(size_t i=0; i<image.size(); i++)
 		for(size_t j=0; j<image[i].size(); j++)
 			out<<image[i][j]<<' ';
+	out<<setprecision(10);
 	objects.print(out); out<<' ';
 	out<<sigma<<' '<<staleness<<' ';
 }
