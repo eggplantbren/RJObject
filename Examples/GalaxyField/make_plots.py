@@ -14,7 +14,7 @@ data = loadtxt('Data/test_image.txt')
 
 img = stretch(data)
 
-imshow(img, cmap='gray')
+imshow(img, cmap='gray', interpolation='nearest')
 xlabel('$x$')
 ylabel('$y$')
 gca().set_xticks([-0.5, 99.5, 199.5])
@@ -22,6 +22,6 @@ gca().set_yticks([-0.5, 99.5, 199.5])
 gca().set_xticklabels(['-1', '0', '1'])
 gca().set_yticklabels(['1', '0', '-1'])
 title('GalaxyField Data')
-savefig('image.pdf', bbox_inches='tight')
+savefig('galaxyfield_data.pdf', bbox_inches='tight')
 show()
 
