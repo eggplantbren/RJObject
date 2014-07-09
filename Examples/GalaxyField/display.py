@@ -1,5 +1,11 @@
 from pylab import *
 
+import os
+
+saveFrames = False # For making movies
+if saveFrames:
+	os.system('rm Frames/*.png')
+
 posterior_sample = atleast_2d(loadtxt('posterior_sample.txt'))
 data = loadtxt('Data/test_image.txt')
 sig = loadtxt('Data/test_sigma.txt')
@@ -16,6 +22,10 @@ for i in xrange(0, posterior_sample.shape[0]):
 	imshow((img - data)/sigma)
 	title('Standardised Residuals')
 	draw()
+
+	if saveFrames:
+		savefig('Frames/' + '%0.4d'%(i+1) + '.png', bbox_inches='tight')
+		print('Frames/' + '%0.4d'%(i+1) + '.png')
 
 ioff()
 show()
