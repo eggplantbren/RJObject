@@ -327,18 +327,34 @@ sinusoid data. The true value was $N=2$.
 %\section{``Asteroseismology'' Example}
 \section{``Galaxy Field'' Example}
 
+We model each galaxy as a mixture of two concentric elliptical galaxies, with
+the following eight parameters. Firstly, two
+parameters $x_c$ and $y_c$ describe the central position of the galaxy within
+the image. The flux $f$ describes the total integral of the galaxy's
+intensity profile. The axis ratio $q$ describes the ellipticity of the galaxy
+and $\theta$ its orientation angle with respect to horizontal. Finally
+we include a ``radius ratio'' $u$ describing the ratio of the radius of the
+smaller gaussian with respect to that of the bigger gaussian, and a parameter
+$v$ describing the fraction of the total flux in the outer gaussian
+(therefore the fraction of the light in the smaller gaussian is $1-f$).
 
-For the interim prior for the total fluxes of the galaxies, we use the Pareto
-distribution. The probability density function is
+For the interim prior for the total fluxes of the galaxies, and for the
+widths of the galaxies, we use the Pareto
+distribution. The probability density function for a variable $x$ given
+hyperparameters $x_{\rm min}$ and $a$ is
 \begin{eqnarray}
-p(f | f_{\rm min}, \alpha) &=&
+p(x | x_{\rm min}, a) &=&
 \left\{
 \begin{array}{lr}
-\frac{\alpha f_{\rm min}^{\alpha}}{f^{\alpha + 1}}, & f \geq f_{\rm min}\\
+\frac{a x_{\rm min}^{a}}{x^{a + 1}}, & x \geq x_{\rm min}\\
 0, & \textnormal{otherwise.}
 \end{array}
 \right.
 \end{eqnarray}
+Since we are using this for both the fluxes and the widths of the galaxies,
+there will be four hyperparameters in total for the fluxes and widths.
+
+
 
 % Pareto in terms of log(x)
 % p(x) ~ x^(-(alpha + 1))
