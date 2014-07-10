@@ -13,7 +13,7 @@ class MyModel:public DNest3::Model
 		double sigma; // Noise standard deviation
 
 		// The signal
-		std::vector<double> mu;
+		std::vector<long double> mu;
 		void calculate_mu();
 
 	public:

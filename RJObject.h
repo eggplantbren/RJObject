@@ -69,6 +69,10 @@ class RJObject
 		// The top-level perturb method
 		double perturb();
 
+		// Take "removed" components and put them into "added" with
+		// negative amplitude. Only applicable to certain models!
+		void consolidate_diff();
+
 		// For output
 		void print(std::ostream& out) const;
 
