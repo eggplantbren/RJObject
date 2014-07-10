@@ -29,6 +29,8 @@ class MyDistribution:public Distribution
 		void to_uniform(std::vector<double>& vec) const;
 
 		void print(std::ostream& out) const;
+		static const int weight_parameter = 1;
+
 };
 
 #endif
