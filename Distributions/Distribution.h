@@ -48,6 +48,10 @@ class Distribution
 
 		// Print parameters to stream
 		virtual void print(std::ostream& out) const = 0;
+
+		// Which element is an "amplitude" and can be used for
+		// faster proposals? Set to -1 if undefined.
+		static const int weight_parameter = -1;
 };
 
 #endif

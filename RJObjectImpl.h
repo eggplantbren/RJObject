@@ -235,3 +235,20 @@ void RJObject<Distribution>::print(std::ostream& out) const
 	}
 }
 
+template<class Distribution>
+void RJObject<Distribution>::consolidate_diff()
+{
+	if(Distribution::weight_parameter == -1)
+	{
+		std::cerr<<"# WARNING: consolidate_diff() failed."<<std::endl;
+		return;
+	}
+
+	for(size_t i=0; i<removed.size(); i++)
+	{
+		removed[i][Distribution::weight_parameter] *= -1;
+		added.push_back(removed[i]);
+	}
+	removed.clear();
+}
+
