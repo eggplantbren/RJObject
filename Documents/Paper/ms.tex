@@ -17,9 +17,21 @@ Sampling}
 
 \begin{document}
 \maketitle
-\abstract{Blah...
-We demonstrate the techniques on a seemingly simple problem of detecting
-sinusoidal signals in noise, which exhibits a phase transition.}
+\abstract{Many inference problems require us to infer the number $N$ of
+objects in some region, along with their properties $\{\xx_i\}_{i=1}^N$,
+from a dataset $\mathcal{D}$. These problems are typically solved using one
+of the following two methods: i)
+by executing a Monte Carlo algorithm (such as Nested Sampling) once for each
+possible value of $N$,
+and calculating the marginal likelihood or evidence as a function of $N$; or
+ii) by doing a single run that allows the model dimension $N$ to change (such as
+Markov Chain Monte Carlo with birth/death moves), and obtaining the posterior
+for $N$ directly. In this paper we present a general approach to this problem
+that uses trans-dimensional MCMC embedded {\it within} a Nested Sampling
+algorithm, allowing us to explore the posterior distribution and calculate
+the marginal likelihood (summed over $N$) even if the problem contains a phase
+transition. We present two example problems, finding sinusoidal signals in
+noisy data, and finding and measuring galaxies in a noisy astronomical image.}
 
 \section{Introduction}\label{sec:introduction}
 \setlength{\parindent}{0cm}
