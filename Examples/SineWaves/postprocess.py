@@ -158,16 +158,17 @@ def postprocess(temperature=1., numResampleLogX=1, plot=True, loaded=[], \
 			plt.figure(3)
 			if z == 0:
 				plt.subplot(2,1,1)
-				plt.plot(logx_samples[:,z], sample_info[:,1], 'b.', label='Samples')
+				plt.plot(logx_samples[:,z], sample_info[:,1], 'b.', markersize=1, label='Samples')
 				plt.hold(True)
 				plt.plot(levels[1:,0], levels[1:,1], 'r.', label='Levels')
 				plt.legend(numpoints=1, loc='lower left')
-				plt.ylabel('log(L)')
-				plt.title(str(z+1) + "/" + str(numResampleLogX) + ", log(Z) = " + str(logz_estimates[z][0]))
+				plt.title('Likelihood Curve')
+				plt.ylabel(r'$\log(L)$')
+
 				# Use all plotted logl values to set ylim
 				combined_logl = np.hstack([sample_info[:,1], levels[1:, 1]])
 				combined_logl = np.sort(combined_logl)
-				lower = combined_logl[int(0.05*combined_logl.size)]
+				lower = combined_logl[int(0.07*combined_logl.size)]
 				upper = combined_logl[-1]
 				diff = upper - lower
 				lower -= 0.05*diff
@@ -182,12 +183,14 @@ def postprocess(temperature=1., numResampleLogX=1, plot=True, loaded=[], \
 		if plot:
 			plt.subplot(2,1,2)
 			plt.hold(False)
-			plt.plot(logx_samples[:,z], P_samples[:,z], 'b.')
+			plt.plot(logx_samples[:,z], P_samples[:,z], 'b.', markersize=1)
 			plt.ylabel('Posterior Weights')
-			plt.xlabel('log(X)')
+			plt.xlabel(r'$\log(X)$')
 			plt.xlim(xlim)
 			if numResampleLogX > 1:
 				plt.draw()
+
+			plt.savefig('sinewaves_likelihood.pdf')
 
 	P_samples = np.mean(P_samples, 1)
 	P_samples = P_samples/np.sum(P_samples)
