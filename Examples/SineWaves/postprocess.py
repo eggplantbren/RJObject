@@ -190,7 +190,7 @@ def postprocess(temperature=1., numResampleLogX=1, plot=True, loaded=[], \
 			if numResampleLogX > 1:
 				plt.draw()
 
-			plt.savefig('sinewaves_likelihood.pdf')
+			plt.savefig('sinewaves_likelihood.pdf', bbox_inches='tight')
 
 	P_samples = np.mean(P_samples, 1)
 	P_samples = P_samples/np.sum(P_samples)

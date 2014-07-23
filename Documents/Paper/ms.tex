@@ -42,7 +42,8 @@ number, $N$, of objects in a region. Each of the $N$ objects has a property
 $\xx$, which may be a single scalar value (for example, a mass), or a set of
 values (e.g. a position and a mass).
 
-We would like to assign a prior to the objects' properties $\{\xx_i\}_{i=1}^N$.
+To do the inference, we must assign a prior to the objects' properties
+$\{\xx_i\}_{i=1}^N$.
 Since $N$ may be large, it is usually easier to assign an ``interim prior''
 conditional on some hyperparameters $\hyperparams$, and then assign a prior to
 $\hyperparams$. This kind of model is usually called {\it hierarchical}.
@@ -326,6 +327,17 @@ noise standard deviation of $\sigma = 1$.
 \label{fig:sinewave_data}}
 \end{center}
 \end{figure}
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{sinewaves_likelihood.pdf}
+\caption{The inference for $N$, the number of sinusoids, based on the
+sinusoid data. The true value was $N=2$.
+\label{fig:sinewaves_likelihood}}
+\end{center}
+\end{figure}
+
 
 \begin{figure}
 \begin{center}
