@@ -17,7 +17,7 @@ Sampling}
 
 \begin{document}
 \maketitle
-\abstract{Many inference problems require us to infer the number $N$ of
+\abstract{Many inference problems involve inferring the number $N$ of
 objects in some region, along with their properties $\{\xx_i\}_{i=1}^N$,
 from a dataset $\mathcal{D}$. These problems are typically solved using one
 of the following two methods: i)
@@ -40,14 +40,14 @@ noisy data, and finding and measuring galaxies in a noisy astronomical image.}
 Many inference problems have the following structure. There is some unknown
 number, $N$, of objects in a region. Each of the $N$ objects has a property
 $\xx$, which may be a single scalar value (for example, a mass), or a set of
-values (e.g. a position and a mass).
+values (e.g. a two-dimensional position and a mass). These problems are often
+challenging due to the unknown (and potentially large) dimensionality.
 
 To do the inference, we must assign a prior to the objects' properties
 $\{\xx_i\}_{i=1}^N$.
 Since $N$ may be large, it is usually easier to assign an ``interim prior''
 conditional on some hyperparameters $\hyperparams$, and then assign a prior to
 $\hyperparams$. This kind of model is usually called {\it hierarchical}.
-
 The prior for $N$, $\hyperparams$, and $\{\xx_i\}$ is usually factorised
 in the following way:
 
@@ -66,7 +66,8 @@ p(N, \hyperparams, \{\xx_i\})
 p(\mathcal{D} | N, \hyperparams, \{\xx_i\})\label{eq:bayes}
 \end{eqnarray}
 The general method used to calculate properties of the posterior distribution
-is to generate samples from it using Markov Chain Monte Carlo (MCMC).
+is to generate samples from it using Markov Chain Monte Carlo (MCMC). The
+structure of the model is depicted graphically in Figure~\ref{fig:pgm}.
 
 The marginal likelihood, or evidence, is also an important quantity, and is
 the normalisation constant of the posterior given in Equation~\ref{eq:bayes}:
@@ -92,8 +93,9 @@ for simplicity.
 \end{center}
 \end{figure}
 
-In other studies, it has been common to do separate runs of Nested Sampling
-$N$ fixed at various trial values. Then, the posterior for $N$ can be calculated
+In other studies, it has been common to do separate runs of Nested Sampling,
+with $N$ fixed at various trial values.
+Then, the posterior for $N$ can be calculated
 based on the estimates of the evidence obtained as a function of $N$. However,
 in this paper, we use trans-dimensional MCMC moves to infer $N$. In other words,
 $N$ is treated as just another parameter, and the marginal likelihood defined
@@ -106,8 +108,11 @@ difficult features, such as strong dependencies or multiple modes, that cause
 problems with mixing. Diffusive Nested Sampling
 (DNS) replaces the posterior distribution with an alternative target
 distribution composed of a mixture of the prior distribution with other, more
-constrained distributions. This is similar to the idea of simulated annealing,
-where the target distribution is modified to something ``easier'', however,
+constrained distributions, facilitating mixing between the multiple modes
+and along degeneracy curves.
+This is similar to the idea of simulated annealing,
+where the target distribution is modified from the posterior to something
+``easier'', however,
 the sequence of distributions used in Nested Sampling avoids some of the
 problems with simulated annealing: in particular, there is no need to choose
 a temperature schedule, and the method does not fail when phase transitions
