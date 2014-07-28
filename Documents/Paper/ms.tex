@@ -379,6 +379,17 @@ sinusoid data. The true value was $N=2$.
 %\section{``Transit'' Example}
 %\section{``Asteroseismology'' Example}
 \section{``Galaxy Field'' Example}
+Source detection is an important problem in astrophysics. Given some data,
+usually one or more noisy, blurred, images of the sky, we would like to know
+how many objects $N$ (such as stars or galaxies) are in the image, and their
+properties (such as flux, size, orientation). Various ad-hoc approaches exist,
+covering a wide spectrum between ad-hoc approaches and principled inference
+approaches
+\citep[e.g.][]{irwin, sextractor, dolphot, 2003MNRAS.338..765H, starfield}.
+
+In this section we apply
+the DNS approach to a toy version of the problem of detecting and quantifying
+extended objects such as galaxies in a noisy image.
 
 We model each galaxy as a mixture of two concentric elliptical galaxies, with
 the following eight parameters. Firstly, two
@@ -454,6 +465,8 @@ John Skilling (MaxEnt Data Consultants), and Daniela Huppenkothen
 
 
 \begin{thebibliography}{}
+\bibitem[Bertin and
+Arnouts(1996)]{sextractor} Bertin, E., Arnouts, S.\ 1996.\ SExtractor: Software for source extraction.\ Astronomy and Astrophysics Supplement Series 117, 393-404.
 
 \bibitem[Bretthorst(1988)]{bretthorst} Bretthorst, G.~Larry.\  1988.\
 Bayesian Spectrum Analysis and Parameter Estimation.\ In Lecture Notes in
@@ -464,7 +477,7 @@ T.~R., Kjeldsen, H., Stello, D.\ 2007.\ Bayesian Inference from
 Observations of Solar-like Oscillations.\ The Astrophysical Journal 654, 
 551-557. 
 
-\bibitem[Brewer et al.(2013)]{2013AJ....146....7B} Brewer, B.~J., 
+\bibitem[Brewer et al.(2013)]{starfield} Brewer, B.~J., 
 Foreman-Mackey, D., Hogg, D.~W.\ 2013.\ Probabilistic Catalogs for Crowded 
 Stellar Fields.\ The Astronomical Journal 146, 7. 
 
@@ -477,8 +490,18 @@ G.~F., Belokurov, V., Irwin, M.~J., Bridges, T.~J., Evans, N.~W.\ 2011.\
 Modelling of the complex CASSOWARY/SLUGS gravitational lenses.\ Monthly
 Notices of the Royal Astronomical Society 412, 2521-2529
 
+\bibitem[Dolphin(2000)]{dolphot} Dolphin, A.~E.\ 2000, PASP, 
+112, 1383 
+
+
 \bibitem[\protect\citeauthoryear{Green}{1995}]{rjmcmc}
 Green, P.~J., 1995, Reversible Jump Markov Chain Monte Carlo Computation and Bayesian Model Determination, Biometrika 82 (4): 711–732.
+
+\bibitem[Hobson 
+\& McLachlan(2003)]{2003MNRAS.338..765H} Hobson, M.~P., \& McLachlan, C.\ 2003, \mnras, 338, 765 
+
+\bibitem[Irwin(1985)]{irwin} Irwin, M.~J.\ 1985, \mnras, 214,
+575
 
 \bibitem[Neal(2001)]{neal} Neal, R.~M., 2001, 
 Annealed importance sampling, Statistics and Computing, vol. 11, pp. 125-139.
