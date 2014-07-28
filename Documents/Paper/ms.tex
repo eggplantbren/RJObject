@@ -333,6 +333,25 @@ noise standard deviation of $\sigma = 1$.
 \end{center}
 \end{figure}
 
+\subsection{Results}
+We ran DNS on the simulated data shown in Figure~\ref{fig:sinewave_data}.
+The shape of the likelihood function, with respect to the prior mass (the
+usual likelihood curve associated with Nested Sampling), us shown in
+Figure~\ref{fig:sinewaves_likelihood}. Two phase transitions can be seen. The
+first, at $\log(X) \approx -10$ nats,
+separates ``noise-only'' models (where the
+entire dataset is accounted for by the noise term) from ``one-sinusoid'' models
+where $N=1$. At $\log(X) \approx -28$ nats, a second phase transition separates
+$N=1$ models from $N=2$ models.
+
+If we were to do this analysis by trying to explore the posterior directly,
+rather than by using Nested Sampling, it would be difficult to jump between
+the $N=1$ solution and the $N=2$ solution, because the posterior distribution
+would be composed of a mixture of a small-volume but high-likelihood spike
+and a large-volume but (relatively) low likelihood
+slab. Note that this phase transition still exists if we condition on $N=2$,
+so is not caused by the trans-dimensional model.
+
 
 \begin{figure}
 \begin{center}
