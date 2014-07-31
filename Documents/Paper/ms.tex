@@ -402,7 +402,7 @@ parameters $x_c$ and $y_c$ describe the central position of the galaxy within
 the image. The flux $f$ describes the total integral of the galaxy's
 intensity profile. The axis ratio $q$ describes the ellipticity of the galaxy
 and $\theta$ its orientation angle with respect to horizontal. The radius of the
-bigger gaussian is a parameter $a$.
+bigger gaussian is a parameter $w$.
 Finally
 we include a ``radius ratio'' $u$ describing the ratio of the radius of the
 smaller gaussian with respect to that of the bigger gaussian, and a parameter
@@ -412,8 +412,8 @@ In a coordinate system aligned with the major axis of the ellipse, the
 surface brightness profile of a ``galaxy'' is given by
 \begin{eqnarray}
 \rho(x, y) &=&
-\frac{f(1-v)}{2\pi a^2}\exp\left[-\frac{1}{2a^2}\left(qx^2 + y^2/q\right)\right]
-+\frac{fv}{2\pi (ua)^2}\exp\left[-\frac{1}{2(ua)^2}\left(qx^2 + y^2/q\right)\right]
+\frac{f(1-v)}{2\pi w^2}\exp\left[-\frac{1}{2w^2}\left(qx^2 + y^2/q\right)\right]\\
+&&+\frac{fv}{2\pi (uw)^2}\exp\left[-\frac{1}{2(uw)^2}\left(qx^2 + y^2/q\right)\right].
 \end{eqnarray}
 
 For the interim prior for the total fluxes of the galaxies, and for the
