@@ -7,6 +7,11 @@ Distribution::Distribution()
 
 }
 
+Distribution::~Distribution()
+{
+
+}
+
 double Distribution::perturb1(const vector< vector<double> >& components,
 				vector< vector<double> >& u_components)
 {

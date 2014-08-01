@@ -26,6 +26,8 @@ class Distribution
 	public:
 		Distribution();
 
+		virtual ~Distribution();
+
 		// Generate parameters from the prior
 		virtual void fromPrior() = 0;
 
