@@ -481,7 +481,11 @@ In general, it is possible to compute the number of components that have been
 affected by the proposal. If this is greater than or equal to $N$, we compute
 the mock signal from scratch, otherwise we subtract the effect of those
 components that have been removed and add in the effect of those that have been
-added.
+added. In the C++ implementation of this work, available at
+{\tt https://www.github.com/eggplantbren/RJObject/}, when a proposal takes
+place, the difference between the old and new model is cached and is available
+to the user, so that the likelihood can be updated rather than computed
+from scratch.
 
 \section*{Acknowledgements}
 This work is supported by a Marsden Fast-Start grant
