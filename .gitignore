@@ -12,4 +12,10 @@ output.txt
 Frames/*.png
 Frames/movie.avi
 *.so
-
+content.aux
+ms.aux
+ms.log
+ms.nav
+ms.out
+ms.snm
+ms.toc
