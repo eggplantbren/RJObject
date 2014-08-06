@@ -5,18 +5,6 @@
 \titlepage
 \end{frame}
 
-\begin{frame}[t]{Context}
-\begin{itemize}
-\item Many problems have the following structure:
-  \begin{itemize}
-  \item There are $N$ objects in a region, and we don't know the value of $N$
-  \item Each object has properties $\mathbf{x}_i$
-  \item We have some data $\mathcal{D}$ which we want to use to infer both $N$
-        and $\{\mathbf{x}_i\}$.
-  \end{itemize}
-\end{itemize}
-\end{frame}
-
 \begin{frame}[t]{Motivating Problem I}
 \begin{itemize}
 \item How many sinusoids are in this data?
@@ -41,12 +29,44 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Bayesian Inference 101}
-Probabilities describe degrees of plausibility
 
-Uncertain quantities described by probability distributions
+\begin{frame}[t]{Context}
+\begin{itemize}
+\item Many problems have the following structure:
+  \begin{itemize}
+  \item There are $N$ objects in a region, and we don't know the value of $N$
+  \item Each object has properties $\mathbf{x}_i$
+  \item We have some data $\mathcal{D}$ which we want to use to infer both $N$
+        and $\{\mathbf{x}_i\}$.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[t]{Bayesian Inference 101: I}
+Bayesian Inference is a unified framework for solving inference problems.
+We need the following ingredients:
+
+\begin{itemize}
+\item A ``hypothesis space'' describing the set of possible answers to our
+question (``parameter space'' in fitting is the same concept).
+\item A ``prior distribution'' $\pi\left(\theta\right)$ describing how plausible
+each of the possible solutions is, not taking into account the data.
+\end{itemize}
 
 \end{frame}
+
+
+\begin{frame}[t]{Bayesian Inference 101: II}
+
+The data helps us by changing our prior distribution into the ``posterior''
+distribution, given by
+\begin{eqnarray}
+\frac{\pi(\theta)\mathcal{L}(\theta)}{\mathcal{Z}}
+\end{eqnarray}
+\end{frame}
+
 
 
 
