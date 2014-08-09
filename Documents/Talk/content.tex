@@ -44,27 +44,35 @@
 
 
 
-\begin{frame}[t]{Bayesian Inference 101: I}
+\begin{frame}[t]{Bayesian Inference 101}
 Bayesian Inference is a unified framework for solving inference problems.
 We need the following ingredients:
 
 \begin{itemize}
-\item A ``hypothesis space'' describing the set of possible answers to our
+\setlength{\itemsep}{20pt}
+\item A {\bf hypothesis space} describing the set of possible answers to our
 question (``parameter space'' in fitting is the same concept).
-\item A ``prior distribution'' $\pi\left(\theta\right)$ describing how plausible
+\item A {\bf prior distribution} $p(\theta)$ describing how plausible
 each of the possible solutions is, not taking into account the data.
+\item A {\bf sampling distribution} $p(D | \theta)$ describing our knowledge
+about the connection between the parameters and the data.
 \end{itemize}
 
 \end{frame}
 
 
-\begin{frame}[t]{Bayesian Inference 101: II}
-
-The data helps us by changing our prior distribution into the ``posterior''
-distribution, given by
+\begin{frame}[t]{Bayesian Inference 101}
+The data helps us by changing our prior distribution to the {\bf posterior
+distribution}, given by
 \begin{eqnarray}
-\frac{\pi(\theta)\mathcal{L}(\theta)}{\mathcal{Z}}
+p(\theta | D) &=& \frac{p(\theta) p(D|\theta)}{p(D)}
 \end{eqnarray}
+where the denominator is the normalisation constant, usually called either
+the {\bf marginal likelihood} or the {\bf evidence}.
+\begin{eqnarray}
+p(D) &=& \int p(\theta)p(D|\theta) \, d\theta.
+\end{eqnarray}
+
 \end{frame}
 
 
