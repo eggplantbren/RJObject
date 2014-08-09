@@ -8,36 +8,34 @@
 \begin{frame}[t]{Motivating Problem I}
 \begin{itemize}
 \item How many sinusoids are in this data?
+\item Also, what are their periods, amplitudes and phases?
 \end{itemize}
 \begin{center}
 \includegraphics[scale=0.35]{sinewave_data.pdf}
 \end{center}
-\begin{itemize}
-\item Also, what are their periods, amplitudes and phases?
-\end{itemize}
 \end{frame}
 
 \begin{frame}[t]{Motivating Problem II}
 \begin{itemize}
 \item How many galaxies are in this data?
+\item Also, what are their positions, sizes, orientations, etc?
 \end{itemize}
 \begin{center}
 \includegraphics[scale=0.35]{../Paper/galaxyfield_data.pdf}
 \end{center}
-\begin{itemize}
-\item Also, what are their positions, sizes, orientations, etc?
-\end{itemize}
 \end{frame}
 
 
-\begin{frame}[t]{Context}
+\begin{frame}[t]{Similarities}
 \begin{itemize}
-\item Many problems have the following structure:
+\item Many problems (such as the previous two) have this structure:
+\vspace{20pt}
   \begin{itemize}
+  \setlength{\itemsep}{20pt}
   \item There are $N$ objects in a region, and we don't know the value of $N$
   \item Each object has properties $\mathbf{x}_i$
   \item We have some data $\mathcal{D}$ which we want to use to infer both $N$
-        and $\{\mathbf{x}_i\}$.
+        and $\{\mathbf{x}_i\}_{i=1}^N$.
   \end{itemize}
 \end{itemize}
 \end{frame}
@@ -55,7 +53,8 @@ question (``parameter space'' in fitting is the same concept).
 \item A {\bf prior distribution} $p(\theta)$ describing how plausible
 each of the possible solutions is, not taking into account the data.
 \item A {\bf sampling distribution} $p(D | \theta)$ describing our knowledge
-about the connection between the parameters and the data.
+about the connection between the parameters and the data. When $D$ is known
+this is a function of $\theta$ called the {\bf likelihood}.
 \end{itemize}
 
 \end{frame}
