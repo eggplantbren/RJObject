@@ -25,23 +25,6 @@
 \end{center}
 \end{frame}
 
-
-\begin{frame}[t]{Similarities}
-\begin{itemize}
-\item Many problems (such as the previous two) have this structure:
-\vspace{20pt}
-  \begin{itemize}
-  \setlength{\itemsep}{20pt}
-  \item There are $N$ objects in a region, and we don't know the value of $N$
-  \item Each object has properties $\mathbf{x}_i$
-  \item We have some data $\mathcal{D}$ which we want to use to infer both $N$
-        and $\{\mathbf{x}_i\}_{i=1}^N$.
-  \end{itemize}
-\end{itemize}
-\end{frame}
-
-
-
 \begin{frame}[t]{Bayesian Inference 101}
 Bayesian Inference is a unified framework for solving inference problems.
 We need the following ingredients:
@@ -121,6 +104,21 @@ $\}$
 
 \end{columns}
 \end{frame}
+
+\begin{frame}[t]{Structure of the two example problems}
+  \begin{itemize}
+  \setlength{\itemsep}{10pt}
+  \item There are $N$ objects in a region, and we don't know the value of $N$
+  \item Each object has properties $\mathbf{x}_i$
+  \item We have some data $\mathcal{D}$ which we want to use to infer both $N$
+        and $\{\mathbf{x}_i\}_{i=1}^N$.
+  \end{itemize}
+\begin{center}
+\includegraphics[scale=0.5]{../Paper/pgm.pdf}
+\end{center}
+\end{frame}
+
+
 
 \begin{frame}[t]{Birth and Death}
 For problems of unknown dimensionality, the hypothesis space is the union
