@@ -86,7 +86,20 @@ dimensional problems.
 
 \begin{frame}[t]{Bayesian Computation}
 To explore the posterior distribution, the Metropolis algorithm is a standard
-technique.
+technique:
+
+\begin{itemize}
+\item Start at some point $\theta$ in the hypothesis space.
+\item Loop\\
+$\{$
+  \begin{itemize}
+  \item Generate {\bf proposal} from some distribution $q(\theta' | \theta)$
+  (e.g. slightly perturb the current position).
+  \item With probability$^*$ $\alpha = \min\left(1, \frac{p(\theta')p(D|\theta')}{p(\theta)p(D|\theta)}\right)$, accept the proposal (i.e. replace $\theta$ with $\theta'$).
+  \item Otherwise, stay in the same place.
+  \end{itemize}
+$\}$
+\end{itemize}
 
 
 \end{frame}
