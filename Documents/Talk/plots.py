@@ -40,3 +40,13 @@ gca().set_yticks([])
 savefig('challenges.pdf', bbox_inches='tight')
 show()
 
+sample = loadtxt('sample.txt')
+plot(sample[:,0], sample[:,1], 'k.', markersize=1)
+axis('scaled')
+xlabel('$x$')
+ylabel('$y$')
+gca().set_xticks([])
+gca().set_yticks([])
+savefig('dnest.png', bbox_inches='tight')
+show()
+
