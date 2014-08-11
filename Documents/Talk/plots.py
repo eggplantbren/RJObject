@@ -21,4 +21,22 @@ legend(loc='upper right', numpoints=1)
 savefig('bayes.pdf', bbox_inches='tight')
 show()
 
+x = linspace(-1, 1, 201)
+[x, y] = meshgrid(x, x)
+y = y[::-1, :]
+
+rsq1 = (x + 0.2)**2 + (y - 0.5)**2
+rsq2 = (x - 0.4)**2 + (y - 0.7)**2
+rsq3 = (y + 1 - x**2)**2
+f1 = exp(-0.5*rsq1/0.05**2)
+f2 = exp(-0.5*rsq2/0.03**2)
+f3 = exp(-0.5*rsq3/0.02**2)
+f4 = exp(-0.5*rsq2/0.3**2)
+imshow(-f1 - f2 - f3 - f4, cmap='gray')
+xlabel('$x$')
+ylabel('$y$')
+gca().set_xticks([])
+gca().set_yticks([])
+savefig('challenges.pdf', bbox_inches='tight')
+show()
 
