@@ -153,6 +153,60 @@ proposals that try to increase or decrease the number of objects in the model.
 \end{center}
 \end{frame}
 
+\begin{frame}[t]{Nested Sampling}
+In 2004, John Skilling introduced {\bf Nested Sampling}, a technique
+that starts with the prior distribution, and shrinks volume at a controlled
+rate. Maps big space into easy 1-D problem.
+
+Resolves phase transition problem, and helps a little with multiple modes \&
+strong degeneracies. Figure from Skilling (2006).
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.2]{ns.png}
+\end{center}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}[t]{Diffusive Nested Sampling}
+\begin{columns}[T]
+\begin{column}{0.35\textwidth}
+  \vspace{30pt}
+  \begin{itemize}
+  \setlength{\itemsep}{20pt}
+  \item Replace the posterior distribution with a {\bf mixture of constrained priors}
+  \item Can cross valleys
+  \end{itemize}
+\end{column}
+\hfill
+\begin{column}{0.5\textwidth}
+  \hspace{50pt}
+  \includegraphics[scale=0.4]{dnest.png}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[t]{Diffusive Nested Sampling}
+\begin{itemize}
+\setlength{\itemsep}{20pt}
+\item I've implemented the sinewave problem and the galaxy problem
+\item The common features (what proposals to use?) are delegated to
+a separate library called {\tt RJObject}
+\item Uses birth-death MCMC, but exploring the DNS distribution, rather than
+the (harder) posterior.
+\end{itemize}
+\end{frame}
 
 
+\begin{frame}[t]{Software}
+\begin{itemize}
+\setlength{\itemsep}{20pt}
+\item Diffusive Nested Sampling in C++
+{\tt github.com/eggplantbren/DNest3}
+\item Birth-death models in C++
+{\tt github.com/eggplantbren/RJObject}
+\item These are free software (GPLd).
+\end{itemize}
+\end{frame}
 
