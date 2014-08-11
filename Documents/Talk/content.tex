@@ -177,6 +177,7 @@ strong degeneracies. Figure from Skilling (2006).
   \setlength{\itemsep}{20pt}
   \item Replace the posterior distribution with a {\bf mixture of constrained priors}
   \item Can cross valleys
+  \item Posterior is available via re-weighting
   \end{itemize}
 \end{column}
 \hfill
@@ -198,6 +199,38 @@ the (harder) posterior.
 \end{itemize}
 \end{frame}
 
+\begin{frame}[t]{Motivating Problem I}
+\begin{itemize}
+\item How many sinusoids are in this data?
+\item Also, what are their periods, amplitudes and phases?
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.35]{sinewave_data.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}[t]{Results from the sinusoid data}
+The $N=1$ and $N=2$ solutions are separated by a phase transition.
+\begin{center}
+\includegraphics[scale=0.45]{../Paper/N_result.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}[t]{Sinusoid data movie}
+
+\end{frame}
+
+\begin{frame}[t]{Results from the galaxy data}
+\begin{center}
+\includegraphics[scale=0.45]{../Paper/N_galaxy_result.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}[t]{Galaxy data movie}
+{\tt https://www.youtube.com/watch?v=s1udKctW2HY}
+\end{frame}
+
+
 
 \begin{frame}[t]{Software}
 \begin{itemize}
@@ -207,6 +240,7 @@ the (harder) posterior.
 \item Birth-death models in C++
 {\tt github.com/eggplantbren/RJObject}
 \item These are free software (GPLd).
+\item The learning curve is steep (sorry) but I'm open to collaborations.
 \end{itemize}
 \end{frame}
 
