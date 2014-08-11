@@ -187,11 +187,16 @@ strong degeneracies. Figure from Skilling (2006).
 \end{columns}
 \end{frame}
 
-%\begin{frame}[t]{Diffusive Nested Sampling}
-%\begin{itemize}
-%\item 
-%\end{itemize}
-%\end{frame}
+\begin{frame}[t]{Diffusive Nested Sampling}
+\begin{itemize}
+\setlength{\itemsep}{20pt}
+\item I've implemented the sinewave problem and the galaxy problem
+\item The common features (what proposals to use?) are delegated to
+a separate library called {\tt RJObject}
+\item Uses birth-death MCMC, but exploring the DNS distribution, rather than
+the (harder) posterior.
+\end{itemize}
+\end{frame}
 
 
 \begin{frame}[t]{Software}
@@ -201,6 +206,7 @@ strong degeneracies. Figure from Skilling (2006).
 {\tt github.com/eggplantbren/DNest3}
 \item Birth-death models in C++
 {\tt github.com/eggplantbren/RJObject}
+\item These are free software (GPLd).
 \end{itemize}
 \end{frame}
 
