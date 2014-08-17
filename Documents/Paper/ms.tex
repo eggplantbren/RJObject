@@ -93,8 +93,9 @@ for simplicity.
 \end{center}
 \end{figure}
 
-In other studies, it has been common to do separate runs of Nested Sampling,
-with $N$ fixed at various trial values.
+In other studies, it has been common to do separate runs of Nested Sampling
+(or another method),
+with $N$ fixed at various trial values \citep[e.g.][]{fengji}.
 Then, the posterior for $N$ can be calculated
 based on the estimates of the evidence obtained as a function of $N$. However,
 in this paper, we use trans-dimensional MCMC moves to infer $N$. In other words,
@@ -118,6 +119,12 @@ problems with simulated annealing: in particular, there is no need to choose
 a temperature schedule, and the method does not fail when phase transitions
 are present.
 
+Since DNS is effectively the Metropolis-Hastings algorithm applied to a
+distribution other than the posterior, proposal distributions are needed.
+In Section~\ref{sec:proposals}, we outline a set of proposal distributions used
+to explore the hypothesis space of possible values for $N$, $\hyperparams$,
+and $\{\xx_i\}$.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Consider having a section on what kind of ME constraint would lead  %
 % to the same prior as a hierarchical model.                          %
@@ -125,7 +132,7 @@ are present.
 
 % Consider terminology: "objects" vs. "components"
 
-\section{Metropolis proposals for the general problem}
+\section{Metropolis proposals for the general problem}\label{sec:proposals}
 We will now define a set of proposal distributions that can be used to
 sample the prior distribution
 $p(N, \hyperparams, \{\xx_i\}) = p(N) p(\hyperparams) \prod_{i=1}^N p(\xx_i | \hyperparams)$.
