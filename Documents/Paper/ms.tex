@@ -102,12 +102,18 @@ doing separate runs of Nested Sampling
 (or another method),
 with $N$ fixed at various trial values \citep[e.g.][]{fengji, feroz}.
 Then, the posterior for $N$ can be calculated
-based on the estimates of the evidence obtained as a function of $N$. However,
-in this paper, we use trans-dimensional MCMC moves to infer $N$. In other words,
-$N$ is treated as just another parameter, and the marginal likelihood defined
-in Equation~\ref{eq:evidence}, which we can compute, also includes the sum over
-the unknown parameter $N$. Our motivation
-for using Nested Sampling is not primarily to calculate $\mathcal{Z}$.
+based on the estimates of the evidence obtained as a function of $N$.
+This approach does not generalise well to large $N$, as it would
+require a large number of parallel runs.
+
+In this paper, we introduce an approach that uses trans-dimensional MCMC moves
+to infer $N$, but embeds this process in the Nested Sampling framework to
+overcome difficulties that would be encountered by sampling the posterior
+distribution directly. Our motivation
+for using Nested Sampling is not primarily to calculate the marginal
+likelihood $\mathcal{Z}$ (including summing over $N$, as in
+Equation~\ref{eq:evidence}),
+although $\mathcal{Z}$ is readily available from the output.
 The motivation for using Nested Sampling, rather than just sampling the
 posterior using trans-dimensional MCMC, is that the posterior often contains
 difficult features, such as strong dependencies or multiple modes, that cause
@@ -132,6 +138,10 @@ which define how a walker moves around the hypothesis space.
 In Section~\ref{sec:proposals}, we outline a set of proposal distributions used
 to explore the hypothesis space of possible values for $N$, $\hyperparams$,
 and $\{\xx_i\}$.
+
+A C++ implementation of the ideas described in this paper is available online
+(under the terms of the GNU General Public Licence) at
+{\tt https://github.com/eggplantbren/RJObject}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Consider having a section on what kind of ME constraint would lead  %
