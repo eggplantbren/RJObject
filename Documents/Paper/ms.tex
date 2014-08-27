@@ -37,13 +37,13 @@ noisy data, and finding and measuring galaxies in a noisy astronomical image.}
 \section{Introduction}\label{sec:introduction}
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{3mm}
-Many inference problems have the following structure. There is some unknown
-number, $N$, of objects in a region. Each of the $N$ objects has a property
+Consider the following class of inference problems. There is some unknown
+number, $N$, of objects in a (physical or metaphorical) region. Each of the $N$ objects has a property
 $\xx$, which may be a single scalar value (for example, a mass), or a set of
 values (e.g. a two-dimensional position and a mass). These problems are often
-challenging due to the unknown (and potentially large) dimensionality.
+challenging to solve due to the unknown (and potentially large) dimensionality.
 
-To do the inference, we must assign a prior to the objects' properties
+To carry out the inference, we must assign a prior to the objects' properties
 $\{\xx_i\}_{i=1}^N$.
 Since $N$ may be large, it is usually easier to assign an ``interim prior''
 conditional on some hyperparameters $\hyperparams$, and then assign a prior to
@@ -59,15 +59,19 @@ p(N, \hyperparams, \{\xx_i\}) &=& p(N) p(\hyperparams | N) p(\{\xx_i\} | \hyperp
 Here we have assumed the priors for $N$ and $\hyperparams$ are independent, and
 the interim prior for $\{\xx_i\}$ is iid and does not depend on $N$.
 Given data $\mathcal{D}$, we usually want to calculate properties of the
-posterior distribution given by:
+posterior distribution, given by:
 \begin{eqnarray}
 p(N, \hyperparams, \{\xx_i\} | \mathcal{D}) \propto
 p(N, \hyperparams, \{\xx_i\})
 p(\mathcal{D} | N, \hyperparams, \{\xx_i\})\label{eq:bayes}
 \end{eqnarray}
-The general method used to calculate properties of the posterior distribution
-is to generate samples from it using Markov Chain Monte Carlo (MCMC). The
-structure of the model is depicted graphically in Figure~\ref{fig:pgm}.
+The structure of the model is depicted graphically in Figure~\ref{fig:pgm}.
+
+The computational method used to calculate properties of the posterior distribution
+is to generate samples from it using Markov Chain Monte Carlo (MCMC). Since
+$N$ is unknown, an MCMC sampler needs to be able to jump between candidate
+solutions with different numbers of objects, using either birth-death MCMC
+\citep{birthdeath} or the reversible jump framework of \citet{rjmcmc}.
 
 The marginal likelihood, or evidence, is also an important quantity, and is
 the normalisation constant of the posterior given in Equation~\ref{eq:bayes}:
@@ -583,6 +587,8 @@ Skilling J., 1998, Massive Inference and Maximum Entropy, in Maximum Entropy
 and Bayesian Methods, Kluwer Academic Publishers, Dordrecht/Boston/London p.14
 
 \bibitem[\protect\citeauthoryear{Skilling}{2006}]{skilling} Skilling, J., 2006, Nested Sampling for General Bayesian Computation, Bayesian Analysis 4, pp. 833-860.
+
+\bibitem[Stephens(2000)]{birthdeath} Stephens, M., 2000, ``Bayesian analysis of mixture models with an unknown number of components-an alternative to reversible jump methods.'', Annals of Statistics (2000), 40-74.
 
 \bibitem[Umst{\"a}tter et al.(2005)]{2005PhRvD..72b2001U} Umst{\"a}tter, 
 R., Christensen, N., Hendry, M., Meyer, R., Simha, V., Veitch, J., 
