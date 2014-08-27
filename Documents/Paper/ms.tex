@@ -208,7 +208,6 @@ If $N' > N$, i.e. the proposal is to add objects to the model,
 the extra parameters needed, $\{\xx_i\}_{i=N+1}^{N'}$,
 are drawn from their prior conditional on the current value of the
 hyperparameters, i.e. the interim prior $p(\xx | \hyperparams)$.
-
 If $N' < N$, i.e. the proposal is to remove objects from the model,
 then $N - N'$ objects must be selected for removal. All
 of the objects have the same probability of being selected for removal.
@@ -233,7 +232,8 @@ u_i &:=& F(\xx_i; \hyperparams)\\
 u_i' &:=& \textnormal{mod}\left(u_i + \delta_u, 1\right)\\
 \xx_i' &:=& G(u_i'; \hyperparams).
 \end{eqnarray}
-where $\delta_u$ is drawn from a heavy-tailed distribution.
+where $\delta_u$ is drawn from a heavy-tailed distribution as in
+Equation~\ref{eqn:heavytailed}.
 
 Choosing just one object to change is most appropriate when the DNS
 distribution is very constrained. When it is close to the prior, bolder
@@ -248,7 +248,8 @@ Another kind of proposal that we will consider is a proposal that keeps all of
 the objects fixed in place (i.e. leaves $\{\xx_i\}$) unchanged, but changes
 the hyperparameter(s) from their current value $\hyperparams$
 to a new value $\hyperparams'$. The proposal for the hyperparameter(s) is chosen
-to satisfy detailed balance with respect to $p(\hyperparams)$.
+to satisfy detailed balance with respect to $p(\hyperparams)$ and should be
+heavy-tailed.
 
 The overall Metropolis acceptance probability
 for this kind of move, if sampling the prior (or the constrained prior of DNS)
@@ -259,7 +260,9 @@ must include the following factor:
 \end{eqnarray}
 Since this proposal leaves the objects $\{\xx_i\}$ fixed, it will usually not
 affect the value of the likelihood, and therefore the likelihood will not need
-to be recomputed.
+to be recomputed. Therefore this proposal is most useful for mixing the values
+of the hyperparameters $\hyperparams$ when the target distribution is highly
+constrained.
 
 \subsection{Proposals that change the hyperparameters
 and all of the objects}\label{sec:proposal4}
@@ -274,10 +277,12 @@ Equation~\ref{eqn:acceptance_prob} is likely to be very small, and the move
 will probably be rejected.
 
 Therefore, we allow an additional move that changes $\hyperparams$ to a new
-value $\hyperparams'$, but rather than leaving the objects $\{\xx_i\}$ fixed, we
-drag them so they represent the distribution $p(\xx | \hyperparams')$ rather than
+value $\hyperparams'$, but rather than leaving the objects $\{\xx_i\}$ fixed,
+they are ``dragged''
+so they represent the distribution $p(\xx | \hyperparams')$ rather than
 $p(\xx|\hyperparams)$. We do this by making use of the transformation functions
-$F(x; \hyperparams)$ and $G(x; \hyperparams)$ defined in Section~\ref{sec:proposal2}.
+$F(x; \hyperparams)$ and $G(x; \hyperparams)$ defined in
+Section~\ref{sec:proposal2}.
 
 The ``dragging'' process works as follows, and must be carried out on
 each object:
@@ -285,6 +290,10 @@ each object:
 u_i &:=& F(\xx_i; \hyperparams)\\
 \xx_i' &:=& G(\xx_i; \hyperparams')
 \end{eqnarray}
+In other words, the objects' parameters are transformed to $[0,1]$ using the
+current value of the hyperparameters, and then transformed back using the
+proposed value of the hyperparameters so they represent the new interim prior
+rather than the old one.
 
 \section{Sinusoidal example}
 In this section we demonstrate a seemingly simple example which exhibits
