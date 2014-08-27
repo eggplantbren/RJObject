@@ -322,37 +322,6 @@ problem of detecting exoplanet signals in radial velocity data, which has
 attracted a lot of research attention in recent years
 \citep[e.g.][]{2007ApJ...654..551B, gregory, fengji, 2011MNRAS.415.3462F}.
 
-\subsection{Prior Distributions}
-In the notation of Section~\ref{sec:introduction}, the parameters of the
-each object are
-\begin{eqnarray}
-\xx_i &=& \{A_i, T_i, \phi_i\}.
-\end{eqnarray}
-For the interim prior $p(\xx_i | \hyperparams)$, we introduced a single
-hyperparameter $\mu$, such that $A_i$ given $\mu$ has an exponential prior
-with mean $\mu$. For the periods, we assigned a log-uniform distribution for
-the periods between fixed boundaries, and a uniform distribution for the phases
-between 0 and $2\pi$. In other words, our prior is only hierarchical for the
-amplitudes $\{A_i\}$.
-
-The model for the shape of the (noise-free) signal is
-\begin{eqnarray}
-y(t) &=& \sum_{i=1}^N A_i \sin \left(\frac{2\pi t}{T_i} + \phi_i\right)
-\end{eqnarray}
-where there are $N$ sinusoids in the signal, the
-amplitudes are $\{A_i\}$, the periods are $\{T_i\}$, and the phases are
-$\{\phi_i\}$.
-The sampling distribution (probability distribution for the data given the
-parameters) is a normal (gaussian) distribution with mean zero and standard
-deviation $\sigma$, applied independently to each data point:
-\begin{eqnarray}
-Y_i | N, \{A_i\}, \{T_i\}, \{\phi_i\}, \sigma \sim
-\mathcal{N}\left(\mu(t_i), \sigma^2\right).
-\end{eqnarray}
-This also depends on an additional noise standard deviation parameter $\sigma$
-which will also be inferred. We used a log-uniform prior for $\sigma$ between
-$10^{-3}$ and $10^{3}$.
-
 \subsection{Simulated Dataset}
 To demonstrate the techniques,
 we simulated some data based on the assumption $N=2$, i.e. the true signal was
@@ -369,8 +338,7 @@ The true form of the signal is:
 y(t) = \sin\left(\frac{2\pi t}{30}\right) +
 0.3 \sin\left(\frac{2\pi t}{2} + 1\right)
 \end{eqnarray}
-and the noise standard deviation was $\sigma = 1$. The data $\{Y_i\}_{i=1}^n$
-is displayed in Figure~\ref{fig:sinewave_data}.
+and the noise standard deviation was $\sigma = 1$.
 
 \begin{figure}
 \begin{center}
@@ -382,16 +350,53 @@ noise standard deviation of $\sigma = 1$.
 \end{center}
 \end{figure}
 
+\subsection{Prior Distributions}
+To infer $N$, the number of sinusoids, as well as all the periods, amplitudes,
+and phases, we need to define prior distributions.
+In the notation of Section~\ref{sec:introduction}, the parameters of the
+each object are
+\begin{eqnarray}
+\xx_i &=& \{A_i, T_i, \phi_i\}.
+\end{eqnarray}
+For the interim prior $p(\xx_i | \hyperparams)$, we introduced a single
+hyperparameter $\mu$, such that $A_i$ given $\mu$ has an exponential prior
+with mean $\mu$. For the periods, we assigned a log-uniform distribution for
+the periods between fixed boundaries, and a uniform distribution for the phases
+between 0 and $2\pi$. In other words, our prior is only hierarchical for the
+amplitudes $\{A_i\}$. The prior for $\mu$ was a log-uniform prior, with
+probability density $\propto 1/\mu$, where $\mu \in [10^{-3}, 10^3]$.
+
+The model for the shape of the (noise-free) signal is
+\begin{eqnarray}
+y(t) &=& \sum_{i=1}^N A_i \sin \left(\frac{2\pi t}{T_i} + \phi_i\right)
+\end{eqnarray}
+where there are $N$ sinusoids in the signal, the
+amplitudes are $\{A_i\}$, the periods are $\{T_i\}$, and the phases are
+$\{\phi_i\}$.
+The sampling distribution (probability distribution for the data given the
+parameters) was a normal (gaussian) distribution with mean zero and standard
+deviation $\sigma$, applied independently to each data point:
+\begin{eqnarray}
+Y_i | N, \{A_i\}, \{T_i\}, \{\phi_i\}, \sigma \sim
+\mathcal{N}\left(\mu(t_i), \sigma^2\right).
+\end{eqnarray}
+This also depends on an additional noise standard deviation parameter $\sigma$
+which will also be inferred. We used a log-uniform prior for $\sigma$ between
+$10^{-3}$ and $10^{3}$.
+
 \subsection{Results}
 We ran DNS on the simulated data shown in Figure~\ref{fig:sinewave_data}.
-The shape of the likelihood function, with respect to the prior mass (the
-usual likelihood curve associated with Nested Sampling), us shown in
-Figure~\ref{fig:sinewaves_likelihood}. Two phase transitions can be seen. The
-first, at $\log(X) \approx -10$ nats,
+The shape of the likelihood function with respect to the prior mass (the
+usual likelihood curve associated with Nested Sampling) is shown in
+Figure~\ref{fig:sinewaves_likelihood}. Two phase transitions can be seen,
+where this curve is concave up. The
+first phase transition, at $\log(X) \approx -10$ nats,
 separates ``noise-only'' models (where the
 entire dataset is accounted for by the noise term) from ``one-sinusoid'' models
 where $N=1$. At $\log(X) \approx -28$ nats, a second phase transition separates
-$N=1$ models from $N=2$ models.
+$N=1$ models from $N=2$ models. This phase transition causes a double-peaked
+feature in the posterior weights (lower panel of
+Figure~\ref{fig:sinewaves_likelihood}).
 
 If we were to do this analysis by trying to explore the posterior directly,
 rather than by using Nested Sampling, it would be difficult to jump between
@@ -415,12 +420,21 @@ distribution.
 \end{center}
 \end{figure}
 
+Although DNS explores a distribution other than the posterior (a mixture of
+constrained priors is used instead), the saved samples can be assigned
+importance weights so we can represent the posterior distribution. The
+marginal posterior distribution for $N$ is shown in Figure~\ref{fig:N_result}.
+The most probable value is $N=2$ which is also the true value, and there is
+a small probability for $N=1$. The decreasing probabilities for $N > 2$ are
+due to the well-known natural ``Occam's Razor'' effect that can occur in
+Bayesian Inference \citep[e.g.][Chapter 28]{mackay}.
 
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{N_result.pdf}
 \caption{The inference for $N$, the number of sinusoids, based on the
-sinusoid data. The true value was $N=2$.
+sinusoid data. The true value was $N=2$, which is also the most probable value
+given the data. Of course, this is not always the case.
 \label{fig:N_result}}
 \end{center}
 \end{figure}
@@ -617,6 +631,9 @@ Radial Velocity Data.\ ArXiv e-prints arXiv:1401.6128.
 
 \bibitem[Irwin(1985)]{irwin} Irwin, M.~J.\ 1985, MNRAS, 214,
 575
+
+\bibitem[MacKay(2003)]{mackay} MacKay, David J.~C., 2003, ``Information theory, inference, and learning algorithms''. Vol. 7.
+Cambridge: Cambridge university press, 2003.
 
 \bibitem[Neal(2001)]{neal} Neal, R.~M., 2001, 
 Annealed importance sampling, Statistics and Computing, vol. 11, pp. 125-139.
