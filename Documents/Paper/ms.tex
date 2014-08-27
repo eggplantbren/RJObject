@@ -197,15 +197,20 @@ a new value $N'$ according to
 N' &=& \textnormal{mod}\left(N + \delta_N, N_{\rm max} + 1\right)
 \end{eqnarray}
 where $\delta_N$ is drawn from a heavy tailed
-distribution. The most probable values of $\delta_N$ are $\pm 1$, but values
+distribution which is a discrete analogue of Equation~\ref{eqn:heavytailed}.
+The most probable values of $\delta_N$ are $\pm 1$, but values
 of order $N_{\rm max}$ also have some probability, to allow fast exploration
-when the target distribution is similar to the prior.
+when the target distribution is similar to the prior. If $N' = N$, $N'$ is
+regenerated as $N+1$ with probability 0.5, and $N-1$ with probability 0.5,
+and then wrapped back into the range $\{0,...,N_{\rm max}\}$ if necessary.
 
-If $N' > N$, the extra parameters needed, $\{\xx_i\}_{i=N+1}^{N'}$,
+If $N' > N$, i.e. the proposal is to add objects to the model,
+the extra parameters needed, $\{\xx_i\}_{i=N+1}^{N'}$,
 are drawn from their prior conditional on the current value of the
 hyperparameters, i.e. the interim prior $p(\xx | \hyperparams)$.
 
-If $N' < N$, then $N - N'$ objects must be removed from the model. All
+If $N' < N$, i.e. the proposal is to remove objects from the model,
+then $N - N'$ objects must be selected for removal. All
 of the objects have the same probability of being selected for removal.
 
 \subsection{Proposals that modify objects}\label{sec:proposal2}
