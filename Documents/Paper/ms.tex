@@ -162,7 +162,7 @@ apply the heavy tailed proposal distributions and simply accept that there will
 be some waste. If a parameter $u$ has a uniform prior between 0 and 1, then
 a particular choice of heavy-tailed proposal is defined by:
 \begin{eqnarray}
-u' &=& \textnormal{mod}\left(u + 10^{1.5 - 6a}b, 1\right)
+u' &:=& \textnormal{mod}\left(u + 10^{1.5 - 6a}b, 1\right)\label{eqn:heavytailed}
 \end{eqnarray}
 where $a \sim \textnormal{Uniform}(0, 1)$ and $b\sim \mathcal{N}(0,1)$.
 This is like a standard gaussian/normal random walk proposal, but with a
@@ -176,8 +176,12 @@ usually not necessary. The value 1.5 in the exponent was found to optimize the
 performance of this proposal when sampling from $U(0, 1)$ and $\mathcal{N}(0,1)$
 priors.
 
-Most of the proposals involve changing one (or a subset) of the parameters
-and/or hyperparameters while keeping the others fixed.
+Most of the proposals discussed in this paper involve changing one
+(or a subset) of the parameters and/or hyperparameters, while keeping the
+others fixed. Whenever a heavy-tailed proposal distribution
+is required, we use the proposal from Equation~\ref{eqn:heavytailed},
+or an analogous one, e.g. a discrete version when the proposal is to change $N$.
+
 
 \subsection{Proposals that modify $N$}\label{sec:proposal1}
 The first kind of proposal we consider are proposals that change the
