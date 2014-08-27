@@ -97,9 +97,10 @@ for simplicity.
 \end{center}
 \end{figure}
 
-In other studies, it has been common to do separate runs of Nested Sampling
+Some authors have addressed these kinds of problems by
+doing separate runs of Nested Sampling
 (or another method),
-with $N$ fixed at various trial values \citep[e.g.][]{fengji}.
+with $N$ fixed at various trial values \citep[e.g.][]{fengji, feroz}.
 Then, the posterior for $N$ can be calculated
 based on the estimates of the evidence obtained as a function of $N$. However,
 in this paper, we use trans-dimensional MCMC moves to infer $N$. In other words,
@@ -113,18 +114,21 @@ difficult features, such as strong dependencies or multiple modes, that cause
 problems with mixing. Diffusive Nested Sampling
 (DNS) replaces the posterior distribution with an alternative target
 distribution composed of a mixture of the prior distribution with other, more
-constrained distributions, facilitating mixing between the multiple modes
+constrained versions of the prior, facilitating mixing between the multiple modes
 and along degeneracy curves.
-This is similar to the idea of simulated annealing,
+This is similar to the idea of annealed importance sampling
+\citep{neal} or parallel tempering \citep{pt},
 where the target distribution is modified from the posterior to something
-``easier'', however,
+``easier''. However,
 the sequence of distributions used in Nested Sampling avoids some of the
-problems with simulated annealing: in particular, there is no need to choose
-a temperature schedule, and the method does not fail when phase transitions
+problems with annealing-based methods. In particular, there is no need to choose
+a temperature schedule (a potentially large set of tuning parameters),
+and the method does not fail when phase transitions
 are present.
 
 Since DNS is effectively the Metropolis-Hastings algorithm applied to a
-distribution other than the posterior, proposal distributions are needed.
+distribution other than the posterior, proposal distributions are needed
+which define how a walker moves around the hypothesis space.
 In Section~\ref{sec:proposals}, we outline a set of proposal distributions used
 to explore the hypothesis space of possible values for $N$, $\hyperparams$,
 and $\{\xx_i\}$.
@@ -465,7 +469,7 @@ While this doesn't affect the
 posterior distribution (unlike the sinewave example), it would affect calculation
 of the marginal likelihood if annealing were used.
 {\bf Bottom panel: }The posterior weights of the saved samples.
-\label{fig:sinewaves_likelihood}}
+\label{fig:galaxyfield_likelihood}}
 \end{center}
 \end{figure}
 
@@ -561,6 +565,11 @@ Hobson, M.~P.\ 2011.\ Detecting extrasolar planets from stellar radial
 velocities using Bayesian evidence.\ Monthly Notices of the Royal
 Astronomical Society 415, 3462-3472.
 
+\bibitem[Feroz and Hobson(2014)]{feroz} Feroz, F., Hobson, 
+M.~P.\ 2014.\ Bayesian analysis of radial velocity data of GJ667C with 
+correlated noise: evidence for only two planets.\ Monthly Notices of the 
+Royal Astronomical Society 437, 3540-3549. 
+
 \bibitem[\protect\citeauthoryear{Green}{1995}]{rjmcmc}
 Green, P.~J., 1995, Reversible Jump Markov Chain Monte Carlo Computation and Bayesian Model Determination, Biometrika 82 (4): 711–732.
 
@@ -568,6 +577,8 @@ Green, P.~J., 1995, Reversible Jump Markov Chain Monte Carlo Computation and Bay
 Bayesian exoplanet tests of a new method for MCMC sampling in highly 
 correlated model parameter spaces.\ Monthly Notices of the Royal 
 Astronomical Society 410, 94-110.
+
+\bibitem[Hansmann(1997)]{pt} Hansmann, Ulrich HE., 1997, ``Parallel tempering algorithm for conformational studies of biological molecules.'', Chemical Physics Letters 281, no. 1 (1997): 140-150.
 
 \bibitem[Hobson 
 \& McLachlan(2003)]{2003MNRAS.338..765H} Hobson, M.~P., \& McLachlan, C.\ 2003, MNRAS, 338, 765 
@@ -594,7 +605,6 @@ and Bayesian Methods, Kluwer Academic Publishers, Dordrecht/Boston/London p.14
 R., Christensen, N., Hendry, M., Meyer, R., Simha, V., Veitch, J., 
 Vigeland, S., Woan, G.\ 2005.\ Bayesian modeling of source confusion in 
 LISA data.\ Physical Review D 72, 022001. 
-
 
 \end{thebibliography}
 
