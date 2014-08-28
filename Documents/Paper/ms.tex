@@ -537,7 +537,8 @@ can be seen in Figure~\ref{fig:galaxyfield_likelihood}. The phase transition
 separates models which only fit the brightest galaxies from models that
 also fit the faint galaxies close to the noise level. This phase transition
 does not affect the posterior distribution, as the low-$N$ solutions are
-eventually found to have very low importance.
+eventually found to have very low importance. However it would cause difficulty
+for a thermal approach to calculating the marginal likelihood.
 
 \begin{figure}
 \begin{center}
@@ -563,8 +564,6 @@ GalaxyField data. The true value was $N=47$.
 \label{fig:N_galaxy_result}}
 \end{center}
 \end{figure}
-
-
 
 The marginal likelihood estimate returned by DNS for this data was
 $\log(\mathcal{Z}) = -319707.6$, and the information, or Kullback-Leibler
@@ -601,6 +600,21 @@ from scratch. Using this technique offers a speed advantage of a factor of
 $\sim 2$ for both of the example problems. The sinusoidal example could be
 solved in a few minutes on a desktop computer, whereas the galaxy example took
 much longer, about a day, to execute.
+
+\section{Conclusions}
+In this paper, we presented a general approach to trans-dimensional Bayesian
+inference problems. To compute the posterior distribution in these contexts,
+birth and death MCMC moves are commonly used. However, the approach presented
+here replaces the posterior distribution with the alternative target
+distribution used in Diffusive Nested Sampling. This is done to facilitate
+mixing between multiple modes, along strong dependencies,
+and between different phases. Additionally,
+the marginal likelihood can be computed including the sum over the unknown
+number of components. The method was demonstrated on two illustrative examples
+inspired by astronomical data analysis, but should be applicable in other
+contexts such as mixture modelling. Software (in C++) implementing the
+general Metropolis proposals for these models, as well as the specific
+examples, is available at {\tt https://github.com/eggplantbren/RJObject}.
 
 \section*{Acknowledgements}
 This work is supported by a Marsden Fast-Start grant
