@@ -123,7 +123,7 @@ The motivation for using Nested Sampling, rather than just sampling the
 posterior using trans-dimensional MCMC, is that the posterior often contains
 difficult features, such as strong dependencies or multiple modes, that cause
 problems with mixing. Diffusive Nested Sampling
-(DNS) replaces the posterior distribution with an alternative target
+\citep[DNS][]{dnest} replaces the posterior distribution with an alternative target
 distribution composed of a mixture of the prior distribution with other, more
 constrained versions of the prior, facilitating mixing between the multiple modes
 and along degeneracy curves.
@@ -321,7 +321,8 @@ and phases $\{\phi_i\}_{i=1}^N$.
 This kind of model has many applications, and has been solved analytically
 under certain sets of assumptions \citep[see e.g.][]{bretthorst}. Similar
 models have been used in many different fields
-\citep[e.g.][]{2005PhRvD..72b2001U, 2007ApJ...654..551B, 2003AIPC..659....3B}.
+\citep[e.g.][]{2003AIPC..659....3B, 2005PhRvD..72b2001U, 2007ApJ...654..551B,
+2009MNRAS.395.2226B}.
 Note that this problem is also very closely related to the
 problem of detecting exoplanet signals in radial velocity data, which has
 attracted a lot of research attention in recent years
@@ -649,6 +650,10 @@ Engineering 659, 3-22.
 T.~R., Kjeldsen, H., Stello, D.\ 2007.\ Bayesian Inference from 
 Observations of Solar-like Oscillations.\ The Astrophysical Journal 654, 
 551-557. 
+
+\bibitem[Brewer and Stello(2009)]{2009MNRAS.395.2226B} Brewer, B.~J., 
+Stello, D.\ 2009.\ Gaussian process modelling of asteroseismic data.\ 
+Monthly Notices of the Royal Astronomical Society 395, 2226-2233. 
 
 \bibitem[Brewer et al.(2013)]{starfield} Brewer, B.~J., 
 Foreman-Mackey, D., Hogg, D.~W.\ 2013.\ Probabilistic Catalogs for Crowded 
