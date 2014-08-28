@@ -442,6 +442,10 @@ given the data. Of course, this is not always the case.
 \end{center}
 \end{figure}
 
+The marginal likelihood estimate returned by DNS for this data was
+$\log(\mathcal{Z}) = -1410.8$, and the information, or Kullback-Leibler
+divergence from the prior to the posterior, was estimated to be 29.7 nats. 
+
 %\section{``Transit'' Example}
 %\section{``Asteroseismology'' Example}
 \section{``Galaxy Field'' Example}
@@ -492,6 +496,7 @@ $200\times 200$ pixels in size and contains $N=47$ ``galaxies''.
 \end{center}
 \end{figure}
 
+\subsection{Priors}
 For the interim prior for the total fluxes of the galaxies, and for the
 widths of the galaxies, we used the Pareto
 distribution. The probability density function for a variable $x$ given
@@ -507,12 +512,32 @@ p(x | x_{\rm min}, a) &=&
 \end{eqnarray}
 Since we are using this for both the fluxes and the widths of the galaxies,
 there will be four hyperparameters in total: two lower limits (one for the
-fluxes and one for the widths) and two slopes. As in Section~\ref{sec:sinewaves}
+fluxes and one for the widths) and two slopes. The lower limits were assigned
+log-uniform priors between $10^{-3}$ and $10^3$, and uniform priors between 0
+and 1 were assigned to the {\it inverses} of the slopes. This latter choice
+was based on the fact that a Pareto distribution for $x$ is an exponential
+distribution for $\ln(x)$, with scale length $1/a$.
+
+The interim priors for the radius ratios $u$ and the flux ratios $w$ were both
+uniform distributions. Since $u \in [0,1]$ and $v \in [0,1]$, the upper limits
+of the uniform interim priors must be between 0 and 1. Therefore the prior
+for the upper limit was a uniform distribution between 0 and 1, and the prior
+for the lower limit given the upper limit was a uniform distribution between 0
+and the upper limit.
+
+As in Section~\ref{sec:sinewaves}
 we allowed the noise standard deviation $\sigma$ to be a free parameter with
 a log-uniform prior between $10^{-3}$ and $10^3$.
 
-
-
+\subsection{Results}
+The results from running DNS on the simulated galaxy data are shown in
+Figures~\ref{fig:galaxyfield_likelihood} and~\ref{fig:N_galaxy_result}.
+This problem, like the sinusoidal problem, exhibits a phase transition, which
+can be seen in Figure~\ref{fig:galaxyfield_likelihood}. The phase transition
+separates models which only fit the brightest galaxies from models that
+also fit the faint galaxies close to the noise level. This phase transition
+does not affect the posterior distribution, as the low-$N$ solutions are
+eventually found to have very low importance.
 
 \begin{figure}
 \begin{center}
@@ -541,6 +566,10 @@ GalaxyField data. The true value was $N=47$.
 
 
 
+The marginal likelihood estimate returned by DNS for this data was
+$\log(\mathcal{Z}) = -319707.6$, and the information, or Kullback-Leibler
+divergence from the prior to the posterior, was estimated to be 550.2 nats.
+
 % Pareto in terms of log(x)
 % p(x) ~ x^(-(alpha + 1))
 % Let u = log(x), du = 1/x dx
@@ -568,7 +597,10 @@ components that have been removed and add in the effect of those that have been
 added. In the C++ implementation of this work, when a proposal takes
 place, the difference between the old and new model is cached and is available
 to the user, so that the likelihood can be updated rather than computed
-from scratch.
+from scratch. Using this technique offers a speed advantage of a factor of
+$\sim 2$ for both of the example problems. The sinusoidal example could be
+solved in a few minutes on a desktop computer, whereas the galaxy example took
+much longer, about a day, to execute.
 
 \section*{Acknowledgements}
 This work is supported by a Marsden Fast-Start grant
