@@ -305,7 +305,7 @@ current value of the hyperparameters, and then transformed back using the
 proposed value of the hyperparameters so they represent the new interim prior
 rather than the old one.
 
-\section{Sinusoidal example}
+\section{Sinusoidal example}\label{sec:sinewaves}
 In this section we demonstrate a seemingly simple example which exhibits
 a phase transition, making a standard MCMC approach difficult. Suppose
 a signal is composed of $N$ sinusoids, of different periods, amplitudes,
@@ -445,15 +445,19 @@ given the data. Of course, this is not always the case.
 Source detection is an important problem in astrophysics. Given some data,
 usually one or more noisy, blurred, images of the sky, we would like to know
 how many objects $N$ (such as stars or galaxies) are in the image, and their
-properties (such as flux, size, orientation). Various ad-hoc approaches exist,
+properties (such as flux, size, orientation). Various approaches exist,
 covering a wide spectrum between ad-hoc approaches and principled inference
 approaches
 \citep[e.g.][]{irwin, sextractor, dolphot, 2003MNRAS.338..765H, starfield}.
+The more principled techniques tend to be much more computationally
+intensive, so should only be applied to interesting or
+especially challenging subsets of astronomical imaging.
 
 In this section we apply
 the DNS approach to a toy version of the problem of detecting and quantifying
 extended objects such as galaxies in a noisy image.
-We model each galaxy as a mixture of two concentric elliptical components, with
+We model each galaxy as a mixture of two concentric elliptical gaussian
+components, with
 the following eight parameters. Firstly, two
 parameters $x_c$ and $y_c$ describe the central position of the galaxy within
 the image. The flux $f$ describes the total integral of the galaxy's
@@ -472,9 +476,21 @@ surface brightness profile of a ``galaxy'' is given by
 \frac{f(1-v)}{2\pi w^2}\exp\left[-\frac{1}{2w^2}\left(qx^2 + y^2/q\right)\right]\\
 &&+\frac{fv}{2\pi (uw)^2}\exp\left[-\frac{1}{2(uw)^2}\left(qx^2 + y^2/q\right)\right].
 \end{eqnarray}
+We generated a simulated $200 \times 200$ pixel noisy image
+(Figure~\ref{fig:galaxyfield_data}) containing 47 ``galaxies'',
+in order to test the algorithm.
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.7]{galaxyfield_data.pdf}
+\caption{The simulated image for the GalaxyField example. The image is
+$200\times 200$ pixels in size and contains $N=47$ ``galaxies''.
+\label{fig:galaxyfield_data}}
+\end{center}
+\end{figure}
 
 For the interim prior for the total fluxes of the galaxies, and for the
-widths of the galaxies, we use the Pareto
+widths of the galaxies, we used the Pareto
 distribution. The probability density function for a variable $x$ given
 hyperparameters $x_{\rm min}$ and $a$ is
 \begin{eqnarray}
@@ -487,16 +503,12 @@ p(x | x_{\rm min}, a) &=&
 \right.
 \end{eqnarray}
 Since we are using this for both the fluxes and the widths of the galaxies,
-there will be four hyperparameters in total for the fluxes and widths.
+there will be four hyperparameters in total: two lower limits (one for the
+fluxes and one for the widths) and two slopes. As in Section~\ref{sec:sinewaves}
+we allowed the noise standard deviation $\sigma$ to be a free parameter with
+a log-uniform prior between $10^{-3}$ and $10^3$.
 
 
-\begin{figure}
-\begin{center}
-\includegraphics[scale=0.7]{galaxyfield_data.pdf}
-\caption{The simulated data for the GalaxyField example.
-\label{fig:galaxyfield_data}}
-\end{center}
-\end{figure}
 
 
 \begin{figure}
@@ -550,8 +562,7 @@ In general, it is possible to compute the number of components that have been
 affected by the proposal. If this is greater than or equal to $N$, we compute
 the mock signal from scratch, otherwise we subtract the effect of those
 components that have been removed and add in the effect of those that have been
-added. In the C++ implementation of this work, available at
-{\tt https://www.github.com/eggplantbren/RJObject/}, when a proposal takes
+added. In the C++ implementation of this work, when a proposal takes
 place, the difference between the old and new model is cached and is available
 to the user, so that the likelihood can be updated rather than computed
 from scratch.
