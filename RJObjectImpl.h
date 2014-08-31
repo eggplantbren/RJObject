@@ -154,6 +154,9 @@ double RJObject<Distribution>::perturb_num_components(double scale)
 template<class Distribution>
 double RJObject<Distribution>::perturb()
 {
+	if(max_num_components == 0)
+		return 0.;
+
 	added.resize(0);
 	removed.resize(0);
 
