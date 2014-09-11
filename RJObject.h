@@ -87,6 +87,10 @@ class RJObject
 		// Getters for the diff
 		const std::vector< std::vector<double> >& get_removed() const
 		{ return removed; }
+
+		// Getter for hyperparameters
+		const Distribution& get_dist() const
+		{ return dist; }
 };
 
 #include "RJObjectImpl.h"
