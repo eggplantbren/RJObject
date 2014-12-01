@@ -143,6 +143,25 @@ into the slab will have a very low acceptance probability because the density
 of the slab is so low relative to that of the spike.
 
 
+\begin{figure}
+\begin{minipage}[lr]{\textwidth}
+\begin{center}
+\includegraphics[width=2.7in]{challenges.pdf}
+\includegraphics[width=2.7in]{dnest.png}
+\end{center}
+\end{minipage}
+\caption{{\bf Left}: An example of a two-dimensional posterior distribution
+with multiple modes, strong dependence, and a phase transition (in the top
+right mode). While this low dimensional example is not difficult to sample,
+an analogous problem in high dimensions would be. {\bf Right}: Diffusive
+Nested Sampling replaces the target posterior distribution by a mixture of
+constrained priors. The density is non-negligible everywhere (since the prior
+is a component of this distribution), and states intermediate between the two
+phases in the top-right mode are appropriately up-weighted.
+\label{fig:challenges}}
+\end{figure}
+
+
 Diffusive Nested Sampling
 \citep[DNS][]{dnest} replaces the posterior distribution with an alternative target
 distribution composed of a mixture of the prior distribution with other, more
@@ -157,6 +176,9 @@ problems with annealing-based methods. In particular, there is no need to choose
 a temperature schedule (a potentially large set of tuning parameters),
 and the method does not fail when phase transitions
 are present.
+Figure~\ref{fig:challenges} shows a mock-up of a two dimensional posterior
+density with three modes, one of which contains a strong dependence, and
+another of which contains a phase transition.
 
 Since DNS is effectively the Metropolis-Hastings algorithm applied to a
 distribution other than the posterior, proposal distributions are needed
