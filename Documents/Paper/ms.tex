@@ -39,13 +39,14 @@ transition or other difficult features such as multimodality.
 We present two example problems, finding sinusoidal signals in
 noisy data, and finding and measuring galaxies in a noisy astronomical image.
 Both of the examples demonstrate phase transitions in the relationship between
-the likelihood and the cumulative prior mass.}
+the likelihood and the cumulative prior mass, highlighting the need for
+Nested Sampling.}
 
 \section{Introduction}\label{sec:introduction}
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{3mm}
 Consider the following class of inference problems. There is some unknown
-number, $N$, of components in a (physical or metaphorical) region. Each of the $N$ components has a property
+number, $N$, of components in a (physical or metaphorical) region. Each of the $N$ components has parameters
 $\xx$, which may be a single scalar value (for example, a mass), or a set of
 values (e.g. a two-dimensional position and a mass). These problems are often
 challenging to solve due to the unknown (and potentially large) dimensionality.
@@ -54,10 +55,10 @@ In addition, they also have the so-called ``label-switching degeneracy'' issue
 switching the identities of the components. Finite mixture modelling is a common
 statistical example.
 
-To carry out the inference, we must assign a prior to the components' properties
+To carry out the inference, we must assign a prior to the components' parameters
 $\{\xx_i\}_{i=1}^N$.
-Since $N$ may be large, it is usually easier to assign an ``interim prior''
-conditional on some hyperparameters $\hyperparams$, and then assign a prior to
+Since $N$ may be large, it is usually easier to assign an ``conditional prior''
+given some hyperparameters $\hyperparams$, and then assign a prior to
 $\hyperparams$. This kind of model is usually called {\it hierarchical}.
 The prior for $N$, $\hyperparams$, and $\{\xx_i\}$ is usually factorised
 in the following way:
@@ -68,7 +69,7 @@ p(N, \hyperparams, \{\xx_i\}) &=& p(N) p(\hyperparams | N) p(\{\xx_i\} | \hyperp
 \end{eqnarray}
 
 Here we have assumed the priors for $N$ and $\hyperparams$ are independent, and
-the interim prior for $\{\xx_i\}$ is iid and does not depend on $N$.
+the conditional prior for $\{\xx_i\}$ is iid and does not depend on $N$.
 Given data $\mathcal{D}$, we usually want to calculate properties of the
 posterior distribution, given by:
 \begin{eqnarray}
@@ -128,7 +129,21 @@ although $\mathcal{Z}$ is readily available from the output.
 The motivation for using Nested Sampling, rather than just sampling the
 posterior using trans-dimensional MCMC, is that the posterior often contains
 difficult features, such as strong dependencies or multiple modes, that cause
-problems with mixing. Diffusive Nested Sampling
+problems with mixing.
+
+In addition to these well-known challenges,
+{\it phase transitions} \citep{skilling} can also cause difficulties for
+Bayesian computation. Phase transitions occur when the posterior distribution
+is a mixture of a ``slab'' with high volume but low density, and a ``spike''
+with low volume but high density. To understand why this causes problems,
+imagine sampling the posterior using the Metropolis algorithm. If the sampler
+is in the slab, it will only rarely propose a move into the spike, because the
+spike's volume is so small. If the sampler is in the spike, a proposal to move
+into the slab will have a very low acceptance probability because the density
+of the slab is so low relative to that of the spike.
+
+
+Diffusive Nested Sampling
 \citep[DNS][]{dnest} replaces the posterior distribution with an alternative target
 distribution composed of a mixture of the prior distribution with other, more
 constrained versions of the prior, facilitating mixing between the multiple modes
