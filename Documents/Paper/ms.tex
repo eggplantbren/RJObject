@@ -22,7 +22,7 @@ Private Bag 92019, Auckland 1142, New Zealand\\
 \begin{document}
 \maketitle
 \abstract{Many inference problems involve inferring the number $N$ of
-objects in some region, along with their properties $\{\xx_i\}_{i=1}^N$,
+components in some region, along with their properties $\{\xx_i\}_{i=1}^N$,
 from a dataset $\mathcal{D}$. A common statistical example is finite mixture
 modelling. In the Bayesian framework, these problems are typically solved using
 one of the following two methods: i)
@@ -45,16 +45,16 @@ the likelihood and the cumulative prior mass.}
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{3mm}
 Consider the following class of inference problems. There is some unknown
-number, $N$, of objects in a (physical or metaphorical) region. Each of the $N$ objects has a property
+number, $N$, of components in a (physical or metaphorical) region. Each of the $N$ components has a property
 $\xx$, which may be a single scalar value (for example, a mass), or a set of
 values (e.g. a two-dimensional position and a mass). These problems are often
 challenging to solve due to the unknown (and potentially large) dimensionality.
 In addition, they also have the so-called ``label-switching degeneracy'' issue
 \citep{label_switching}, where the meaning of the model is invariant to
-switching the identities of the objects. Finite mixture modelling is a common
+switching the identities of the components. Finite mixture modelling is a common
 statistical example.
 
-To carry out the inference, we must assign a prior to the objects' properties
+To carry out the inference, we must assign a prior to the components' properties
 $\{\xx_i\}_{i=1}^N$.
 Since $N$ may be large, it is usually easier to assign an ``interim prior''
 conditional on some hyperparameters $\hyperparams$, and then assign a prior to
@@ -81,7 +81,7 @@ The structure of the model is depicted graphically in Figure~\ref{fig:pgm}.
 The computational method used to calculate properties of the posterior distribution
 is to generate samples from it using Markov Chain Monte Carlo (MCMC). Since
 $N$ is unknown, an MCMC sampler needs to be able to jump between candidate
-solutions with different numbers of objects, using either birth-death MCMC
+solutions with different numbers of components, using either birth-death MCMC
 \citep{birthdeath} or the reversible jump framework of \citet{rjmcmc}.
 
 The marginal likelihood, or evidence, is also an important quantity, and is
@@ -99,8 +99,8 @@ p(N, \hyperparams, \{\xx_i\})p(\mathcal{D} | N, \hyperparams, \{\xx_i\})
 \includegraphics{pgm.pdf}
 \caption{\it A probabilistic graphical model (PGM) depicting the kind
 of model discussed in this paper. Produced using daft ({\tt daft-pgm.org}).
-The number, $N$, of objects in the model is an unknown parameter, as are the
-properties of the objects. The data depends on the properties of the objects.
+The number, $N$, of components in the model is an unknown parameter, as are the
+properties of the components. The data depends on the properties of the components.
 Note that it is possible (and common) to have other parameters in the model
 that point directly to the data. However, we have omitted such parameters
 for simplicity.
@@ -159,7 +159,7 @@ A C++ implementation of the ideas described in this paper is available online
 % to the same prior as a hierarchical model.                          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Consider terminology: "objects" vs. "components"
+% Consider terminology: "components" vs. "components"
 
 \section{Metropolis proposals for the general problem}\label{sec:proposals}
 We will now define a set of proposal distributions that can be used to
@@ -225,17 +225,17 @@ when the target distribution is similar to the prior. If $N' = N$, $N'$ is
 regenerated as $N+1$ with probability 0.5, and $N-1$ with probability 0.5,
 and then wrapped back into the range $\{0,...,N_{\rm max}\}$ if necessary.
 
-If $N' > N$, i.e. the proposal is to add objects to the model,
+If $N' > N$, i.e. the proposal is to add components to the model,
 the extra parameters needed, $\{\xx_i\}_{i=N+1}^{N'}$,
 are drawn from their prior conditional on the current value of the
 hyperparameters, i.e. the interim prior $p(\xx | \hyperparams)$.
-If $N' < N$, i.e. the proposal is to remove objects from the model,
-then $N - N'$ objects must be selected for removal. All
-of the objects have the same probability of being selected for removal.
+If $N' < N$, i.e. the proposal is to remove components from the model,
+then $N - N'$ components must be selected for removal. All
+of the components have the same probability of being selected for removal.
 
-\subsection{Proposals that modify objects}\label{sec:proposal2}
+\subsection{Proposals that modify components}\label{sec:proposal2}
 We now consider a proposal distribution that modifies one or more of the
-objects $\{\xx_i\}$, while keeping the number of objects $N$, as well as the
+components $\{\xx_i\}$, while keeping the number of components $N$, as well as the
 hyperparameters $\hyperparams$, fixed.
 
 Let $F(x; \hyperparams)$ be a function that takes an object $x$ and transforms it
@@ -259,14 +259,14 @@ Equation~\ref{eqn:heavytailed}.
 Choosing just one object to change is most appropriate when the DNS
 distribution is very constrained. When it is close to the prior, bolder
 proposals that change more than one object at a time are possible. Hence,
-we choose the number of objects to change from a heavy tailed distribution
+we choose the number of components to change from a heavy tailed distribution
 wherer the most probable value is 1 but there is also a nontrivial probability
-of proposing to change $\sim N$ objects at once.
+of proposing to change $\sim N$ components at once.
 
 \subsection{Proposals that change the hyperparameters,
-keeping the objects fixed}\label{sec:proposal3}
+keeping the components fixed}\label{sec:proposal3}
 Another kind of proposal that we will consider is a proposal that keeps all of
-the objects fixed in place (i.e. leaves $\{\xx_i\}$) unchanged, but changes
+the components fixed in place (i.e. leaves $\{\xx_i\}$) unchanged, but changes
 the hyperparameter(s) from their current value $\hyperparams$
 to a new value $\hyperparams'$. The proposal for the hyperparameter(s) is chosen
 to satisfy detailed balance with respect to $p(\hyperparams)$ and should be
@@ -279,14 +279,14 @@ must include the following factor:
 \frac{\prod_{i=1}^N p(\xx_i | \hyperparams')}{\prod_{i=1}^N p(\xx_i | \hyperparams)}
 \label{eqn:acceptance_prob}
 \end{eqnarray}
-Since this proposal leaves the objects $\{\xx_i\}$ fixed, it will usually not
+Since this proposal leaves the components $\{\xx_i\}$ fixed, it will usually not
 affect the value of the likelihood, and therefore the likelihood will not need
 to be recomputed. Therefore this proposal is most useful for mixing the values
 of the hyperparameters $\hyperparams$ when the target distribution is highly
 constrained.
 
 \subsection{Proposals that change the hyperparameters
-and all of the objects}\label{sec:proposal4}
+and all of the components}\label{sec:proposal4}
 The above proposals allow for changes to $N$, $\hyperparams$, and $\{\xx_i\}$,
 and are therefore sufficient to allow for ``correct'' exploration of the
 prior distribution, and the constrained prior distributions used in DNS.
@@ -298,7 +298,7 @@ Equation~\ref{eqn:acceptance_prob} is likely to be very small, and the move
 will probably be rejected.
 
 Therefore, we allow an additional move that changes $\hyperparams$ to a new
-value $\hyperparams'$, but rather than leaving the objects $\{\xx_i\}$ fixed,
+value $\hyperparams'$, but rather than leaving the components $\{\xx_i\}$ fixed,
 they are ``dragged''
 so they represent the distribution $p(\xx | \hyperparams')$ rather than
 $p(\xx|\hyperparams)$. We do this by making use of the transformation functions
@@ -311,7 +311,7 @@ each object:
 u_i &:=& F(\xx_i; \hyperparams)\\
 \xx_i' &:=& G(\xx_i; \hyperparams')
 \end{eqnarray}
-In other words, the objects' parameters are transformed to $[0,1]$ using the
+In other words, the components' parameters are transformed to $[0,1]$ using the
 current value of the hyperparameters, and then transformed back using the
 proposed value of the hyperparameters so they represent the new interim prior
 rather than the old one.
@@ -460,7 +460,7 @@ divergence from the prior to the posterior, was estimated to be 29.7 nats.
 \section{``Galaxy Field'' Example}
 Source detection is an important problem in astrophysics. Given some data,
 usually one or more noisy, blurred, images of the sky, we would like to know
-how many objects $N$ (such as stars or galaxies) are in the image, and their
+how many components $N$ (such as stars or galaxies) are in the image, and their
 properties (such as flux, size, orientation). Various approaches exist,
 covering a wide spectrum between ad-hoc approaches and principled inference
 approaches
@@ -473,7 +473,7 @@ presented in this paper.
 
 In this section we apply
 the DNS approach to a toy version of the problem of detecting and quantifying
-extended objects such as galaxies in a noisy image.
+extended components such as galaxies in a noisy image.
 We model each galaxy as a mixture of two concentric elliptical gaussian
 components, with
 the following eight parameters. Firstly, two
@@ -596,8 +596,8 @@ However, many of the proposal distributions used involve changing a subset
 of the parameters, while keeping others fixed. Considerable speedups can be
 achieved by, when appropriate, updating the mock signal to reflect the proposed
 change to the model, rather than computing the entire mock signal from scratch.
-For example, if the proposal is to add two new objects to the model, the
-mock signal can simply be updated by adding the effect of the two new objects
+For example, if the proposal is to add two new components to the model, the
+mock signal can simply be updated by adding the effect of the two new components
 to the model.
 
 In general, it is possible to compute the number of components that have been
