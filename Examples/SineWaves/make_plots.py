@@ -12,3 +12,10 @@ xlim([-0.5, 10.5])
 savefig('N_result.pdf', bbox_inches='tight')
 show()
 
+sample_info = loadtxt('Metropolis/sample_info.txt')
+plot(sample_info[:,1], linewidth=1)
+xlabel('Iteration / 20000')
+ylabel('Log Likelihood')
+savefig('trace_logl.pdf', bbox_inches='tight')
+show()
+

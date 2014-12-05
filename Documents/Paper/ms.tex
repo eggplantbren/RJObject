@@ -490,7 +490,18 @@ given the data. Of course, this is not always the case.
 
 The marginal likelihood estimate returned by DNS for this data was
 $\log(\mathcal{Z}) = -1410.8$, and the information, or Kullback-Leibler
-divergence from the prior to the posterior, was estimated to be 29.7 nats. 
+divergence from the prior to the posterior, was estimated to be 29.7 nats.
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{trace_logl.pdf}
+\caption{A ``trace plot'' of the log likelihood in the SineWave model, for an
+MCMC chain designed to sample the posterior distribution. The two phases
+have log-likelihoods around -730 and -745 respectively, however transitions
+between the two phases are quite uncommon.
+\label{fig:trace_logl}}
+\end{center}
+\end{figure}
 
 %\section{``Transit'' Example}
 %\section{``Asteroseismology'' Example}
