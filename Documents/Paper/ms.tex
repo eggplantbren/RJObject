@@ -379,7 +379,7 @@ The simulated data is shown in Figure~\ref{fig:sinewave_data}, and shows a
 large, low period oscillation with a smaller, much faster oscillation
 superimposed. The noise level is such that the fast oscillation is difficult
 to detect. The true values of the parameters were
-$N=2$, $\mathbf{A} = \{1, 0.3\}$,
+$N=2$, $\mathbf{A} = \{7, 0.155\}$,
 $\mathbf{T}=\{30, 2\}$, and $\boldsymbol{\phi} = \{0, 1\}$. The signal was
 observed at $n=1001$ points equally spaced between $t=0$ and $t=100$.
 The true form of the signal is:
@@ -387,14 +387,14 @@ The true form of the signal is:
 y(t) = \sin\left(\frac{2\pi t}{30}\right) +
 0.3 \sin\left(\frac{2\pi t}{2} + 1\right)
 \end{eqnarray}
-and the noise standard deviation was $\sigma = 1$.
+and the noise standard deviation was $\sigma = 0.5$.
 
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{sinewave_data.pdf}
 \caption{The simulated data for the sinusoidal example. The solid line shows
 the true signal and the points are the measurements, simulated based on a
-noise standard deviation of $\sigma = 1$.
+noise standard deviation of $\sigma = 0.5$.
 \label{fig:sinewave_data}}
 \end{center}
 \end{figure}
@@ -442,7 +442,7 @@ where this curve is concave up. The
 first phase transition, at $\log(X) \approx -10$ nats,
 separates ``noise-only'' models (where the
 entire dataset is accounted for by the noise term) from ``one-sinusoid'' models
-where $N=1$. At $\log(X) \approx -28$ nats, a second phase transition separates
+where $N=1$. At $\log(X) \approx -35$ nats, a second phase transition separates
 $N=1$ models from $N=2$ models. This phase transition causes a double-peaked
 feature in the posterior weights (lower panel of
 Figure~\ref{fig:sinewaves_likelihood}).

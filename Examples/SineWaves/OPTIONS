@@ -1,7 +1,7 @@
 # File containing parameters for DNest3
 # Put comments at the top, or at the end of the line.
 1	# Number of particles
-20000	# new level interval
+50000	# new level interval
 20000	# save interval
 500	# threadSteps - how many steps each thread should do independently before communication
 70	# maximum number of levels
