@@ -357,7 +357,7 @@ rather than the old one.
 In this section we demonstrate a seemingly simple example which exhibits
 a phase transition, making a standard MCMC approach difficult. Suppose
 a signal is composed of $N$ sinusoids, of different periods, amplitudes,
-and phases. The signal is observed at various times $\{t_i\}_{i=1}^N$ with
+and phases. The signal is observed at various times $\{t_i\}_{i=1}^m$ with
 noise, and we want to use the resulting data to infer the number of sinusoids
 $N$, along with the periods $\{T_i\}_{i=1}^N$, amplitudes $\{A_i\}_{i=1}^N$,
 and phases $\{\phi_i\}_{i=1}^N$.
@@ -428,7 +428,7 @@ parameters) was a normal (gaussian) distribution with mean zero and standard
 deviation $\sigma$, applied independently to each data point:
 \begin{eqnarray}
 Y_i | N, \{A_i\}, \{T_i\}, \{\phi_i\}, \sigma \sim
-\mathcal{N}\left(\mu(t_i), \sigma^2\right).
+\mathcal{N}\left(y(t_i), \sigma^2\right).
 \end{eqnarray}
 This also depends on an additional noise standard deviation parameter $\sigma$
 which will also be inferred. We used a log-uniform prior for $\sigma$ between
