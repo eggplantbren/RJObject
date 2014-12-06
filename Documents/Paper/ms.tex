@@ -330,13 +330,13 @@ We now consider a proposal distribution that modifies one or more of the
 components $\{\xx_i\}$, while keeping the number of components $N$, as well as the
 hyperparameters $\hyperparams$, fixed.
 
-Let $F(x; \hyperparams)$ be a function that takes an object $x$ and transforms it
+Let $F(x; \hyperparams)$ be a function that takes an component $x$ and transforms it
 to a value $u$ that has a uniform distribution between 0 and 1, given $\hyperparams$.
-If the object $x$ consists of a single scalar value, $F$ is the cumulative
+If the component $x$ consists of a single scalar value, $F$ is the cumulative
 distribution of the interim prior. Denote the inverse of $F$ by $G$.
 
 A proposal
-for an object involves transforming its parameters to $[0, 1]$ using $F$,
+for an component involves transforming its parameters to $[0, 1]$ using $F$,
 making the proposal in terms of $u$, and then transforming back.
 Specifically, the proposal chooses
 a new value $\xx_i'$ from the current value $\xx_i$ as follows:
@@ -348,9 +348,9 @@ u_i' &:=& \textnormal{mod}\left(u_i + \delta_u, 1\right)\\
 where $\delta_u$ is drawn from a heavy-tailed distribution as in
 Equation~\ref{eqn:heavytailed}.
 
-Choosing just one object to change is most appropriate when the DNS
+Choosing just one component to change is most appropriate when the DNS
 distribution is very constrained. When it is close to the prior, bolder
-proposals that change more than one object at a time are possible. Hence,
+proposals that change more than one component at a time are possible. Hence,
 we choose the number of components to change from a heavy tailed distribution
 wherer the most probable value is 1 but there is also a nontrivial probability
 of proposing to change $\sim N$ components at once.
@@ -398,7 +398,7 @@ $F(x; \hyperparams)$ and $G(x; \hyperparams)$ defined in
 Section~\ref{sec:proposal2}.
 
 The ``dragging'' process works as follows, and must be carried out on
-each object:
+each component:
 \begin{eqnarray}
 u_i &:=& F(\xx_i; \hyperparams)\\
 \xx_i' &:=& G(\xx_i; \hyperparams')
@@ -459,7 +459,7 @@ noise standard deviation of $\sigma = 0.5$.
 To infer $N$, the number of sinusoids, as well as all the periods, amplitudes,
 and phases, we need to define prior distributions.
 In the notation of Section~\ref{sec:introduction}, the parameters of the
-each object are
+each component are
 \begin{eqnarray}
 \xx_i &=& \{A_i, T_i, \phi_i\}.
 \end{eqnarray}
