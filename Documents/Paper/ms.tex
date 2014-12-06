@@ -403,7 +403,7 @@ The ``dragging'' process works as follows, and must be carried out on
 each component:
 \begin{eqnarray}
 u_i &:=& F(\xx_i; \hyperparams)\\
-\xx_i' &:=& G(\xx_i; \hyperparams')
+\xx_i' &:=& G(u_i; \hyperparams')
 \end{eqnarray}
 In other words, the components' parameters are transformed to $[0,1]$ using the
 current value of the hyperparameters, and then transformed back using the
