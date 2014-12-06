@@ -449,7 +449,8 @@ and the noise standard deviation was $\sigma = 0.5$.
 \begin{center}
 \includegraphics[scale=0.5]{sinewave_data.pdf}
 \caption{The simulated data for the sinusoidal example. The solid line shows
-the true signal and the points are the measurements, simulated based on a
+the true signal which consists of a large slow oscillation and a much smaller
+amplitude fast oscillation. The points are the measurements, simulated with a
 noise standard deviation of $\sigma = 0.5$.
 \label{fig:sinewave_data}}
 \end{center}
@@ -524,7 +525,7 @@ is absent is crucial.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{trace_logl.pdf}
-\caption{A ``trace plot'' of the log likelihood in the SineWave model, for an
+\caption{A ``trace plot'' of the log likelihood in the sinusoidal model, for an
 MCMC chain designed to sample the posterior distribution. The two phases
 have log-likelihoods around -730 and -745 respectively, however transitions
 between the two phases are quite uncommon.
