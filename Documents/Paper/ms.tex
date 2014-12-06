@@ -509,8 +509,28 @@ the $N=1$ solution and the $N=2$ solution, because the posterior distribution
 would be composed of a mixture of a small-volume but high-likelihood spike
 and a large-volume but (relatively) low likelihood
 slab. Note that this phase transition still exists if we condition on $N=2$,
-so is not caused by the trans-dimensional model.
+so is not caused by the trans-dimensional model. To demonstrate this,
+Figure~\ref{fig:trace_logl} shows the value of the log likelihood versus time
+for 45 million iterations of MCMC targeting the posterior distribution.
+The sampler should visit states with log likelihood $\sim -745$ about 10\%
+of the time (corresponding with models that don't contain the small oscillation),
+and the rest of the time should be spent in states with log likelihood around
+$-730$. In this run transitions between these two phases occurred only a
+handful of times. In a practical application, computing the posterior probability
+for the existence of the small oscillation might be the whole point of the
+calculation, so mixing between models where it is present and models where it
+is absent is crucial.
 
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{trace_logl.pdf}
+\caption{A ``trace plot'' of the log likelihood in the SineWave model, for an
+MCMC chain designed to sample the posterior distribution. The two phases
+have log-likelihoods around -730 and -745 respectively, however transitions
+between the two phases are quite uncommon.
+\label{fig:trace_logl}}
+\end{center}
+\end{figure}
 
 \begin{figure}
 \begin{center}
