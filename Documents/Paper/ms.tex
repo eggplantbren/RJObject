@@ -161,13 +161,11 @@ which gives the log of the marginal likelihood:
 \end{eqnarray}
 
 where $L(\theta)$ is the likelihood function, and the expectation is taken
-with respect to the ``power posterior'' distributions which are intermediate
+with respect to the ``thermal'' distributions which are intermediate
 between the prior $\pi(\theta)$ and the posterior:
-
 \begin{eqnarray}
-p_\beta(\theta) \propto \pi(\theta)L(\theta)^\beta.
+p_\beta(\theta) \propto \pi(\theta)L(\theta)^\beta.\label{eq:annealing}
 \end{eqnarray}
-
 If the posterior distribution is a mixture of a slab and a spike,
 then for some range of inverse temperatures $\beta$ the probability mass in
 the slab and the spike will be comparable. At these temperatures the MCMC
@@ -178,7 +176,7 @@ Nested Sampling \citep{skilling} overcomes these problems by working with an
 alternative sequence of probability distributions, proportional to the prior
 but with a hard constraint on the value of the likelihood:
 \begin{eqnarray}
-p_{l}(\theta) \propto \pi(\theta)\mathds{1}\left[L(\theta) > l\right]
+p_{l}(\theta) \propto \pi(\theta)\mathds{1}\left[L(\theta) > l\right]\label{eq:constrained_prior}
 \end{eqnarray}
 The normalising constants of these distributions are given by
 \begin{eqnarray}
@@ -187,13 +185,23 @@ X(l) &=& \int \pi(\theta)\mathds{1}\left[L(\theta) > l\right] \, d\theta
 which is the amount of prior mass that has likelihood greater than
 $l$. As Nested Sampling proceeds, $X$ shrinks geometrically with time, so
 the number of iterations required to compress from the slab to the spike is
-of order $\log(V_{\rm slab}/V_{\rm spike})$.
+of order $\log(V_{\rm slab}/V_{\rm spike})$. During this process Nested Sampling
+visits states with likelihoods intermediate between those of the slab and the
+spike, whereas no choice of $\beta$ in Equation~\ref{eq:annealing} will give
+these states substantial probability.
 
 \subsection{Diffusive Nested Sampling}
+The main difficulty with Nested Sampling is coming up with methods to sample
+the constrained prior distributions of Equation~\ref{eq:constrained_prior}.
 Diffusive Nested Sampling
-\citep[DNS][]{dnest} replaces the posterior distribution with an alternative target
-distribution composed of a mixture of the prior distribution with other, more
-constrained versions of the prior, facilitating mixing between the multiple modes
+\citep[DNS][]{dnest} is an alternative version of Nested Sampling that is
+appropriate when MCMC is used to explore the parameter space.
+
+Rather than working with a sequence of constrained prior distributions like in
+Equation~\ref{eq:constrained_prior}, DNS
+replaces the posterior distribution with an alternative target
+distribution composed of a {\it mixture} of the prior distribution with the
+constrained priors, facilitating mixing between the multiple modes
 and along degeneracy curves.
 This is similar to the idea of annealed importance sampling
 \citep{neal} or parallel tempering \citep{pt},
