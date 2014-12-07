@@ -193,6 +193,10 @@ these states substantial probability.
 \subsection{Diffusive Nested Sampling}
 The main difficulty with Nested Sampling is coming up with methods to sample
 the constrained prior distributions of Equation~\ref{eq:constrained_prior}.
+Various implementations of Nested Sampling exist, with different strategies
+for sampling Equation~\ref{eq:constrained_prior}
+\citep[e.g.][]{multinest, diamonds, radfriends}.
+
 Diffusive Nested Sampling
 \citep[DNS][]{dnest} is an alternative version of Nested Sampling that is
 appropriate when MCMC is used to explore the parameter space.
@@ -822,8 +826,18 @@ G.~F., Belokurov, V., Irwin, M.~J., Bridges, T.~J., Evans, N.~W.\ 2011.\
 Modelling of the complex CASSOWARY/SLUGS gravitational lenses.\ Monthly
 Notices of the Royal Astronomical Society 412, 2521-2529
 
+\bibitem[Buchner (2014)]{radfriends}
+Buchner, Johannes.~A statistical test for Nested Sampling algorithms.~Statistics
+and Computing (2014): 1-10.
+
+\bibitem[Corsaro and De 
+Ridder(2014)]{diamonds} Corsaro, E., De Ridder, J.\ 2014.\ DIAMONDS: A new Bayesian nested sampling tool. Application to peak bagging of solar-like oscillations.\ Astronomy and Astrophysics 571, AA71.
+
 \bibitem[Dolphin(2000)]{dolphot} Dolphin, A.~E.\ 2000, PASP, 
 112, 1383 
+
+\bibitem[\protect\citeauthoryear{Feroz, Hobson,
+\& Bridges}{2009}]{multinest} Feroz F., Hobson M.~P., Bridges M., 2009, MNRAS, 398, 1601
 
 \bibitem[Feroz et al.(2011)]{2011MNRAS.415.3462F} Feroz, F., Balan, S.~T.,
 Hobson, M.~P.\ 2011.\ Detecting extrasolar planets from stellar radial
