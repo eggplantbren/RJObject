@@ -196,6 +196,8 @@ the constrained prior distributions of Equation~\ref{eq:constrained_prior}.
 Diffusive Nested Sampling
 \citep[DNS][]{dnest} is an alternative version of Nested Sampling that is
 appropriate when MCMC is used to explore the parameter space.
+A C++ implementation of DNS, called {\tt DNest3}, is available at
+{https://github.com/eggplantbren/DNest3}.
 
 Rather than working with a sequence of constrained prior distributions like in
 Equation~\ref{eq:constrained_prior}, DNS
@@ -311,7 +313,10 @@ Most of the proposals discussed in this paper involve changing one
 others fixed. Whenever a heavy-tailed proposal distribution
 is required, we use the proposal from Equation~\ref{eqn:heavytailed},
 or an analogous one, e.g. a discrete version when the proposal is to change $N$.
-
+The {\tt DNest3} package monitors the acceptance rate as a function of level.
+In most applications, the acceptance probability is close to 1 (or may be
+precisely 1) when sampling the prior, and decreases to 5-40\% when sampling
+high levels.
 
 \subsection{Proposals that modify $N$}\label{sec:proposal1}
 The first kind of proposal we consider are proposals that change the
