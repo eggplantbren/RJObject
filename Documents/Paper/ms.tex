@@ -202,7 +202,22 @@ Equation~\ref{eq:constrained_prior}, DNS
 replaces the posterior distribution with an alternative target
 distribution composed of a {\it mixture} of the prior distribution with the
 constrained priors, facilitating mixing between the multiple modes
-and along degeneracy curves.
+and along degeneracy curves. The mixture of constrained priors is given by
+a mixture of distributions like in Equation~\ref{eq:constrained_prior}:
+
+\begin{eqnarray}
+p(\theta) &=& \sum_{i=0}^n w_i
+\frac{\pi(\theta)\mathds{1}\left[L(\theta) > l_i\right]}{X_i}
+\end{eqnarray}
+where $\{l_i\}$ is a set of likelihood thresholds or ``levels'',
+constructed such that the associated prior mass $X_{i+1}$ of level
+$i+1$ is approximately $e^{-1}$ times that of level $i$. The $\{w_i\}$ are a
+set of mixture weights, usually chosen to emphasise the higher levels during
+the initial stages of a run (while creating levels),
+and set to uniform once the desired number of levels $n$ has been created.
+See \citet{dnest}
+for more details about DNS.
+
 This is similar to the idea of annealed importance sampling
 \citep{neal} or parallel tempering \citep{pt},
 where the target distribution is modified from the posterior to something
@@ -212,7 +227,7 @@ problems with annealing-based methods. In particular, there is no need to choose
 a temperature schedule (a potentially large set of tuning parameters),
 and the method does not fail when phase transitions
 are present.
-Figure~\ref{fig:challenges} shows a mock-up of a two dimensional posterior
+Figure~\ref{fig:challenges} shows a mock two dimensional posterior
 density with three modes, one of which contains a strong dependence, and
 another of which contains a phase transition. The target distribution used by
 DNS includes the prior as part of the mixture, so travel between the modes is
