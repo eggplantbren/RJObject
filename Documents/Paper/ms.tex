@@ -196,12 +196,11 @@ the constrained prior distributions of Equation~\ref{eq:constrained_prior}.
 Various implementations of Nested Sampling exist, with different strategies
 for sampling Equation~\ref{eq:constrained_prior}
 \citep[e.g.][]{multinest, diamonds, radfriends}.
-
 Diffusive Nested Sampling
 \citep[DNS][]{dnest} is an alternative version of Nested Sampling that is
-appropriate when MCMC is used to explore the parameter space.
+appropriate when MCMC is used to explore the parameter space\footnote{
 A C++ implementation of DNS, called {\tt DNest3}, is available at
-{https://github.com/eggplantbren/DNest3}.
+{\tt https://github.com/eggplantbren/DNest3}}.
 
 Rather than working with a sequence of constrained prior distributions like in
 Equation~\ref{eq:constrained_prior}, DNS
