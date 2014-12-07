@@ -180,7 +180,7 @@ p_{l}(\theta) \propto \pi(\theta)\mathds{1}\left[L(\theta) > l\right]\label{eq:c
 \end{eqnarray}
 The normalising constants of these distributions are given by
 \begin{eqnarray}
-X(l) &=& \int \pi(\theta)\mathds{1}\left[L(\theta) > l\right] \, d\theta
+X(l) &=& \int \pi(\theta)\mathds{1}\left[L(\theta) > l\right] \, d\theta\label{eq:X}
 \end{eqnarray}
 which is the amount of prior mass that has likelihood greater than
 $l$. As Nested Sampling proceeds, $X$ shrinks geometrically with time, so
@@ -220,8 +220,9 @@ $i+1$ is approximately $e^{-1}$ times that of level $i$. The $\{w_i\}$ are a
 set of mixture weights, usually chosen to emphasise the higher levels during
 the initial stages of a run (while creating levels),
 and set to uniform once the desired number of levels $n$ has been created.
-See \citet{dnest}
-for more details about DNS.
+Since DNS does not sample the posterior distribution, the samples need to be
+assigned weights (in a manner similar to importance sampling) to represent
+the posterior. See \citet{dnest} for more details about DNS.
 
 This is similar to the idea of annealed importance sampling
 \citep{neal} or parallel tempering \citep{pt},
@@ -517,10 +518,14 @@ $10^{-3}$ and $10^{3}$.
 
 \subsection{Results}
 We ran DNS on the simulated data shown in Figure~\ref{fig:sinewave_data}.
-The shape of the likelihood function with respect to the prior mass (the
-usual likelihood curve associated with Nested Sampling) is shown in
-Figure~\ref{fig:sinewaves_likelihood}. Two phase transitions can be seen,
-where this curve is concave up. The
+The (log) likelihood as a function of (log) enclosed prior mass $X$
+(Equation~\ref{eq:X}) is plotted in Figure~\ref{fig:sinewaves_likelihood}
+This curve is a standard output of Nested Sampling methods and can be used to
+gain insight into the structure of the problem. Particularly, when
+phase transitions are present, this curve will have concave-up
+regions \citep{skilling}.
+
+Two phase transitions can be seen in Figure~\ref{fig:sinewaves_likelihood}. The
 first phase transition, at $\log(X) \approx -10$ nats,
 separates ``noise-only'' models (where the
 entire dataset is accounted for by the noise term) from ``one-sinusoid'' models
