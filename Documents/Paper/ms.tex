@@ -194,8 +194,10 @@ these states substantial probability.
 The main difficulty with Nested Sampling is coming up with methods to sample
 the constrained prior distributions of Equation~\ref{eq:constrained_prior}.
 Various implementations of Nested Sampling exist, with different strategies
-for sampling Equation~\ref{eq:constrained_prior}
-\citep[e.g.][]{multinest, diamonds, radfriends}.
+for sampling Equation~\ref{eq:constrained_prior}, as well as other features
+to infer whether the run was successful, or to improve the accuracy of
+the marginal likelihood estimate
+\citep[e.g.][]{multinest, importance, diamonds, radfriends}.
 Diffusive Nested Sampling
 \citep[DNS][]{dnest} is an alternative version of Nested Sampling that is
 appropriate when MCMC is used to explore the parameter space\footnote{
@@ -839,6 +841,10 @@ Ridder(2014)]{diamonds} Corsaro, E., De Ridder, J.\ 2014.\ DIAMONDS: A new Bayes
 
 \bibitem[Dolphin(2000)]{dolphot} Dolphin, A.~E.\ 2000, PASP, 
 112, 1383 
+
+\bibitem[Feroz et al.(2013)]{importance} Feroz, F., Hobson, M.~P., 
+Cameron, E., Pettitt, A.~N.\ 2013.\ Importance Nested Sampling and the 
+MultiNest Algorithm.\ ArXiv e-prints arXiv:1306.2144. 
 
 \bibitem[\protect\citeauthoryear{Feroz, Hobson,
 \& Bridges}{2009}]{multinest} Feroz F., Hobson M.~P., Bridges M., 2009, MNRAS, 398, 1601
