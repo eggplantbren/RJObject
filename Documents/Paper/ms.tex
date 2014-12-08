@@ -231,7 +231,8 @@ Since DNS does not sample the posterior distribution, the samples need to be
 assigned weights (in a manner similar to importance sampling) to represent
 the posterior. See \citet{dnest} for more details about DNS.
 
-This is similar to the idea of annealed importance sampling
+The idea of replacing the target distribution with something other than the
+posterior is similar to annealed importance sampling
 \citep{neal} or parallel tempering \citep{pt},
 where the target distribution is modified from the posterior to something
 ``easier''. However,
