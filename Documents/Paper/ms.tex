@@ -169,7 +169,8 @@ p_\beta(\theta) \propto \pi(\theta)L(\theta)^\beta.\label{eq:annealing}
 If the posterior distribution is a mixture of a slab and a spike,
 then for some range of inverse temperatures $\beta$ the probability mass in
 the slab and the spike will be comparable. At these temperatures the MCMC
-method will be unable to mix and will give an incorrect estimate of
+method will be unable to mix (the sampler will only visit the spike or the
+slab, and not both) and will give an incorrect estimate of
 $\left<\log\left[L(\theta)\right]\right>_\beta$.
 
 Nested Sampling \citep{skilling} overcomes these problems by working with an
@@ -185,12 +186,16 @@ X(l) &=& \int \pi(\theta)\mathds{1}\left[L(\theta) > l\right] \, d\theta\label{e
 which is the amount of prior mass that has likelihood greater than
 $l$. As Nested Sampling proceeds, $X$ shrinks geometrically with time, so
 the number of iterations required to compress from the slab to the spike is
-of order $\log(V_{\rm slab}/V_{\rm spike})$. During this process Nested Sampling
+of order $\log(V_{\rm slab}/V_{\rm spike})$. In Diffusive Nested Sampling
+(Section~\ref{sec:dns}), it takes of order $\log(V_{\rm slab}/V_{\rm spike})$
+iterations to pass from the slab to the spike initially, and then
+$\log(V_{\rm slab}/V_{\rm spike})^2$ time to revise this.
+During this process Nested Sampling
 visits states with likelihoods intermediate between those of the slab and the
 spike, whereas no choice of $\beta$ in Equation~\ref{eq:annealing} will give
 these states substantial probability.
 
-\subsection{Diffusive Nested Sampling}
+\subsection{Diffusive Nested Sampling}\label{sec:dns}
 The main difficulty with Nested Sampling is coming up with methods to sample
 the constrained prior distributions of Equation~\ref{eq:constrained_prior}.
 Various implementations of Nested Sampling exist, with different strategies
