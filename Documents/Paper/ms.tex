@@ -338,7 +338,9 @@ a new value $N'$ according to
 N' &=& \textnormal{mod}\left(N + \delta_N, N_{\rm max} + 1\right)
 \end{eqnarray}
 where $\delta_N$ is drawn from a heavy tailed
-distribution which is a discrete analogue of Equation~\ref{eqn:heavytailed}.
+distribution which is a discrete analogue of Equation~\ref{eqn:heavytailed}
+($N$ is treated as a real number in $[0, N_{\rm max} + 1]$ and then we take
+the integer part at the end).
 The most probable values of $\delta_N$ are $\pm 1$, but values
 of order $N_{\rm max}$ also have some probability, to allow fast exploration
 when the target distribution is similar to the prior. If $N' = N$, $N'$ is
@@ -348,7 +350,7 @@ and then wrapped back into the range $\{0,...,N_{\rm max}\}$ if necessary.
 If $N' > N$, i.e. the proposal is to add components to the model,
 the extra parameters needed, $\{\xx_i\}_{i=N+1}^{N'}$,
 are drawn from their prior conditional on the current value of the
-hyperparameters, i.e. the interim prior $p(\xx | \hyperparams)$.
+hyperparameters, i.e. the conditional prior $p(\xx | \hyperparams)$.
 If $N' < N$, i.e. the proposal is to remove components from the model,
 then $N - N'$ components must be selected for removal. All
 of the components have the same probability of being selected for removal.
@@ -361,7 +363,7 @@ hyperparameters $\hyperparams$, fixed.
 Let $F(x; \hyperparams)$ be a function that takes an component $x$ and transforms it
 to a value $u$ that has a uniform distribution between 0 and 1, given $\hyperparams$.
 If the component $x$ consists of a single scalar value, $F$ is the cumulative
-distribution of the interim prior. Denote the inverse of $F$ by $G$.
+distribution of the conditional prior. Denote the inverse of $F$ by $G$.
 
 A proposal
 for an component involves transforming its parameters to $[0, 1]$ using $F$,
@@ -433,7 +435,7 @@ u_i &:=& F(\xx_i; \hyperparams)\\
 \end{eqnarray}
 In other words, the components' parameters are transformed to $[0,1]$ using the
 current value of the hyperparameters, and then transformed back using the
-proposed value of the hyperparameters so they represent the new interim prior
+proposed value of the hyperparameters so they represent the new conditional prior
 rather than the old one.
 
 \section{Sinusoidal example}\label{sec:sinewaves}
@@ -492,7 +494,7 @@ each component are
 \begin{eqnarray}
 \xx_i &=& \{A_i, T_i, \phi_i\}.
 \end{eqnarray}
-For the interim prior $p(\xx_i | \hyperparams)$, we introduced a single
+For the conditional prior $p(\xx_i | \hyperparams)$, we introduced a single
 hyperparameter $\mu$, such that $A_i$ given $\mu$ has an exponential prior
 with mean $\mu$. For the periods, we assigned a log-uniform distribution for
 the periods between fixed boundaries, and a uniform distribution for the phases
@@ -665,7 +667,7 @@ $200\times 200$ pixels in size and contains $N=47$ ``galaxies''.
 \end{figure}
 
 \subsection{Priors}
-For the interim prior for the total fluxes of the galaxies, and for the
+For the conditional prior for the total fluxes of the galaxies, and for the
 widths of the galaxies, we used the Pareto
 distribution. The probability density function for a variable $x$ given
 hyperparameters $x_{\rm min}$ and $a$ is
@@ -684,11 +686,13 @@ fluxes and one for the widths) and two slopes. The lower limits were assigned
 log-uniform priors between $10^{-3}$ and $10^3$, and uniform priors between 0
 and 1 were assigned to the {\it inverses} of the slopes. This latter choice
 was based on the fact that a Pareto distribution for $x$ is an exponential
-distribution for $\ln(x)$, with scale length $1/a$.
+distribution for $\ln(x)$, with scale length $1/a$. If we do not expect the
+scale length to be very extreme then we might want to restrict it to $[0,1]$
+with a uniform prior.
 
-The interim priors for the radius ratios $u$ and the flux ratios $w$ were both
+The conditional priors for the radius ratios $u$ and the flux ratios $w$ were both
 uniform distributions. Since $u \in [0,1]$ and $v \in [0,1]$, the upper limits
-of the uniform interim priors must be between 0 and 1. Therefore the prior
+of the uniform conditional priors must be between 0 and 1. Therefore the prior
 for the upper limit was a uniform distribution between 0 and 1, and the prior
 for the lower limit given the upper limit was a uniform distribution between 0
 and the upper limit.
