@@ -8,7 +8,7 @@ using namespace std;
 using namespace DNest3;
 
 MyModel::MyModel()
-:objects(3, 10, false, MyDistribution(-10., 10.))
+:objects(3, 10, false, MyDistribution(0., 50000.))
 {
 
 }

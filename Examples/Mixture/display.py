@@ -1,14 +1,14 @@
 from pylab import *
 import os
 
-data = loadtxt('data.txt')
+data = loadtxt('galaxies.txt')
 posterior_sample = atleast_2d(loadtxt('posterior_sample.txt'))
 
 saveFrames = False # For making movies
 if saveFrames:
   os.system('rm Frames/*.png')
 
-x = linspace(-10., 10., 1001)
+x = linspace(0., 50000., 10001)
 def mixture(x, params):
   N = int(params[7])
   centers = params[8:18][0:N]

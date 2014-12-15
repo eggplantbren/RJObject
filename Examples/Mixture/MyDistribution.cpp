@@ -19,7 +19,7 @@ void MyDistribution::fromPrior()
 	center_locations = x_min + x_range*randomU();
 	diversity_locations = exp(log(1E-3) + log(1E3)*randomU())*x_range;
 
-	center_logwidths = exp(log(1E-3) + log(1E3)*randomU())*x_range;
+	center_logwidths = log(1E-3*x_range) + log(1E6)*randomU();
 	diversity_logwidths = 2.*randomU();
 
 	diversity_logweights = 2.*randomU();
@@ -45,10 +45,8 @@ double MyDistribution::perturb_parameters()
 	}
 	if(which == 2)
 	{
-		center_logwidths = log(center_logwidths/x_range);
-		center_logwidths += log(1E3)*randh();
-		wrap(center_logwidths, log(1E-3), log(1.));
-		center_logwidths = exp(center_logwidths)*x_range;
+		center_logwidths += log(1E6)*randh();
+		wrap(center_logwidths, log(1E-3*x_range), log(1E3*x_range));
 	}
 	if(which == 3)
 	{
