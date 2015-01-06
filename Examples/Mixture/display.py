@@ -22,6 +22,7 @@ def mixture(x, params):
 
   return y
 
+total = zeros(x.shape)
 
 ion()
 for i in xrange(0, posterior_sample.shape[0]):
@@ -29,7 +30,9 @@ for i in xrange(0, posterior_sample.shape[0]):
   hist(data, 100, alpha=0.5, normed=True)
   hold(True)
   y = mixture(x, posterior_sample[i, :])
+  total += y
   plot(x, y, 'r', linewidth=2)
+  title("{a} / {b}".format(a=(i+1), b=posterior_sample.shape[0]))
   draw()
   if saveFrames:
     savefig('Frames/' + '%0.4d'%(i+1) + '.png', bbox_inches='tight')
@@ -38,3 +41,9 @@ for i in xrange(0, posterior_sample.shape[0]):
 
 ioff()
 show()
+
+hist(data, 100, alpha=0.5, normed=True)
+hold(True)
+plot(x, total/posterior_sample.shape[0], 'r', linewidth=2)
+show()
+
