@@ -100,7 +100,7 @@ p(N, \hyperparams, \{\xx_i\})p(\mathcal{D} | N, \hyperparams, \{\xx_i\})
 \begin{figure}
 \begin{center}
 \includegraphics{pgm.pdf}
-\caption{A probabilistic graphical model (PGM) depicting the kind
+\caption{\it A probabilistic graphical model (PGM) depicting the kind
 of model discussed in this paper. Produced using daft ({\tt daft-pgm.org}).
 The number, $N$, of components in the model is an unknown parameter, as are the
 properties of the components. The data depends on the properties of the components.
@@ -255,7 +255,7 @@ possible.
 \includegraphics[width=2.7in]{dnest.png}
 \end{center}
 \end{minipage}
-\caption{{\bf Left}: An example of a two-dimensional posterior distribution
+\caption{\it {\bf Left}: An example of a two-dimensional posterior distribution
 with multiple modes, strong dependence, and a phase transition (in the top
 right mode). While this low dimensional example is not difficult to sample,
 an analogous problem in high dimensions would be. {\bf Right}: Diffusive
@@ -485,7 +485,7 @@ and the noise standard deviation was $\sigma = 0.5$.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{sinewave_data.pdf}
-\caption{The simulated data for the sinusoidal example. The solid line shows
+\caption{\it The simulated data for the sinusoidal example. The solid line shows
 the true signal which consists of a large slow oscillation and a much smaller
 amplitude fast oscillation. The points are the measurements, simulated with a
 noise standard deviation of $\sigma = 0.5$.
@@ -566,7 +566,7 @@ is absent is crucial.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{trace_logl.pdf}
-\caption{A ``trace plot'' of the log likelihood in the sinusoidal model, for an
+\caption{\it A ``trace plot'' of the log likelihood in the sinusoidal model, for an
 MCMC chain designed to sample the posterior distribution. The two phases
 have log-likelihoods around -730 and -745 respectively, however transitions
 between the two phases are quite uncommon.
@@ -577,7 +577,7 @@ between the two phases are quite uncommon.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.6]{sinewaves_likelihood.png}
-\caption{{\bf Top panel: }
+\caption{\it {\bf Top panel: }
 The shape of the likelihood function with respect to prior mass.
 {\bf Bottom panel: }The posterior weights of the saved samples. The existence
 of a phase transition causes this to display two separate peaks, which
@@ -599,7 +599,7 @@ Bayesian Inference \citep[e.g.][Chapter 28]{mackay}.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{N_result.pdf}
-\caption{The inference for $N$, the number of sinusoids, based on the
+\caption{\it The inference for $N$, the number of sinusoids, based on the
 sinusoid data. The true value was $N=2$, which is also the most probable value
 given the data. Of course, this is not always the case.
 \label{fig:N_result}}
@@ -613,7 +613,7 @@ divergence from the prior to the posterior, was estimated to be 39.8 nats.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{trace_logl.pdf}
-\caption{A ``trace plot'' of the log likelihood in the SineWave model, for an
+\caption{\it A ``trace plot'' of the log likelihood in the SineWave model, for an
 MCMC chain designed to sample the posterior distribution. The two phases
 have log-likelihoods around -730 and -745 respectively, however transitions
 between the two phases are quite uncommon.
@@ -667,7 +667,7 @@ in order to test the algorithm.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.7]{galaxyfield_data.pdf}
-\caption{The simulated image for the GalaxyField example. The image is
+\caption{\it The simulated image for the GalaxyField example. The image is
 $200\times 200$ pixels in size and contains $N=47$ ``galaxies''.
 \label{fig:galaxyfield_data}}
 \end{center}
@@ -722,7 +722,7 @@ for a thermal approach to calculating the marginal likelihood.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.6]{galaxyfield_likelihood.png}
-\caption{{\bf Top panel: }
+\caption{\it {\bf Top panel: }
 The shape of the likelihood function with respect to prior mass for the
 GalaxyField data. Note the phase
 transition at $\log(X) \approx -100$ nats. This separates models with just
@@ -738,7 +738,7 @@ of the marginal likelihood if annealing were used.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{N_galaxy_result.pdf}
-\caption{The inference for $N$, the number of galaxies, based on the
+\caption{\it The inference for $N$, the number of galaxies, based on the
 GalaxyField data. The true value was $N=47$.
 \label{fig:N_galaxy_result}}
 \end{center}
