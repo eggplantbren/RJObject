@@ -72,6 +72,19 @@ p(D) &=& \int p(\theta)p(D|\theta) \, d\theta.
 
 \end{frame}
 
+\begin{frame}[t]{Marginal Likelihood and Model Selection}
+The marginal likelihood is more than a normalising constant. Consider
+estimating parameters $\theta$ within a model $M$. The marginal likelihood
+is really
+\begin{equation}
+p(D|M) = \int p(\theta | M)p(D|\theta, M) \, d\theta
+\end{equation}
+which can
+be used as a likelihood if we want to calculate the plausibility of $M$ vs.
+an alternative.
+\end{frame}
+
+
 \begin{frame}[t]{Posterior Distribution vs. Maximum Likelihood}
 The practical difference between these two concepts is greater in higher
 dimensional problems.
@@ -82,7 +95,7 @@ dimensional problems.
 
 
 \begin{frame}[t]{View of data analysis}
-All conclusions are probabilities.
+All conclusions are probabilities, and probabilities are plausibilities.
 \vspace{20pt}
 
 The only difference between data analysis methods is what prior information
@@ -140,9 +153,25 @@ $\}$
 \end{center}
 \end{frame}
 
+\begin{frame}[t]{Popular but slow approach}
+The marginal posterior distribution for $N$ be written down directly
+using Bayes' rule with $N$ as the only unknown parameter:
+\begin{eqnarray}
+p(N | D) &=& \frac{p(N)p(D | N)}{\sum_N p(N)p(D | N)}.
+\end{eqnarray}
+where
+\begin{eqnarray}
+p(D | N) &=& \int p(\theta | N) p(D | \theta, N) \, d^n \theta
+\end{eqnarray}
+\end{frame}
+
+\begin{frame}[t]{Popular but slow approach}
+Use many trial values of $N$ and use some Monte Carlo method to do the integral
+for each $N$.
+\end{frame}
 
 
-\begin{frame}[t]{Birth and Death}
+\begin{frame}[t]{Alternative: Birth and Death}
 For problems of unknown dimensionality, the hypothesis space is the union
 of several fixed-dimension hypothesis spaces. Can add {\bf birth and death}
 proposals that try to increase or decrease the number of objects in the model.
@@ -265,8 +294,15 @@ The $N=1$ and $N=2$ solutions are separated by a phase transition.
 
 
 \begin{frame}[t]{Exoplanets}
-Radial velocity data is considered challenging
+Radial velocity data is considered challenging. There are many systems where
+controversy rages over $N$.
 \end{frame}
+
+\begin{frame}[t]{Exoplanets}
+Radial velocity data is considered challenging. There are many systems where
+controversy rages over $N$.
+\end{frame}
+
 
 \begin{frame}[t]{Exoplanets: Simulated Dataset}
 How many planets?
