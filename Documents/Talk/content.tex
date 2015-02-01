@@ -83,9 +83,10 @@ dimensional problems.
 
 \begin{frame}[t]{View of data analysis}
 All conclusions are probabilities.
+\vspace{20pt}
 
 The only difference between data analysis methods is what prior information
-they assume.
+they assume, and what numerical methods are used to calculate the result.
 \end{frame}
 
 \begin{frame}[t]{Computation: Markov Chain Monte Carlo}
@@ -177,17 +178,10 @@ proposals that try to increase or decrease the number of objects in the model.
 \begin{frame}[t]{Nested Sampling}
 In 2004, John Skilling introduced {\bf Nested Sampling}, a technique
 that starts with the prior distribution, and shrinks volume at a controlled
-rate. Maps big space into easy 1-D problem.
+rate.
+\vspace{20pt}
 
-Resolves phase transition problem, and helps a little with multiple modes \&
-strong degeneracies. Figure from Skilling (2006).
-
-\begin{figure}
-\begin{center}
-\includegraphics[scale=0.2]{ns.png}
-\end{center}
-\end{figure}
-
+{\bf Nested Sampling solves the problem of phase transitions}.
 \end{frame}
 
 \begin{frame}[t]{Diffusive Nested Sampling}
@@ -249,6 +243,18 @@ The $N=1$ and $N=2$ solutions are separated by a phase transition.
 
 \begin{frame}[t]{Galaxy data movie}
 {\tt https://www.youtube.com/watch?v=s1udKctW2HY}
+\end{frame}
+
+
+\begin{frame}[t]{Exoplanets}
+Radial velocity data is considered challenging
+\end{frame}
+
+\begin{frame}[t]{Exoplanets: Simulated Dataset}
+How many planets?
+\begin{center}
+\includegraphics[scale=0.35]{ExoplanetFigures/fake_data.pdf}
+\end{center}
 \end{frame}
 
 
