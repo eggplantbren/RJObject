@@ -302,7 +302,7 @@ The $N=1$ and $N=2$ solutions are separated by a phase transition.
 
 \begin{frame}[t]{Hyperparameters}
 \begin{center}
-\includegraphics[scale=0.3]{StarFieldFigures/inference2.pdf}
+\includegraphics[scale=0.28]{StarFieldFigures/inference2.pdf}
 \end{center}
 \end{frame}
 
@@ -330,12 +330,6 @@ Radial velocity data is considered challenging. There are many systems where
 controversy rages over $N$.
 \end{frame}
 
-\begin{frame}[t]{Exoplanets}
-Radial velocity data is considered challenging. There are many systems where
-controversy rages over $N$.
-\end{frame}
-
-
 \begin{frame}[t]{Exoplanets: Simulated Dataset}
 How many planets?
 \begin{center}
@@ -343,12 +337,58 @@ How many planets?
 \end{center}
 \end{frame}
 
-\begin{frame}[t]{Exoplanets: Simulated Dataset}
-How many planets?
+\begin{frame}[t]{Exoplanets: Simulated Dataset Results}
+The true value was $N$=7.
 \begin{center}
-\includegraphics[scale=0.35]{ExoplanetFigures/fake_data.pdf}
+\includegraphics[scale=0.35]{ExoplanetFigures/fake_data_N.pdf}
 \end{center}
 \end{frame}
+
+\begin{frame}[t]{Exoplanets: Simulated Dataset Results}
+This is the posterior distribution for $P_1$. Keep in mind the {\bf
+label-switching degeneracy}.
+\begin{center}
+\includegraphics[scale=0.35]{ExoplanetFigures/fake_data_periods.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}[t]{Exoplanets: Simulated Dataset Results}
+Here, we can see why one of the planets was not ``detected'':
+\begin{center}
+\includegraphics[scale=0.35]{ExoplanetFigures/fake_data_posterior.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}[t]{Time}
+It takes about 15-20 minutes to obtain some posterior samples.
+
+Compare with Phil Gregory's code (30 minutes per planet, no trans dimensional
+moves).
+\end{frame}
+
+\begin{frame}[t]{Gliese 581}
+Gliese 581 is an M dwarf which has been observed extensively with the HARPS
+and UVES spectrographs.
+
+\vspace{20pt}
+
+There is controversy about $N$, some people only
+believe {\bf two} of the claimed planets, while other analyses suggest
+{\bf up to 6} (with a few of these in the habitable zone).
+\end{frame}
+
+\begin{frame}[t]{Giant Disclaimer}
+\begin{center}
+\includegraphics[scale=0.25]{robertson.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[t]{Giant Disclaimer}
+\begin{center}
+\includegraphics[scale=0.25]{robertson.png}
+\end{center}
+\end{frame}
+
 
 
 \begin{frame}[t]{Real projects}
