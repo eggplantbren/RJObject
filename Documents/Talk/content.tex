@@ -111,9 +111,9 @@ technique:
 \item Loop\\
 $\{$
   \begin{itemize}
-  \item Generate {\bf proposal} from some distribution $q(\theta' | \theta)$
+  \item Generate {\bf proposal} from some {\it proposal distribution} $q(\theta' | \theta)$
   (e.g. slightly perturb the current position).
-  \item With probability$^*$ $\alpha = \min\left(1, \frac{p(\theta')p(D|\theta')}{p(\theta)p(D|\theta)}\right)$, accept the proposal (i.e. replace $\theta$ with $\theta'$).
+  \item With probability $\alpha = \min\left(1, \frac{q(\theta | \theta')}{q(\theta' | \theta)}\frac{p(\theta')p(D|\theta')}{p(\theta)p(D|\theta)}\right)$, accept the proposal (i.e. replace $\theta$ with $\theta'$).
   \item Otherwise, stay in the same place.
   \end{itemize}
 $\}$
@@ -183,6 +183,26 @@ proposals that try to increase or decrease the number of objects in the model.
 \end{figure}
 \end{frame}
 
+
+\begin{frame}[t]{Alternative: Birth and Death}
+Birth and death moves are surprisingly easy to implement. Design them to
+explore the prior (\& satisfy detailed balance), and then use
+\begin{eqnarray}
+\alpha = \min\left(1, \frac{p(D|\theta')}{p(D|\theta)}\right)
+\end{eqnarray}
+as the acceptance probability: i.e. just the ratio of likelihoods.
+\end{frame}
+
+\begin{frame}[t]{Alternative: Birth and Death}
+Birth proposal: Increment $N$, generate the new 'object' from the prior
+(given current values of hyperparameters)
+
+\vspace{20pt}
+
+Death proposal: Choose one of the $N$ objects, remove it, decrement $N$.
+\end{frame}
+
+
 \begin{frame}[t]{What's the issue?}
 \begin{itemize}
 \setlength{\itemsep}{20pt}
@@ -210,7 +230,8 @@ that starts with the prior distribution, and shrinks volume at a controlled
 rate.
 \vspace{20pt}
 
-{\bf Nested Sampling solves the problem of phase transitions}.
+{\bf Nested Sampling solves the problem of phase transitions and (as far as I
+know) no other Monte Carlo method does.}
 \end{frame}
 
 \begin{frame}[t]{Diffusive Nested Sampling}
@@ -220,7 +241,7 @@ rate.
   \begin{itemize}
   \setlength{\itemsep}{20pt}
   \item Replace the posterior distribution with a {\bf mixture of constrained priors}
-  \item Can cross valleys
+  \item Can cross valleys (the prior is a mixture component)
   \item Posterior is available via re-weighting
   \end{itemize}
 \end{column}
@@ -235,9 +256,8 @@ rate.
 \begin{frame}[t]{Diffusive Nested Sampling}
 \begin{itemize}
 \setlength{\itemsep}{20pt}
-\item I've implemented the sinewave problem and the galaxy problem
-\item The common features (what proposals to use?) are delegated to
-a separate library called {\tt RJObject}
+\item I've implemented a library, {\tt RJObject}, that handles all the
+Metropolis proposals I need for these kinds of problems.
 \item Uses birth-death MCMC, but exploring the DNS distribution, rather than
 the (harder) posterior.
 \end{itemize}
@@ -261,7 +281,7 @@ The $N=1$ and $N=2$ solutions are separated by a phase transition.
 \end{frame}
 
 \begin{frame}[t]{Sinusoid data movie}
-{\tt https://www.youtube.com/watch?v=q4s8NJyUVoY}
+{\tt https://www.youtube.com/watch?v=i-f4VqPPeGg}
 \end{frame}
 
 \begin{frame}[t]{Motivating Problem II}
@@ -292,6 +312,12 @@ The $N=1$ and $N=2$ solutions are separated by a phase transition.
 \end{center}
 \end{frame}
 
+\begin{frame}[t]{Recommendations}
+It is infeasable to apply this approach wholesale.
+Instead I would use it on small subsets of imaging that are of specific interest.
+\end{frame}
+
+
 
 \begin{frame}[t]{Exoplanets}
 Radial velocity data is considered challenging. There are many systems where
@@ -303,6 +329,13 @@ Radial velocity data is considered challenging. There are many systems where
 controversy rages over $N$.
 \end{frame}
 
+
+\begin{frame}[t]{Exoplanets: Simulated Dataset}
+How many planets?
+\begin{center}
+\includegraphics[scale=0.35]{ExoplanetFigures/fake_data.pdf}
+\end{center}
+\end{frame}
 
 \begin{frame}[t]{Exoplanets: Simulated Dataset}
 How many planets?
