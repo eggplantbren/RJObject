@@ -31,22 +31,3 @@ def remove(state):
     return state
   return np.delete(state, rng.randint(state.size))
 
-
-if __name__ == '__main__':
-  state = np.array([])
-
-  steps = 10000
-  N = np.zeros(steps)
-  x = np.array([])
-
-  for i in range(0, steps):
-    state = proposal(state)
-    x = np.hstack([x, state])
-    N[i] = state.size
-
-  plt.plot(N)
-  plt.show()
-
-  plt.hist(x, 100)
-  plt.show()
-
