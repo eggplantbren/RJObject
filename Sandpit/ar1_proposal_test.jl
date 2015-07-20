@@ -18,7 +18,6 @@ y_data += sig_data*randn(N_data)
 
 
 function log_likelihood(params::Array{Float64, 2})
-	println(min(params), " ", max(params))
 	y_model = zeros(N_data)
 	for(i in 1:N)
 		y_model += -log(1.0 - params[1, 1])*exp(-0.5*(x_data - (-10.0 + 20.0*params[1, 2])).^2/0.2^2)
@@ -29,18 +28,19 @@ end
 
 function ar1_proposal(params::Array{Float64, 2})
 	theta = 10.0^(-6.0*rand())*2.0*pi
-	n = cdf(normal, params)
+	n = quantile(normal, params)
 	proposal = cos(theta)*n + sin(theta)*randn(size(params))
-	proposal = quantile(normal, proposal)
+	proposal = cdf(normal, proposal)
 	return proposal
 end
 
 steps = 100000
-skip = 10
+skip = 100
 
 params = rand(N, 2)
 logl = log_likelihood(params)[1]
 
+plt.ion()
 for(i in 1:steps)
 	proposal = ar1_proposal(params)
 	logl_proposal = log_likelihood(proposal)[1]
@@ -50,7 +50,15 @@ for(i in 1:steps)
 	end
 
 	if(rem(i, skip) == 0)
+		plt.hold(false)
+		plt.plot(x_data, y_data, "bo")
+		plt.hold(true)
+		plt.plot(x_data, log_likelihood(proposal)[2], "r-")
+		plt.draw()
 		println(i, "/", steps)
 	end
 end
+
+plt.ioff()
+plt.show()
 
