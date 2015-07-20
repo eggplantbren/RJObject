@@ -37,7 +37,7 @@ end
 function easy_proposal(params::Array{Float64, 2})
 	i = rand(1:N)
 	j = rand(1:2)
-	proposal = params
+	proposal = copy(params)
 	proposal[i, j] += 10.0^(1.5 - 6.0*rand())*randn()
 	proposal[i, j] = mod(proposal[i, j], 1.0)
 	return proposal
@@ -54,7 +54,6 @@ plt.ion()
 for(i in 1:steps)
 	proposal = easy_proposal(params)
 	logl_proposal = log_likelihood(proposal)[1]
-	println(logl)
 	if(rand() <= exp(logl_proposal - logl))
 		params = proposal
 		logl = logl_proposal 
@@ -64,9 +63,9 @@ for(i in 1:steps)
 		plt.hold(false)
 		plt.plot(x_data, y_data, "bo")
 		plt.hold(true)
-		plt.plot(x_data, log_likelihood(proposal)[2], "r-")
+		plt.plot(x_data, log_likelihood(params)[2], "r-")
 		plt.draw()
-		println(i, "/", steps, " ", logl)
+		println(i, "/", steps, " ", logl, " ", log_likelihood(params)[1])
 	end
 end
 
