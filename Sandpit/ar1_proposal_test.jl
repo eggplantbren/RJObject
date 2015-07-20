@@ -20,7 +20,7 @@ y_data += sig_data*randn(N_data)
 function log_likelihood(params::Array{Float64, 2})
 	y_model = zeros(N_data)
 	for(i in 1:N)
-		y_model += -log(1.0 - params[1, 1])*exp(-0.5*(x_data - (-10.0 + 20.0*params[1, 2])).^2/0.2^2)
+		y_model += -log(1.0 - params[i, 1])*exp(-0.5*(x_data - (-10.0 + 20.0*params[i, 2])).^2/0.2^2)
 	end
 
 	return (-0.5*sum((y_data - y_model).^2/sig_data^2), y_model)
