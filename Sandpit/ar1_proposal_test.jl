@@ -23,7 +23,7 @@ function log_likelihood(params::Array{Float64, 2})
 		y_model += -log(1.0 - params[i, 1])*exp(-0.5*(x_data - (-10.0 + 20.0*params[i, 2])).^2/0.2^2)
 	end
 
-	return (-0.5*sum((y_data - y_model).^2/sig_data^2), y_model)
+	return (-0.5*sum((y_data - y_model).^2)/sig_data^2, y_model)
 end
 
 function ar1_proposal(params::Array{Float64, 2})
@@ -34,6 +34,16 @@ function ar1_proposal(params::Array{Float64, 2})
 	return proposal
 end
 
+function easy_proposal(params::Array{Float64, 2})
+	i = rand(1:N)
+	j = rand(1:2)
+	proposal = params
+	proposal[i, j] += 10.0^(1.5 - 6.0*rand())*randn()
+	proposal[i, j] = mod(proposal[i, j], 1.0)
+	return proposal
+end
+
+
 steps = 100000
 skip = 100
 
@@ -42,8 +52,9 @@ logl = log_likelihood(params)[1]
 
 plt.ion()
 for(i in 1:steps)
-	proposal = ar1_proposal(params)
+	proposal = easy_proposal(params)
 	logl_proposal = log_likelihood(proposal)[1]
+	println(logl)
 	if(rand() <= exp(logl_proposal - logl))
 		params = proposal
 		logl = logl_proposal 
@@ -55,7 +66,7 @@ for(i in 1:steps)
 		plt.hold(true)
 		plt.plot(x_data, log_likelihood(proposal)[2], "r-")
 		plt.draw()
-		println(i, "/", steps)
+		println(i, "/", steps, " ", logl)
 	end
 end
 
