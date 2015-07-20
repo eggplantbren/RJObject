@@ -2,7 +2,7 @@ using PyCall
 using Distributions
 @pyimport matplotlib.pyplot as plt
 
-srand(0)
+srand(1)
 normal = Normal(0.0, 1.0)
 
 # Create the data
@@ -61,11 +61,11 @@ for(i in 1:steps)
 
 	if(rem(i, skip) == 0)
 		plt.hold(false)
-		plt.plot(x_data, y_data, "bo")
+		plt.plot(x_data, y_data, "bo", alpha=0.2)
 		plt.hold(true)
-		plt.plot(x_data, log_likelihood(params)[2], "r-")
+		plt.plot(x_data, log_likelihood(params)[2], "r-", linewidth=2)
 		plt.draw()
-		println(i, "/", steps, " ", logl, " ", log_likelihood(params)[1])
+		println(i, "/", steps, " ", logl)
 	end
 end
 
