@@ -1,8 +1,8 @@
 #include <cmath>
 #include <iostream>
 #include <iomanip>
-#include "RandomNumberGenerator.h"
-#include "Utils.h"
+#include <RandomNumberGenerator.h>
+#include <Utils.h>
 
 template<class Distribution>
 RJObject<Distribution>::RJObject(int num_dimensions, int max_num_components, bool fixed,
