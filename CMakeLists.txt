@@ -8,6 +8,8 @@ set (CMAKE_MACOSX_RPATH TRUE)
 
 set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
+set (CMAKE_AR "gcc-ar")
+set (CMAKE_RANLIB "gcc-ranlib")
 set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic")
 set (CMAKE_CXX_FLAGS_RELEASE "-m64 -O3 -flto -march=native -funroll-loops")
 set (CMAKE_CXX_FLAGS_DEBUG "-O0 -g")
