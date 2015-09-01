@@ -63,3 +63,9 @@ location of the library and headers. Assuming it has been downloaded and built
 ```
 cmake -DDNEST3_INCLUDES=/home/username/DNest3/include -DDNEST3_LIBRARY=/home/username/DNest3/build/libdnest3.a ..
 ```
+
+Acknowledgements
+================
+
+Thanks to Stephen Portillo (Harvard) for finding a bug.
+

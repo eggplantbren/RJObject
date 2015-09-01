@@ -124,8 +124,8 @@ double RJObject<Distribution>::perturb_num_components(double scale)
 
 	// Work out how many components we will have after the change
 	double delta = max_num_components*scale*DNest3::randn();
-	int difference = (int)floor(delta);
-	// In case difference is zero, make it + 1
+	int difference = (int)delta;
+	// In case difference is zero, make it +1 or -1
 	if(difference == 0)
 	{
 		if(DNest3::randomU() <= 0.5)
