@@ -6,10 +6,11 @@
 class Data
 {
 	private:
-		static const int num_dimensions;
 		std::vector< std::vector<double> > x;
 
 	public:
+		static const int num_dimensions;
+
 		Data();
 		void load(const char* filename);
 
