@@ -25,17 +25,19 @@ MyDistribution::MyDistribution(const vector<double>& min, const vector<double>& 
 		range[i] = max[i] - min[i];
 }
 
-//void MyDistribution::fromPrior()
-//{
-//	for(size_t i=0; i<
-//	center_locations = x_min + x_range*randomU();
-//	diversity_locations = exp(log(1E-3) + log(1E3)*randomU())*x_range;
+void MyDistribution::fromPrior()
+{
+	for(size_t i=0; i<min.size(); i++)
+	{
+		center_locations[i] = min[i] + range[i]*randomU();
+		diversity_locations[i] = exp(log(1E-3) + log(1E3)*randomU())*range[i];
 
-//	center_logwidths = log(1E-3*x_range) + log(1E6)*randomU();
-//	diversity_logwidths = 2.*randomU();
+		center_logwidths[i] = log(1E-3*range[i]) + log(1E6)*randomU();
+		diversity_logwidths[i] = 2.*randomU();
+	}
 
-//	diversity_logweights = 2.*randomU();
-//}
+	diversity_logweights = 2.*randomU();
+}
 
 //double MyDistribution::perturb_parameters()
 //{
