@@ -4,12 +4,19 @@ Reversible Jump Objects
 Classes for generic birth/death MCMC in
 [DNest3](https://github.com/eggplantbren/DNest3).
 
-(c) 2013 Brendon J. Brewer
+(c) 2013-2015 Brendon J. Brewer
 
 Licence: GNU GPL v3 for software, CC BY-NC-SA for documents.
 
 This work is supported by a Marsden Fast-Start grant
 from the Royal Society of New Zealand.
+
+News
+====
+
+A significant bug was fixed at the beginning of September 2015. If you use
+RJObject, please make sure your copy of this repository is up to date.
+
 
 Installation
 ============
