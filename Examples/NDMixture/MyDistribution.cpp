@@ -121,10 +121,14 @@ void MyDistribution::to_uniform(std::vector<double>& vec) const
 	vec[min.size()] = gsl_cdf_ugaussian_P(vec[min.size()]/diversity_logweights);
 }
 
-//void MyDistribution::print(std::ostream& out) const
-//{
-//	out<<center_locations<<' '<<diversity_locations<<' ';
-//	out<<center_logwidths<<' '<<diversity_logwidths<<' ';
-//	out<<diversity_logweights<<' ';
-//}
+void MyDistribution::print(std::ostream& out) const
+{
+	for(size_t i=0; i<min.size(); i++)
+		out<<center_locations[i]<<' ';
+	for(size_t i=0; i<min.size(); i++)
+		out<<diversity_locations[i]<<' ';
+	for(size_t i=0; i<min.size(); i++)
+		out<<center_logwidths[i]<<' ';
+	out<<diversity_logweights<<' ';
+}
 
