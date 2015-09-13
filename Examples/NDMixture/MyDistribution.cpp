@@ -111,12 +111,15 @@ void MyDistribution::from_uniform(std::vector<double>& vec) const
 	vec[min.size()] = diversity_logweights*gsl_cdf_ugaussian_Pinv(vec[min.size()]);
 }
 
-//void MyDistribution::to_uniform(std::vector<double>& vec) const
-//{
-//	vec[0] = gsl_cdf_ugaussian_P((vec[0] - center_locations)/diversity_locations);
-//	vec[1] = gsl_cdf_ugaussian_P((vec[1] - center_logwidths)/diversity_logwidths);
-//	vec[2] = gsl_cdf_ugaussian_P(vec[2]/diversity_logweights);
-//}
+void MyDistribution::to_uniform(std::vector<double>& vec) const
+{
+	for(size_t i=0; i<min.size(); i++)
+	{
+		vec[i] = gsl_cdf_ugaussian_P((vec[i] - center_locations[i])/diversity_locations[i]);
+		vec[min.size() + i] = gsl_cdf_ugaussian_P((vec[min.size() + i] - center_logwidths[i])/diversity_logwidths[i]);
+	}
+	vec[min.size()] = gsl_cdf_ugaussian_P(vec[min.size()]/diversity_logweights);
+}
 
 //void MyDistribution::print(std::ostream& out) const
 //{
