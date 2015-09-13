@@ -93,7 +93,7 @@ double MyDistribution::log_pdf(const std::vector<double>& vec) const
 			-0.5*pow((vec[Data::num_dimensions + i] - center_logwidths[i])/diversity_logwidths[i], 2);
 	}
 	logp += -log(diversity_logweights)
-		-0.5*pow(vec[Data::num_dimensions]/diversity_logweights, 2);
+		-0.5*pow(vec.back()/diversity_logweights, 2);
 
 	return logp;
 }
@@ -108,7 +108,7 @@ void MyDistribution::from_uniform(std::vector<double>& vec) const
 		vec[Data::num_dimensions + i] = center_logwidths[i]
 				+ diversity_logwidths[i]*gsl_cdf_ugaussian_Pinv(vec[Data::num_dimensions + i]);
 	}
-	vec[Data::num_dimensions] = diversity_logweights*gsl_cdf_ugaussian_Pinv(vec[Data::num_dimensions]);
+	vec.back() = diversity_logweights*gsl_cdf_ugaussian_Pinv(vec.back());
 }
 
 void MyDistribution::to_uniform(std::vector<double>& vec) const
@@ -118,7 +118,7 @@ void MyDistribution::to_uniform(std::vector<double>& vec) const
 		vec[i] = gsl_cdf_ugaussian_P((vec[i] - center_locations[i])/diversity_locations[i]);
 		vec[Data::num_dimensions + i] = gsl_cdf_ugaussian_P((vec[Data::num_dimensions + i] - center_logwidths[i])/diversity_logwidths[i]);
 	}
-	vec[Data::num_dimensions] = gsl_cdf_ugaussian_P(vec[Data::num_dimensions]/diversity_logweights);
+	vec.back() = gsl_cdf_ugaussian_P(vec.back()/diversity_logweights);
 }
 
 void MyDistribution::print(std::ostream& out) const
