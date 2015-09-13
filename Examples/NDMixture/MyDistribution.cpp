@@ -77,7 +77,7 @@ double MyDistribution::perturb_parameters()
 	return logH;
 }
 
-// vec[0], ..., vec[num_dimensions-1] = central position
+// vec[0], ..., vec[num_dimensions-1] = position
 // vec[num_dimensions, ..., vec[2*num_dimensions-1] = log_width
 // vec[2*num_dimensions] = log_weight
 
@@ -93,7 +93,7 @@ double MyDistribution::log_pdf(const std::vector<double>& vec) const
 			-0.5*pow((vec[Data::num_dimensions + i] - center_logwidths[i])/diversity_logwidths[i], 2);
 	}
 	logp += -log(diversity_logweights)
-		-0.5*pow(vec[2]/diversity_logweights, 2);
+		-0.5*pow(vec[Data::num_dimensions]/diversity_logweights, 2);
 
 	return logp;
 }
