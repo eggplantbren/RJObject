@@ -18,8 +18,8 @@ MyDistribution::MyDistribution(const vector<double>& min, const vector<double>& 
 ,center_logwidths(Data::num_dimensions)
 ,diversity_logwidths(Data::num_dimensions)
 {
-	assert(min.size() == Data::num_dimensions);
-	assert(max.size() == Data::num_dimensions);
+	assert(static_cast<int>(min.size()) == Data::num_dimensions);
+	assert(static_cast<int>(max.size()) == Data::num_dimensions);
 
 	for(int i=0; i<Data::num_dimensions; i++)
 		range[i] = max[i] - min[i];
