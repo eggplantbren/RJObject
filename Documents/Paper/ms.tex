@@ -10,7 +10,8 @@
 \renewcommand{\textfraction}{0.1}
 
 \newcommand{\hyperparams}{\boldsymbol{\alpha}}
-\newcommand{\xx}{\mathbf{x}}
+\newcommand{\xx}{\boldsymbol{x}}
+\newcommand{\data}{\boldsymbol{D}}
 
 \title{Inference for Trans-dimensional Bayesian Models with Diffusive Nested
 Sampling}
@@ -24,7 +25,7 @@ Private Bag 92019, Auckland 1142, New Zealand\\
 \maketitle
 \abstract{Many inference problems involve inferring the number $N$ of
 components in some region, along with their properties $\{\xx_i\}_{i=1}^N$,
-from a dataset $\mathcal{D}$. A common statistical example is finite mixture
+from a dataset $\data$. A common statistical example is finite mixture
 modelling. In the Bayesian framework, these problems are typically solved using
 one of the following two methods: i)
 by executing a Monte Carlo algorithm (such as Nested Sampling) once for each
@@ -72,12 +73,12 @@ p(N, \hyperparams, \{\xx_i\}) &=& p(N) p(\hyperparams | N) p(\{\xx_i\} | \hyperp
 
 Here we have assumed the priors for $N$ and $\hyperparams$ are independent, and
 the conditional prior for $\{\xx_i\}$ is iid and does not depend on $N$.
-Given data $\mathcal{D}$, we usually want to calculate properties of the
+Given data $\data$, we usually want to calculate properties of the
 posterior distribution, given by:
 \begin{eqnarray}
-p(N, \hyperparams, \{\xx_i\} | \mathcal{D}) \propto
+p(N, \hyperparams, \{\xx_i\} | \data) \propto
 p(N, \hyperparams, \{\xx_i\})
-p(\mathcal{D} | N, \hyperparams, \{\xx_i\})\label{eq:bayes}
+p(\data | N, \hyperparams, \{\xx_i\})\label{eq:bayes}
 \end{eqnarray}
 The structure of the model is depicted graphically in Figure~\ref{fig:pgm}.
 
@@ -90,9 +91,9 @@ solutions with different numbers of components, using either birth-death MCMC
 The marginal likelihood, or evidence, is also an important quantity, and is
 the normalisation constant of the posterior given in Equation~\ref{eq:bayes}:
 \begin{eqnarray}
-\mathcal{Z} &=& p(\mathcal{D})\\
+\mathcal{Z} &=& p(\data)\\
 &=& \sum_{i=0}^{N_{\rm max}} \int
-p(N, \hyperparams, \{\xx_i\})p(\mathcal{D} | N, \hyperparams, \{\xx_i\})
+p(N, \hyperparams, \{\xx_i\})p(\data | N, \hyperparams, \{\xx_i\})
 \, d^N \xx_i \, d\hyperparams \label{eq:evidence}
 \end{eqnarray}
 
