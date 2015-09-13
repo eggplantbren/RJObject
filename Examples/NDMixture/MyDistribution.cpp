@@ -98,16 +98,18 @@ double MyDistribution::log_pdf(const std::vector<double>& vec) const
 	return logp;
 }
 
-//void MyDistribution::from_uniform(std::vector<double>& vec) const
-//{
-//	vec[0] = center_locations
-//			+ diversity_locations*gsl_cdf_ugaussian_Pinv(vec[0]);
+void MyDistribution::from_uniform(std::vector<double>& vec) const
+{
+	for(size_t i=0; i<min.size(); i++)
+	{
+		vec[i] = center_locations[i]
+				+ diversity_locations[i]*gsl_cdf_ugaussian_Pinv(vec[i]);
 
-//	vec[1] = center_logwidths
-//			+ diversity_logwidths*gsl_cdf_ugaussian_Pinv(vec[1]);
-
-//	vec[2] = diversity_logweights*gsl_cdf_ugaussian_Pinv(vec[2]);
-//}
+		vec[min.size() + i] = center_logwidths[i]
+				+ diversity_logwidths[i]*gsl_cdf_ugaussian_Pinv(vec[min.size() + i]);
+	}
+	vec[min.size()] = diversity_logweights*gsl_cdf_ugaussian_Pinv(vec[min.size()]);
+}
 
 //void MyDistribution::to_uniform(std::vector<double>& vec) const
 //{

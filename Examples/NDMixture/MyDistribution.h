@@ -6,15 +6,18 @@
 class MyDistribution:public Distribution
 {
 	private:
-		// Limits
+		// Limits for the mean vector
 		std::vector<double> min, max, range;
 
+		// These determine the conditional prior for a mean vector
 		std::vector<double> center_locations;
 		std::vector<double> diversity_locations;
 
+		// These determine the conditional prior for gaussian sigmas
 		std::vector<double> center_logwidths;
 		std::vector<double> diversity_logwidths;
 
+		// Determines the conditional prior for the weights
 		double diversity_logweights;
 
 		double perturb_parameters();
