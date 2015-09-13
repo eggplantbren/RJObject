@@ -54,24 +54,25 @@ double MyModel::logLikelihood() const
 
 	double logL = 0.;
 
-	double temp, gaussian;
-	// Loop over datapoints
+	double temp1, temp2;
+	// For all datapoints
 	for(size_t i=0; i<x.size(); i++)
 	{
-		// Loop over dimensions
-		for(size_t j=0; j<x[i].size(); j++)
+		// Evaluate the mixture of gaussians
+		// at this datapoint
+		temp1 = -1E300;
+		for(size_t j=0; j<components.size(); j++)
 		{
-			// Loop over mixture components
-			temp = -1E300;
-			for(size_t k=0; k<components.size(); k++)
+			temp2 = 0.;
+			for(int k=0; k<Data::num_dimensions; k++)
 			{
-				gaussian = -0.5*log(2.*M_PI) - components[k][j + Data::num_dimensions]
-					-0.5*pow((x[i][j] - components[k][j])/exp(components[k][j + Data::num_dimensions]), 2);
-				temp = logsumexp(temp, logw[k] + gaussian);
+				temp2 += -components[j][Data::num_dimensions+k]
+							-0.5*pow((x[i][k] - components[j][k])/
+								exp(components[j][Data::num_dimensions+k]), 2);
 			}
-
-			logL += temp;
+			temp1 = logsumexp(temp1, logw[j] + temp2);
 		}
+		logL += temp1;
 	}
 
 	return logL;
