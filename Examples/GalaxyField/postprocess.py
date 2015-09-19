@@ -205,7 +205,7 @@ def postprocess(temperature=1., numResampleLogX=1, plot=True, loaded=[], \
 	print("Effective sample size = " + str(ESS))
 
 	# Resample to uniform weight
-	N = 300#int(ESS)
+	N = int(ESS)
 	posterior_sample = np.zeros((N, sample.shape[1]))
 	w = P_samples
 	w = w/np.max(w)
