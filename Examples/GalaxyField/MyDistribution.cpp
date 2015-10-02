@@ -101,7 +101,8 @@ double MyDistribution::log_pdf(const std::vector<double>& vec) const
 	double alpha = 1./gamma;
 	double alpha_radius = 1./gamma_radius;
 
-	if(vec[0] < x_min || vec[1] > x_max ||
+	if(vec[0] < x_min || vec[0] > x_max ||
+			vec[1] < y_min || vec[1] > y_max ||
 			vec[2] < fluxlim || vec[3] < radiuslim ||
 			vec[4] < 0.2 || vec[4] > 1. ||
 			vec[5] < 0. || vec[5] > M_PI ||
