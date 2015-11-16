@@ -27,8 +27,22 @@
 \maketitle
 
 \section{Introduction}
-RJObject is a C++ library for implementing certain kinds of hierarchical
-models in DNest3.
+RJObject is a C++ library for implementing certain kinds of trans-dimensional
+hierarchical models (basically `mixture models')in DNest3. I developed this
+library after realising that many models I was implementing all had this
+common structure.
+Throughout this manual, I will assume you're proficient at
+DNest3. If not, please read the manual for that project first.
+
+\section{Dependencies}
+As well as all the DNest3 dependencies, it's best if you add some of DNest3's
+directories to your various PATH variables. Specifically, things will work best
+if you put the location of the DNest3 libraries (the location of
+the {\tt libdnest3.so} file) to your {\tt LIBRARY\_PATH} and
+{\tt LD\_LIBRARY\_PATH}. Also add the directory containing the DNest3 header
+files ({\tt *.h}) to your {\tt CPLUS\_INCLUDE\_PATH}. Finally, add the
+directory containing DNest3's {\tt postprocess.py} and {\tt dnest\_plots.py} to
+your {\tt PYTHON\_PATH}.
 
 \end{document}
 
