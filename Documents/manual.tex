@@ -50,5 +50,20 @@ specified above, you should be able to compile RJObject by going into the
 root RJObject directory and invoking {\tt make}. Alternatively you can follow
 the {\tt cmake} instructions in the README.
 
+\section{Specifying models}
+When using RJObject, you're really using DNest3. So to implement a model, you
+need to write a DNest3 model class and specify the fromPrior, perturb,
+logLikelihood methods etc. All RJObject provides is a quick and relatively
+painless way of incorporating a trans-dimensional object into your model and
+specifying heirarchical priors for its parameters. For example, consider
+the SineWave example from the RJObject paper. There are an unknown number of
+sinusoids $N$, and each of the sinusoids has an unknown period $T_i$, amplitude
+$A_i$, and phase $\phi_i$. To use DNest3 on this problem, you'd have to write
+the fromPrior and perturb methods for all of these parameters, which is
+potentially very annoying.
+
+
+
+
 \end{document}
 
