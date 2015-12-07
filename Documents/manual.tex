@@ -60,7 +60,14 @@ the SineWave example from the RJObject paper. There are an unknown number of
 sinusoids $N$, and each of the sinusoids has an unknown period $T_i$, amplitude
 $A_i$, and phase $\phi_i$. To use DNest3 on this problem, you'd have to write
 the fromPrior and perturb methods for all of these parameters, which is
-potentially very annoying.
+potentially very annoying. You'd have to decide such things as how to propose
+to change $N$, how frequently to propose a move for one or a few of the
+amplitudes, periods, and phases, and the nature of those moves. This is even
+more complicated when you want a heirarchical prior for the amplitudes, periods,
+and phases.
+
+RJObject provides sensible default moves, drastically reducing the amount of
+work required to write the model class.
 
 
 
