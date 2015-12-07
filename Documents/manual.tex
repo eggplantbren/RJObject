@@ -67,8 +67,27 @@ more complicated when you want a heirarchical prior for the amplitudes, periods,
 and phases.
 
 RJObject provides sensible default moves, drastically reducing the amount of
-work required to write the model class.
+work required to write the model class. In the Examples/SineWaves directory,
+the model is specified in the MyModel class. If you open MyModel.h you'll
+notice the MyModel class doesn't have very many data members:
 
+\begin{framed}
+\begin{verbatim}
+class MyModel:public DNest3::Model
+{
+    private:
+        RJObject<MyDistribution> objects;
+        double sigma;
+
+        std::vector<long double> mu;
+}
+\end{verbatim}
+\end{framed}
+
+The variable {\tt objects}, of type {\tt RJObject<MyDistribution>}, represents
+$\left\{N, \{A_i, T_i, \phi_i\}_{i=1}^N\right\}$. The only other parameter
+is the noise standard deviation $\sigma$. The vector of long doubles is
+the ``mock signal'' used in the likelihood function.
 
 
 
