@@ -27,40 +27,41 @@
 \maketitle
 
 \section{Introduction}
-RJObject is a C++ library for implementing certain kinds of trans-dimensional
-hierarchical models (basically `mixture models') in DNest3. I developed this
+\rjobject~is a C++ library for implementing certain kinds of trans-dimensional
+hierarchical models (basically `mixture models') in \dnest. I developed this
 library after realising that many models I was implementing all had this
 common structure.
 Throughout this manual, I will assume you're proficient at
-DNest3. If not, please read the manual for that project first and get some
-experience using the software. I'll also assume you've read the RJObject
-paper (available at {\tt http://arxiv.org/abs/1411.3921}).
+\dnest. If not, please read the manual for that project first and get some
+experience using the software. I'll also assume you've read the \rjobject~paper
+(available at {\tt http://arxiv.org/abs/1411.3921}).
 
 \section{Dependencies}
-As well as all the DNest3 dependencies, it's best if you add some of DNest3's
-directories to your various PATH variables. Specifically, things will work best
-if you put the location of the DNest3 libraries (the location of
+As well as \dnest~and its dependencies, it's best if you add some of
+\dnest's directories to your various PATH variables.
+Specifically, things will work best
+if you put the location of the \dnest~library (the location of
 the {\tt libdnest3.so} file) to your {\tt LIBRARY\_PATH} and
-{\tt LD\_LIBRARY\_PATH}. Also add the directory containing the DNest3 header
+{\tt LD\_LIBRARY\_PATH}. Also add the directory containing the \dnest~header
 files ({\tt *.h}) to your {\tt CPLUS\_INCLUDE\_PATH}. Finally, add the
-directory containing DNest3's {\tt postprocess.py} and {\tt dnest\_plots.py} to
+directory containing \dnest's {\tt postprocess.py} and {\tt dnest\_plots.py} to
 your {\tt PYTHON\_PATH}.
 
 \section{Compiling}
 If you have all the dependencies, and have all the paths set up correctly as
-specified above, you should be able to compile RJObject by going into the
-root RJObject directory and invoking {\tt make}. Alternatively you can follow
+specified above, you should be able to compile \rjobject~by going into the
+root \rjobject~directory and invoking {\tt make}. Alternatively you can follow
 the {\tt cmake} instructions in the README.
 
 \section{Specifying models}
-When using RJObject, you're really using DNest3. So to implement a model, you
-need to write a DNest3 model class and specify the fromPrior, perturb,
-logLikelihood methods etc. All RJObject provides is a quick and relatively
+When using \rjobject, you're really using \dnest. So to implement a model, you
+need to write a \dnest~model class and specify the fromPrior, perturb,
+logLikelihood methods etc. All \rjobject provides is a quick and relatively
 painless way of incorporating a trans-dimensional object into your model and
 specifying heirarchical priors for its parameters. For example, consider
-the SineWave example from the RJObject paper. There are an unknown number of
+the SineWave example from the \rjobject paper. There are an unknown number of
 sinusoids $N$, and each of the sinusoids has an unknown period $T_i$, amplitude
-$A_i$, and phase $\phi_i$. To use DNest3 on this problem, you'd have to write
+$A_i$, and phase $\phi_i$. To use \dnest~on this problem, you'd have to write
 the fromPrior and perturb methods for all of these parameters, which is
 potentially very annoying. You'd have to decide such things as how to propose
 to change $N$, how frequently to propose a move for one or a few of the
@@ -68,7 +69,7 @@ amplitudes, periods, and phases, and the nature of those moves. This is even
 more complicated when you want a heirarchical prior for the amplitudes, periods,
 and phases.
 
-RJObject provides sensible default moves, drastically reducing the amount of
+\rjobject provides sensible default moves, drastically reducing the amount of
 work required to write the model class. In the Examples/SineWaves directory,
 the model is specified in the MyModel class. If you open MyModel.h you'll
 notice the MyModel class doesn't have very many data members:
